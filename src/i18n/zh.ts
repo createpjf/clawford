@@ -70,6 +70,7 @@ const zh: Translations = {
     connectButton: "注册 / 登录",
     usernamePlaceholder: "用户名",
     passwordPlaceholder: "密码",
+    adminCodePlaceholder: "管理员邀请码（可选）",
     loginHint: "新用户名将自动注册。已有账号请输入密码登录。",
     displayNamePlaceholder: "显示名称（可选，仅新注册时生效）",
     connecting: "连接中…",

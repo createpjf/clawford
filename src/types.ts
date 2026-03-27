@@ -57,6 +57,7 @@ export interface TerminalTranslations {
   connectButton: string;
   usernamePlaceholder: string;
   passwordPlaceholder: string;
+  adminCodePlaceholder: string;
   loginHint: string;
   displayNamePlaceholder: string;
   connecting: string;

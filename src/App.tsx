@@ -60,10 +60,15 @@ function MainSite({ lang, setLang }: MainSiteProps) {
   const examPassed = transcript?.foundationsStatus.status === "completed";
 
   const handleConnect = useCallback(
-    async (username: string, password: string, displayName?: string) => {
+    async (
+      username: string,
+      password: string,
+      displayName?: string,
+      adminCode?: string,
+    ) => {
       setTerminalLogs((prev) => appendLogs(prev, `> authenticating: ${username}...`));
       try {
-        await connect(username, password, displayName);
+        await connect(username, password, displayName, adminCode);
         setTerminalLogs((prev) =>
           appendLogs(prev,
             "> identity verified",

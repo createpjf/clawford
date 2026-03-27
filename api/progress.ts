@@ -21,6 +21,8 @@ const MODULE_CREDITS: Record<string, number> = {
 const ALL_MODULE_IDS = Object.keys(MODULE_CREDITS);
 const FOUNDATIONS_CREDENTIAL = "foundation-certificate";
 
+class ExamPrerequisiteError extends Error {}
+
 export default async function handler(
   req: VercelRequest,
   res: VercelResponse,
@@ -56,14 +58,15 @@ export default async function handler(
       if (!moduleId || typeof moduleId !== "string") {
         return res.status(400).json({ error: "moduleId is required" });
       }
-      if (!ALL_MODULE_IDS.includes(moduleId)) {
+      const normalizedModuleId = moduleId.toUpperCase();
+      if (!ALL_MODULE_IDS.includes(normalizedModuleId)) {
         return res
           .status(400)
           .json({ error: `Invalid moduleId: ${moduleId}` });
       }
       const transcript = await updateTranscript(identity.uid, (current) => {
         const completed = new Set(current.foundationsStatus.completedModules);
-        completed.add(moduleId);
+        completed.add(normalizedModuleId);
         const orderedCompleted = ALL_MODULE_IDS.filter((id) => completed.has(id));
         const totalCredits = orderedCompleted.reduce(
           (sum, id) => sum + (MODULE_CREDITS[id] ?? 0),
@@ -94,56 +97,77 @@ export default async function handler(
       let bestScore = examScore;
       let latestScore = examScore;
 
-      const transcript = await updateTranscript(identity.uid, (current) => {
-        alreadyPassed = current.foundationsStatus.status === "completed";
-        const previousBest = current.foundationsStatus.assessmentResults
-          .filter((result) => result.assessmentId.startsWith("exam-"))
-          .reduce((best, result) => Math.max(best, result.score), -1);
+      let transcript = null;
+      try {
+        transcript = await updateTranscript(identity.uid, (current) => {
+          alreadyPassed = current.foundationsStatus.status === "completed";
 
-        attempt =
-          current.foundationsStatus.assessmentResults.filter((result) =>
-            result.assessmentId.startsWith("exam-"),
-          ).length + 1;
+          const completedSet = new Set(
+            current.foundationsStatus.completedModules.map((id) => id.toUpperCase()),
+          );
+          const hasCompletedAllModules = ALL_MODULE_IDS.every((id) =>
+            completedSet.has(id),
+          );
+          if (!alreadyPassed && !hasCompletedAllModules) {
+            throw new ExamPrerequisiteError(
+              "Complete all modules before taking the exam.",
+            );
+          }
 
-        current.foundationsStatus.assessmentResults.push({
-          assessmentId: `exam-${Date.now()}-${attempt}`,
-          score: examScore,
-          maxScore: 14,
-          decision: "pass",
-          attempt,
-          timestamp: now,
-        });
+          const previousBest = current.foundationsStatus.assessmentResults
+            .filter((result) => result.assessmentId.startsWith("exam-"))
+            .reduce((best, result) => Math.max(best, result.score), -1);
 
-        if (!alreadyPassed) {
-          current.foundationsStatus.status = "completed";
-          current.foundationsStatus.completedAt = now;
-          current.foundationsStatus.completedModules = [...ALL_MODULE_IDS];
-          current.foundationsStatus.totalCreditsEarned = Object.values(
-            MODULE_CREDITS,
-          ).reduce((a, b) => a + b, 0);
-          current.currentState = "foundations-graduate";
-        }
+          attempt =
+            current.foundationsStatus.assessmentResults.filter((result) =>
+              result.assessmentId.startsWith("exam-"),
+            ).length + 1;
 
-        if (
-          !current.credentials.some(
-            (credential) => credential.type === FOUNDATIONS_CREDENTIAL,
-          )
-        ) {
-          current.credentials.push({
-            credentialId: `cred-${current.uid}-foundations`,
-            type: FOUNDATIONS_CREDENTIAL,
-            issuedAt: now,
+          current.foundationsStatus.assessmentResults.push({
+            assessmentId: `exam-${Date.now()}-${attempt}`,
+            score: examScore,
+            maxScore: 14,
+            decision: "pass",
+            attempt,
+            timestamp: now,
           });
-        }
 
-        const examResults = current.foundationsStatus.assessmentResults.filter(
-          (result) => result.assessmentId.startsWith("exam-"),
-        );
-        latestScore = examResults.at(-1)?.score ?? examScore;
-        bestScore = examResults.reduce((best, result) => Math.max(best, result.score), 0);
-        improved = previousBest >= 0 && bestScore > previousBest;
-        return current;
-      });
+          if (!alreadyPassed) {
+            current.foundationsStatus.status = "completed";
+            current.foundationsStatus.completedAt = now;
+            current.foundationsStatus.completedModules = [...ALL_MODULE_IDS];
+            current.foundationsStatus.totalCreditsEarned = Object.values(
+              MODULE_CREDITS,
+            ).reduce((a, b) => a + b, 0);
+            current.currentState = "foundations-graduate";
+          }
+
+          if (
+            !current.credentials.some(
+              (credential) => credential.type === FOUNDATIONS_CREDENTIAL,
+            )
+          ) {
+            current.credentials.push({
+              credentialId: `cred-${current.uid}-foundations`,
+              type: FOUNDATIONS_CREDENTIAL,
+              issuedAt: now,
+            });
+          }
+
+          const examResults = current.foundationsStatus.assessmentResults.filter(
+            (result) => result.assessmentId.startsWith("exam-"),
+          );
+          latestScore = examResults.at(-1)?.score ?? examScore;
+          bestScore = examResults.reduce((best, result) => Math.max(best, result.score), 0);
+          improved = previousBest >= 0 && bestScore > previousBest;
+          return current;
+        });
+      } catch (err) {
+        if (err instanceof ExamPrerequisiteError) {
+          return res.status(400).json({ error: err.message });
+        }
+        throw err;
+      }
       if (!transcript) {
         return res.status(404).json({ error: "Transcript not found" });
       }

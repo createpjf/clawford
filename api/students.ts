@@ -14,7 +14,7 @@ export default async function handler(
   try {
     const wall = await getWallIndex();
 
-    res.setHeader("Cache-Control", "s-maxage=30, stale-while-revalidate=60");
+    res.setHeader("Cache-Control", "s-maxage=5, stale-while-revalidate=10");
     return res.status(200).json(wall);
   } catch (err) {
     console.error("students error:", err);

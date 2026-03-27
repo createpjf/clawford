@@ -9,7 +9,12 @@ interface SessionState {
   transcript: Transcript | null;
   isLoading: boolean;
   error: string | null;
-  connect: (username: string, password: string, displayName?: string) => Promise<void>;
+  connect: (
+    username: string,
+    password: string,
+    displayName?: string,
+    adminCode?: string,
+  ) => Promise<void>;
   disconnect: () => void;
   studyModule: (moduleId: string) => Promise<void>;
   takeExam: () => Promise<void>;
@@ -44,7 +49,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const [error, setError] = useState<string | null>(null);
 
   const connect = useCallback(
-    async (u: string, pw: string, displayName?: string) => {
+    async (u: string, pw: string, displayName?: string, adminCode?: string) => {
       setIsLoading(true);
       setError(null);
       try {
@@ -54,6 +59,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
             username: u,
             password: pw,
             displayName,
+            adminCode,
           }),
         });
         setUsername(u);

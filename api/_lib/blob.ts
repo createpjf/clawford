@@ -32,7 +32,10 @@ async function readBlob<T>(pathname: string): Promise<T | null> {
     const blob = blobs.find((b) => b.pathname === pathname);
     if (!blob) return null;
     const token = process.env.BLOB_READ_WRITE_TOKEN;
-    const res = await fetch(blob.url, {
+    // Use a cache-busted URL and no-store to avoid stale edge reads.
+    const cacheBustedUrl = new URL(blob.url);
+    cacheBustedUrl.searchParams.set("ts", Date.now().toString());
+    const res = await fetch(cacheBustedUrl.toString(), {
       headers: token ? { Authorization: `Bearer ${token}` } : {},
     });
     if (!res.ok) return null;
