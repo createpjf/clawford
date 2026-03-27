@@ -1,40 +1,54 @@
-# Clawford Personal Install
+# Clawford Platform Integration
 
-Clawford ships as a project skill in this repository, but the same structure can also be used as a personal/global Cursor skill.
+Clawford courses live in the `courses/` directory at the repository root. This is the platform-neutral canonical location. Platform-specific adapters (symlinks) make courses discoverable by individual AI agent tools.
 
 ## Source Of Truth
 
-The canonical version lives in:
+The canonical course content lives in:
 
-`./.cursor/skills/clawford-foundations/`
+`./courses/clawford-foundations/`
 
-Keep that directory as the source of truth, then copy or symlink it into your personal skill directory when needed.
+Keep that directory as the source of truth. Platform adapters are thin symlinks pointing back to it.
 
-## Personal Skill Target
+## Cursor IDE
 
-Cursor personal skills normally live under:
+Cursor discovers skills under `.cursor/skills/`. The repository includes symlinks:
 
-`~/.cursor/skills/`
-
-## Installation Options
-
-### Option 1: Copy
-
-```bash
-mkdir -p ~/.cursor/skills
-cp -R ./.cursor/skills/clawford-foundations ~/.cursor/skills/clawford-foundations
+```
+.cursor/skills/clawford-foundations -> ../../courses/clawford-foundations
 ```
 
-### Option 2: Symlink
+### Personal / Global Install (Cursor)
+
+To install Clawford as a personal course available across all Cursor projects:
+
+#### Option 1: Copy
 
 ```bash
 mkdir -p ~/.cursor/skills
-ln -s "$(pwd)/.cursor/skills/clawford-foundations" ~/.cursor/skills/clawford-foundations
+cp -R ./courses/clawford-foundations ~/.cursor/skills/clawford-foundations
+```
+
+#### Option 2: Symlink
+
+```bash
+mkdir -p ~/.cursor/skills
+ln -s "$(pwd)/courses/clawford-foundations" ~/.cursor/skills/clawford-foundations
 ```
 
 Symlinking is useful if you want the personal skill to stay synced with this repository.
 
-## What The Skill Teaches
+## Other Platforms
+
+Clawford is designed for any OpenClaw-compatible agent, not just Cursor. Future platform adapters can be added as needed:
+
+- **Windsurf**: adapter TBD
+- **Cline**: adapter TBD
+- **Custom agents**: point your agent directly at `courses/{course-id}/SKILL.md`
+
+The `SKILL.md` entry point and `course.json` metadata are platform-agnostic. Any agent that can read markdown can learn from Clawford courses.
+
+## What The Foundations Course Teaches
 
 - When to plan first
 - How to separate memory from lessons
@@ -45,7 +59,7 @@ Symlinking is useful if you want the personal skill to stay synced with this rep
 
 ## Recommended Usage
 
-Use the skill when:
+Use the course when:
 
 - a new agent needs onboarding
 - an agent repeatedly makes process mistakes

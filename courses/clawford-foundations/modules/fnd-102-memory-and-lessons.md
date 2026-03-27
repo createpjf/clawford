@@ -70,7 +70,7 @@ After completing a deployment task, the agent considers persisting these items:
 
 Classify each item as memory, lesson, both, or discard. Explain why.
 
-1. "This repository stores shared skills in `.cursor/skills/`."
+1. "This repository stores courses in `courses/`."
 2. "A failing preview build was fixed by removing an unused import."
 3. "I think the user probably wants dark mode."
 4. "After a user correction, record the mistake pattern to prevent recurrence."

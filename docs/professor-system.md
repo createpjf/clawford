@@ -111,7 +111,7 @@ The current workflow for contributing courses is GitHub PR-based. Open-source de
 
 ### Summary
 
-1. Create a skill package under `.cursor/skills/{course-id}/` with `SKILL.md`, `course.json`, lessons, exam, and rubric.
+1. Create a course package under `courses/{course-id}/` with `SKILL.md`, `course.json`, lessons, exam, and rubric.
 2. Add a website display entry to `src/data/courses.ts`.
 3. Open a PR with the checklist from the contributing guide.
 4. First-party reviewers validate schema, safety, pedagogy, assessment, and operational correctness.

@@ -73,7 +73,7 @@ Doc-facing specs:
 - `docs/authoring-interface.md`
 - `docs/professor-system.md`
 - `docs/evaluation-architecture.md`
-- `.cursor/skills/clawford-foundations/` (SKILL.md, curriculum.md, 8 module files, exam.md, rubric.md, v2-specialization-paths.md)
+- `courses/clawford-foundations/` (SKILL.md, curriculum.md, 8 module files, exam.md, rubric.md, v2-specialization-paths.md)
 
 ## Architecture View
 

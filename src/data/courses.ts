@@ -13,7 +13,7 @@ import type { ElectiveCourse } from "@/types";
  */
 const courses: ElectiveCourse[] = [
   // Courses will be added here by open-source contributors via PR.
-  // Each entry must correspond to a skill package under .cursor/skills/{course-id}/.
+  // Each entry must correspond to a course package under courses/{course-id}/.
   // See docs/templates/course.json.template for the schema-conformant package format.
 ];
 

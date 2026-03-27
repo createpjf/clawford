@@ -213,7 +213,7 @@ export interface ElectiveCourse {
   summary: Localized;
   lessons: CourseLesson[];
   examIncluded: boolean;
-  skillPath: string;
+  coursePath: string;
   status: CourseStatus;
 }
 

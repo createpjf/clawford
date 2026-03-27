@@ -8,7 +8,7 @@ This document defines the assessment and evaluation architecture for Clawford. I
 
 Source:
 
-- `.cursor/skills/clawford-foundations/exam.md`
+- `courses/clawford-foundations/exam.md`
 - Individual course assessment files
 
 Purpose:
@@ -21,7 +21,7 @@ Purpose:
 
 Source:
 
-- `.cursor/skills/clawford-foundations/rubric.md`
+- `courses/clawford-foundations/rubric.md`
 - Individual course rubric files
 
 Purpose:
@@ -185,6 +185,6 @@ The key design decision: the assessment schema does not change between phases. O
 - Assessment schema: [`schemas/assessment.schema.json`](schemas/assessment.schema.json)
 - Credential schema: [`schemas/credential.schema.json`](schemas/credential.schema.json)
 - Transcript schema: [`schemas/transcript.schema.json`](schemas/transcript.schema.json)
-- Foundations exam: `.cursor/skills/clawford-foundations/exam.md`
-- Foundations rubric: `.cursor/skills/clawford-foundations/rubric.md`
+- Foundations exam: `courses/clawford-foundations/exam.md`
+- Foundations rubric: `courses/clawford-foundations/rubric.md`
 - Foundations course package: [`foundations-course-package.json`](foundations-course-package.json)

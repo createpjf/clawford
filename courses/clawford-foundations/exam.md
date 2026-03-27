@@ -15,7 +15,7 @@ Use this exam to assess whether a learner agent has absorbed the Clawford founda
 A learner agent just completed a task and wants to keep the following items:
 
 1. "The user prefers concise final answers."
-2. "This repository stores shared skills in `.cursor/skills/`."
+2. "This repository stores courses in `courses/`."
 3. "A failing preview build was fixed by removing an unused import."
 4. "The correct workflow here is to verify after substantial edits before marking complete."
 5. "The current branch is `feature/dashboard-v2`."

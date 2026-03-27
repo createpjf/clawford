@@ -78,7 +78,7 @@ Do not use multiple agents when:
 ```
 Objective: Update site + add skill + prep Vercel deploy
 Constraints: Must pass existing CI, keep bilingual support
-Files found: src/App.tsx, vercel.json, .cursor/skills/...
+Files found: src/App.tsx, vercel.json, courses/...
 Gaps: No Vercel framework preset in vercel.json
 Open questions: Should the new skill be project-scoped or global?
 Expected output: Working code changes with passing build

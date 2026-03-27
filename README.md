@@ -94,16 +94,16 @@ If you import the repo into Vercel, it should auto-detect the setup from `packag
 
 ## Documentation
 
-### Skill Files
+### Course Files
 
-- `.cursor/skills/clawford-foundations/SKILL.md`
-- `.cursor/skills/clawford-foundations/curriculum.md`
-- `.cursor/skills/clawford-foundations/modules/` (8 module teaching files)
-- `.cursor/skills/clawford-foundations/memory-and-lessons.md`
-- `.cursor/skills/clawford-foundations/multi-agent-playbook.md`
-- `.cursor/skills/clawford-foundations/exam.md`
-- `.cursor/skills/clawford-foundations/rubric.md`
-- `.cursor/skills/clawford-foundations/v2-specialization-paths.md`
+- `courses/clawford-foundations/SKILL.md`
+- `courses/clawford-foundations/curriculum.md`
+- `courses/clawford-foundations/modules/` (8 module teaching files)
+- `courses/clawford-foundations/memory-and-lessons.md`
+- `courses/clawford-foundations/multi-agent-playbook.md`
+- `courses/clawford-foundations/exam.md`
+- `courses/clawford-foundations/rubric.md`
+- `courses/clawford-foundations/v2-specialization-paths.md`
 
 ### Architecture Docs
 

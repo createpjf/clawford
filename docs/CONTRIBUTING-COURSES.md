@@ -13,11 +13,11 @@ Before contributing a course, familiarize yourself with:
 
 ## Required Directory Structure
 
-Every course lives under `.cursor/skills/{course-id}/`:
+Every course lives under `courses/{course-id}/`:
 
 ```
-.cursor/skills/{course-id}/
-├── SKILL.md              # Agent-facing skill entry point (with frontmatter)
+courses/{course-id}/
+├── SKILL.md              # Agent-facing entry point (with frontmatter)
 ├── course.json           # Machine-readable course package (schema-conformant)
 ├── curriculum.md         # Human-readable curriculum map
 ├── lessons/
@@ -28,6 +28,16 @@ Every course lives under `.cursor/skills/{course-id}/`:
 ├── rubric.md             # Grading rubric
 └── README.md             # Optional: human-readable overview for GitHub
 ```
+
+### Platform Adapter (Cursor IDE)
+
+For Cursor IDE compatibility, also add a symlink so the course is auto-discovered by Cursor:
+
+```bash
+ln -s ../../courses/{course-id} .cursor/skills/{course-id}
+```
+
+Add the symlink to your PR. Other platform adapters may be added in the future.
 
 ## Naming Conventions
 
@@ -58,21 +68,21 @@ A ready-to-copy template is available at [`templates/course.json.template`](temp
 ```bash
 # Using ajv-cli
 npm install -g ajv-cli
-ajv validate -s docs/schemas/course-package.schema.json -d .cursor/skills/{course-id}/course.json
+ajv validate -s docs/schemas/course-package.schema.json -d courses/{course-id}/course.json
 
 # Using python jsonschema
 pip install jsonschema
-python -m jsonschema -i .cursor/skills/{course-id}/course.json docs/schemas/course-package.schema.json
+python -m jsonschema -i courses/{course-id}/course.json docs/schemas/course-package.schema.json
 ```
 
 ## Website Data Entry
 
-In addition to the skill package, you must add an entry to `src/data/courses.ts` so your course appears in the website's Course Catalog.
+In addition to the course package, you must add an entry to `src/data/courses.ts` so your course appears in the website's Course Catalog.
 
 Follow the `ElectiveCourse` type defined in `src/types.ts`. Key fields:
 
 - `status`: set to `"pending"` in your PR. Reviewers change it to `"reviewed"` before merge.
-- `skillPath`: relative path to your skill directory (e.g. `".cursor/skills/flock-101"`).
+- `coursePath`: relative path to your course directory (e.g. `"courses/flock-101"`).
 - All `Localized` fields require `en` at minimum. `zh` is encouraged for bilingual courses.
 - Pick a `theme` color from the existing set: `amber`, `cyan`, `violet`, `emerald`, `orange`, `red`, `sky`, `rose`, `teal`, `indigo`.
 - Pick an appropriate icon from `lucide-react`.
@@ -114,7 +124,7 @@ Include this checklist in your PR description:
 ```markdown
 ### Course Contribution Checklist
 
-- [ ] `.cursor/skills/{course-id}/` directory with all required files
+- [ ] `courses/{course-id}/` directory with all required files
 - [ ] `course.json` validates against `docs/schemas/course-package.schema.json`
 - [ ] `prerequisites` includes `"clawford-foundations"`
 - [ ] `reviewStatus.status` is `"draft"`
@@ -124,6 +134,7 @@ Include this checklist in your PR description:
 - [ ] No secrets, API keys, or unsafe instructions in lesson content
 - [ ] Manifest safety declarations match actual content
 - [ ] `SKILL.md` has valid frontmatter with `name` and `description`
+- [ ] Symlink added at `.cursor/skills/{course-id}` for Cursor compatibility
 ```
 
 ## What Happens After You Open a PR
@@ -132,7 +143,7 @@ Include this checklist in your PR description:
 2. **Human review**: pedagogy quality, assessment fairness, operational correctness. See [review-pipeline.md](review-pipeline.md) for the five review lanes.
 3. **Revision if needed**: reviewer posts findings, you update the PR.
 4. **Approval**: reviewer sets `status: "reviewed"` in `courses.ts` and `reviewStatus.status: "published"` in `course.json`.
-5. **Merge**: course appears on the Clawford website and becomes available as a Cursor skill.
+5. **Merge**: course appears on the Clawford website and becomes available as a course module for any compatible agent platform.
 
 ## Review Criteria Summary
 
@@ -142,7 +153,7 @@ Include this checklist in your PR description:
 | Safety | no unsafe tool instructions, honest manifest declarations, no secrets |
 | Pedagogy | clear learning objectives, complete lesson structure, realistic examples |
 | Assessment | rubric alignment with outcomes, fair grading, anti-gaming resilience |
-| Operational | all file paths resolve, skill loads correctly, no duplicates |
+| Operational | all file paths resolve, course loads correctly, no duplicates |
 
 ## Questions?
 
