@@ -24,6 +24,28 @@
   box-sizing: border-box;
 }
 
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  background: var(--brand);
+  color: #06111c;
+  font-weight: 600;
+  border-radius: 0 0 0.5rem 0.5rem;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -164,6 +186,38 @@ button {
   color: white;
   border-color: rgba(255, 179, 71, 0.45);
   background: rgba(255, 140, 66, 0.15);
+}
+
+.mobile-nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid rgba(130, 161, 205, 0.14);
+  color: var(--text-soft);
+  border-radius: 0.6rem;
+  padding: 0.45rem;
+  cursor: pointer;
+}
+
+.mobile-nav {
+  display: none;
+  width: 100%;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem 0;
+  border-top: 1px solid rgba(130, 161, 205, 0.1);
+}
+
+.mobile-nav a {
+  padding: 0.65rem 0.5rem;
+  border-radius: 0.5rem;
+  color: var(--text-soft);
+}
+
+.mobile-nav a:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .primary-link,
@@ -481,6 +535,21 @@ button {
   word-break: break-word;
 }
 
+.terminal-line.fade-in {
+  animation: fadeInLine 0.35s ease-out both;
+}
+
+@keyframes fadeInLine {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .prompt {
   color: #57b88c;
 }
@@ -703,11 +772,21 @@ button {
 
   .topbar {
     padding-inline: 0.9rem;
+    flex-wrap: wrap;
   }
 
   .topnav,
   .primary-link {
     display: none;
+  }
+
+  .mobile-nav-toggle {
+    display: flex;
+  }
+
+  .mobile-nav {
+    display: flex;
+    order: 4;
   }
 
   .hero-actions,
