@@ -13,7 +13,7 @@ FLock 101 is a foundational course on FLock.io — a decentralised AI training p
 By the end of this course, students will be able to:
 
 - **Explain / 解释** 什么是联邦学习及其重要性
-- **Describe / 描述** FLock.io 三大核心产品架构（AI Arena、FL Alliance、AI Marketplace）
+- **Describe / 描述** FLock.io 三大核心产品架构（AI Arena、FL Alliance、FOMO）
 - **Identify / 识别** AI Arena 中的四种参与角色（Task Creator、Training Node、Validator、Delegator）
 - **Understand / 理解** FLOCK 代币如何激励生态参与
 - **Use / 使用** FLock API 平台构建 AI 应用
@@ -76,6 +76,7 @@ By the end of this course, students will be able to:
 - RMA Issuer、Supporters、Users 的区别？/ What's the difference between RMA Issuers, Supporters, and Users?
 - FOMO 的经济闭环是什么？/ What is FOMO's closed economic loop?
 - 什么是 RMO？为什么它重要？/ What is an RMO and why does it matter?
+- FOMO 与 AI Marketplace 的关系是什么？/ What is the relationship between FOMO and AI Marketplace?
 
 阅读 / Readings:
 - `flock-docs/flock-products/fomo.md`
@@ -86,21 +87,7 @@ By the end of this course, students will be able to:
 
 ---
 
-### Lesson 5: AI Marketplace — 模型部署 / Model Deployment
-**目标：** 理解训练好的模型如何触达终端用户 / Understand how trained models reach end users
-
-关键问题 / Key questions:
-- 什么是 AI Marketplace？/ What is the AI Marketplace?
-- 模型如何上架并被使用？/ How do models get listed and used?
-
-阅读 / Readings:
-- `flock-docs/flock-products/ai-marketplace.md`
-
-知识检验 / Knowledge check: 描述从 AI Arena → FL Alliance → AI Marketplace 的完整流程。
-
----
-
-### Lesson 6: FLock 代币经济学 / FLock Tokenomics
+### Lesson 5: FLock 代币经济学 / FLock Tokenomics
 **目标：** 理解 FLOCK 代币在生态中的角色 / Understand the FLOCK token's role in the ecosystem
 
 关键问题 / Key questions:

@@ -14,12 +14,15 @@ FOMO operates alongside the FLock API Platform, forming a full-cycle AI infrastr
 
 ## 为什么 FOMO 重要？/ Why Does FOMO Matter?
 
+传统 AI Marketplace = 模型上架，收益归平台公司。
+
 传统 AI 模型变现 = 卖 API key，收益归公司。
 
 **FOMO 的颠覆：**
 - 任何人都可以成为模型的"股东"
 - 用户质押代币 = 享受折扣推理费用
 - 真实使用量驱动代币回购 = 模型越受欢迎 = 所有人受益
+- FOMO = AI Marketplace 的进阶版：模型必须先生成、才能发行代币；代币只有真实使用才有价值
 
 **Traditional AI model monetization** = selling API keys, revenue goes to company.
 

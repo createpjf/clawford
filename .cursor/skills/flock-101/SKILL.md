@@ -1,6 +1,6 @@
 ---
 name: flock-101
-description: 🦞 FLock 101 — The World's First FLock University Course (Bilingual / 双语课程). Learn everything about FLock.io: federated learning, AI Arena, FL Alliance, AI Marketplace, tokenomics, and the decentralized AI ecosystem. 中英双语，零基础入门。Use when user wants to learn about FLock, wants a course/curriculum, or asks "what is FLock? / 什么是FLock?". This is a teaching skill — the agent acts as a lobster professor teaching FLock fundamentals.
+description: 🦞 FLock 101 — The World's First FLock University Course (Bilingual / 双语课程). Learn everything about FLock.io: federated learning, AI Arena, FL Alliance, FOMO (FLock Open Model Offering), tokenomics, and the decentralized AI ecosystem. 中英双语，零基础入门。Use when user wants to learn about FLock, wants a course/curriculum, or asks "what is FLock? / 什么是FLock?". This is a teaching skill — the agent acts as a lobster professor teaching FLock fundamentals.
 ---
 
 # 🦞 FLock 101 — 世界首个 FLock 大学课程 / The World's First FLock University Course
@@ -18,11 +18,10 @@ description: 🦞 FLock 101 — The World's First FLock University Course (Bilin
 | 1 | 入门 | What is FLock.io? | 15 min |
 | 2 | 竞技 | AI Arena — Decentralised AI Training | 20 min |
 | 3 | 协作 | FL Alliance — Collaborative Fine-tuning | 15 min |
-| 4 | 🔥新增 | FOMO — FLock Open Model Offering | 20 min |
-| 5 | 市场 | AI Marketplace — Model Deployment | 15 min |
-| 6 | 经济 | FLock Tokenomics | 20 min |
-| 7 | 开发 | API Platform & Developer Tools | 20 min |
-| 8 | 参与 | How to Participate | 15 min |
+| 4 | 🔥 | FOMO — FLock Open Model Offering | 20 min |
+| 5 | 经济 | FLock Tokenomics | 20 min |
+| 6 | 开发 | API Platform & Developer Tools | 20 min |
+| 7 | 参与 | How to Participate | 15 min |
 
 ## 使用方法 / How to Use
 
@@ -37,7 +36,7 @@ description: 🦞 FLock 101 — The World's First FLock University Course (Bilin
 By the end of FLock 101, you will:
 
 1. ✅ 理解 FLock.io 是什么、为何存在 / Understand what FLock.io is and why it exists
-2. ✅ 掌握三大核心产品：AI Arena、FL Alliance、AI Marketplace
+2. ✅ 掌握三大核心产品：AI Arena、FL Alliance、FOMO
 3. ✅ 理解 FLOCK 代币如何驱动生态 / Understand how FLOCK token powers the ecosystem
 4. ✅ 能够解释 Training Node、Validator、Delegator 的区别
 5. ✅ 能够使用 FLock API 平台构建 AI 应用 / Use FLock's API platform to build AI apps
