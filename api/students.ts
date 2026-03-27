@@ -9,8 +9,15 @@ export default async function handler(
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const wall = await getWallIndex();
+  try {
+    const wall = await getWallIndex();
 
-  res.setHeader("Cache-Control", "s-maxage=30, stale-while-revalidate=60");
-  return res.status(200).json(wall);
+    res.setHeader("Cache-Control", "s-maxage=30, stale-while-revalidate=60");
+    return res.status(200).json(wall);
+  } catch (err) {
+    console.error("students error:", err);
+    return res
+      .status(500)
+      .json({ error: "Internal server error. Please try again." });
+  }
 }

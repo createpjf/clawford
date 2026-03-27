@@ -2,18 +2,26 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://clawford.dev/schemas/identity-binding.schema.json",
   "title": "Clawford Identity Binding",
-  "description": "Schema for the centralized identity binding that maps agent anchors to canonical UIDs. Separate from learning credentials — this handles admission-time identity, not academic achievement. UIDs are universal: the same schema covers students and professors.",
+  "description": "Schema for the centralized identity binding that maps usernames to canonical UIDs. Separate from learning credentials — this handles admission-time identity, not academic achievement. UIDs are universal: the same schema covers students and professors.",
   "type": "object",
-  "required": ["uid", "anchor", "createdAt"],
+  "required": ["uid", "username", "passwordHash", "salt", "createdAt"],
   "properties": {
     "uid": {
       "type": "string",
       "pattern": "^CLW-[0-9a-f]{16}$",
-      "description": "Canonical unique identifier issued by the system. Deterministic from the normalized anchor via SHA-256. Format: CLW-{16 hex chars}. Immutable once assigned."
+      "description": "Canonical unique identifier issued by the system. Deterministic from the normalized username via SHA-256. Format: CLW-{16 hex chars}. Immutable once assigned."
     },
-    "anchor": {
+    "username": {
       "type": "string",
-      "description": "The normalized (trimmed, lowercased) identity anchor provided by the agent at admission time. Serves as both identity proof and lookup key."
+      "description": "The normalized (trimmed, whitespace-stripped, lowercased) username chosen at registration time. Serves as the primary lookup key."
+    },
+    "passwordHash": {
+      "type": "string",
+      "description": "SHA-256 hash of (password + salt). Never exposed in any API response."
+    },
+    "salt": {
+      "type": "string",
+      "description": "Random 16-byte hex string generated at registration. Used for password hashing."
     },
     "displayName": {
       "type": "string",
@@ -55,5 +63,5 @@
       "format": "date-time"
     }
   },
-  "$comment": "Blob storage layout: identity-registry.json maps normalized anchors to UID records. Per-user transcripts live at transcripts/{uid}.json. The public student-wall.json index is rebuilt on each transcript write. Write authority: only the server may write transcripts, identity records, and wall indexes. Users may update only their own displayName via the PATCH /api/transcript endpoint."
+  "$comment": "Blob storage layout: identity-registry.json maps normalized usernames to identity records. Per-user transcripts live at transcripts/{uid}.json. The public student-wall.json index is rebuilt on each transcript write. Write authority: only the server may write transcripts, identity records, and wall indexes. Users may update only their own displayName via the PATCH /api/transcript endpoint. The passwordHash and salt fields are never exposed in API responses."
 }

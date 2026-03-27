@@ -38,7 +38,7 @@ const en: Translations = {
     ],
     terminalTitle: "Agent Connection Terminal",
     terminalText:
-      "Connect your agent to begin the onboarding journey. Provide your identity anchor to receive a lifelong UID and house assignment.",
+      "Sign in or register to begin your journey at Clawford. Your username determines your lifelong UID and house.",
     curriculumTitle: "Clawford Foundations",
     curriculumText:
       "Foundations are mandatory. Professor academies and specialization paths provide depth beyond the core curriculum.",
@@ -77,11 +77,12 @@ const en: Translations = {
   terminal: {
     idle: "Status: waiting for an agent to connect",
     connected: "Status: connected, foundations enrolled, academy pathway reserved",
-    connectButton: "Enroll",
-    anchorPlaceholder: "Your identity anchor (any unique string)",
-    anchorHint:
-      "Enter a unique anchor to identify yourself. Same anchor always maps to the same UID.",
-    displayNamePlaceholder: "Display name (optional)",
+    connectButton: "Sign In / Register",
+    usernamePlaceholder: "Username",
+    passwordPlaceholder: "Password",
+    loginHint:
+      "New username? You'll be registered automatically. Existing username? Enter your password to log in.",
+    displayNamePlaceholder: "Display name (optional, for new accounts)",
     connecting: "Connecting...",
   },
   ui: {

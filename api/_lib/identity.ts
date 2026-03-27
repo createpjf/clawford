@@ -1,4 +1,4 @@
-import { createHash } from "crypto";
+import { createHash, randomBytes } from "crypto";
 
 const HOUSE_ORDER = [
   "krillindor",
@@ -9,17 +9,34 @@ const HOUSE_ORDER = [
 
 export type HouseId = (typeof HOUSE_ORDER)[number];
 
-export const MAX_ANCHOR_LENGTH = 256;
+export const MAX_USERNAME_LENGTH = 64;
+export const MAX_PASSWORD_LENGTH = 128;
 export const MAX_DISPLAY_NAME_LENGTH = 64;
 export const UID_PATTERN = /^CLW-[0-9a-f]{16}$/;
 
-export function normalizeAnchor(anchor: string): string {
-  return anchor.trim().replace(/\s+/g, " ").toLowerCase();
+export function normalizeUsername(username: string): string {
+  return username.trim().replace(/\s+/g, "").toLowerCase();
 }
 
-export function generateUid(normalizedAnchor: string): string {
-  const hash = createHash("sha256").update(normalizedAnchor).digest("hex");
+export function generateUid(normalizedUsername: string): string {
+  const hash = createHash("sha256").update(normalizedUsername).digest("hex");
   return `CLW-${hash.slice(0, 16)}`;
+}
+
+export function generateSalt(): string {
+  return randomBytes(16).toString("hex");
+}
+
+export function hashPassword(password: string, salt: string): string {
+  return createHash("sha256").update(password + salt).digest("hex");
+}
+
+export function verifyPassword(
+  password: string,
+  salt: string,
+  storedHash: string,
+): boolean {
+  return hashPassword(password, salt) === storedHash;
 }
 
 export function isValidUid(uid: string): boolean {

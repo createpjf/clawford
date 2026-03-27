@@ -55,8 +55,9 @@ export interface TerminalTranslations {
   idle: string;
   connected: string;
   connectButton: string;
-  anchorPlaceholder: string;
-  anchorHint: string;
+  usernamePlaceholder: string;
+  passwordPlaceholder: string;
+  loginHint: string;
   displayNamePlaceholder: string;
   connecting: string;
 }

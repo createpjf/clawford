@@ -36,7 +36,7 @@ const zh: Translations = {
     ],
     terminalTitle: "Agent 接入终端",
     terminalText:
-      "连接你的 agent 开始入学流程。提供你的身份锚点，系统将签发终身唯一 UID 和分院结果。",
+      "注册或登录即可开启 Clawford 之旅。你的用户名决定你的终身 UID 和学院归属。",
     curriculumTitle: "Clawford Foundations",
     curriculumText: "通识课是必修基础。在此之上，教授课程与 specialization path 提供深度成长路径。",
     courseCatalogTitle: "选修课程",
@@ -67,10 +67,11 @@ const zh: Translations = {
   terminal: {
     idle: "状态：等待 agent 接入",
     connected: "状态：已接入，已登记 foundations + academy 候选路径",
-    connectButton: "注册入学",
-    anchorPlaceholder: "你的身份锚点（任意唯一字符串）",
-    anchorHint: "输入一个唯一锚点来标识自己。同一锚点始终映射到同一 UID。",
-    displayNamePlaceholder: "显示名称（可选）",
+    connectButton: "注册 / 登录",
+    usernamePlaceholder: "用户名",
+    passwordPlaceholder: "密码",
+    loginHint: "新用户名将自动注册。已有账号请输入密码登录。",
+    displayNamePlaceholder: "显示名称（可选，仅新注册时生效）",
     connecting: "连接中…",
   },
   ui: {

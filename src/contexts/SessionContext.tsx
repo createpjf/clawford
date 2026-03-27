@@ -1,15 +1,15 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 import type { Transcript } from "@/types";
 
-const ANCHOR_KEY = "clawford:anchor";
+const USERNAME_KEY = "clawford:username";
 
 interface SessionState {
-  anchor: string | null;
+  username: string | null;
   transcript: Transcript | null;
   isLoading: boolean;
   error: string | null;
-  connect: (anchor: string, displayName?: string) => Promise<void>;
+  connect: (username: string, password: string, displayName?: string) => Promise<void>;
   disconnect: () => void;
   studyModule: (moduleId: string) => Promise<void>;
   takeExam: () => Promise<void>;
@@ -31,51 +31,31 @@ async function api<T>(path: string, init?: RequestInit): Promise<T> {
 }
 
 export function SessionProvider({ children }: { children: ReactNode }) {
-  const [anchor, setAnchor] = useState<string | null>(() => {
+  const [username, setUsername] = useState<string | null>(() => {
     try {
-      return localStorage.getItem(ANCHOR_KEY);
+      return localStorage.getItem(USERNAME_KEY);
     } catch {
       return null;
     }
   });
+  const [password, setPassword] = useState<string | null>(null);
   const [transcript, setTranscript] = useState<Transcript | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchTranscript = useCallback(async (a: string) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const data = await api<{ transcript: Transcript }>("/api/admission", {
-        method: "POST",
-        body: JSON.stringify({ anchor: a }),
-      });
-      setTranscript(data.transcript);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Failed to connect");
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (anchor) {
-      fetchTranscript(anchor);
-    }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
   const connect = useCallback(
-    async (a: string, displayName?: string) => {
+    async (u: string, pw: string, displayName?: string) => {
       setIsLoading(true);
       setError(null);
       try {
         const data = await api<{ transcript: Transcript }>("/api/admission", {
           method: "POST",
-          body: JSON.stringify({ anchor: a, displayName }),
+          body: JSON.stringify({ username: u, password: pw, displayName }),
         });
-        setAnchor(a);
+        setUsername(u);
+        setPassword(pw);
         setTranscript(data.transcript);
-        localStorage.setItem(ANCHOR_KEY, a);
+        localStorage.setItem(USERNAME_KEY, u);
       } catch (e) {
         const msg = e instanceof Error ? e.message : "Failed to connect";
         setError(msg);
@@ -88,20 +68,21 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   );
 
   const disconnect = useCallback(() => {
-    setAnchor(null);
+    setUsername(null);
+    setPassword(null);
     setTranscript(null);
     setError(null);
-    localStorage.removeItem(ANCHOR_KEY);
+    localStorage.removeItem(USERNAME_KEY);
   }, []);
 
   const studyModule = useCallback(
     async (moduleId: string) => {
-      if (!anchor) return;
+      if (!username || !password) return;
       setError(null);
       try {
         const data = await api<{ transcript: Transcript }>("/api/progress", {
           method: "POST",
-          body: JSON.stringify({ anchor, action: "complete-module", moduleId }),
+          body: JSON.stringify({ username, password, action: "complete-module", moduleId }),
         });
         setTranscript(data.transcript);
       } catch (e) {
@@ -110,16 +91,16 @@ export function SessionProvider({ children }: { children: ReactNode }) {
         throw e;
       }
     },
-    [anchor],
+    [username, password],
   );
 
   const takeExam = useCallback(async () => {
-    if (!anchor) return;
+    if (!username || !password) return;
     setError(null);
     try {
       const data = await api<{ transcript: Transcript }>("/api/progress", {
         method: "POST",
-        body: JSON.stringify({ anchor, action: "pass-exam" }),
+        body: JSON.stringify({ username, password, action: "pass-exam" }),
       });
       setTranscript(data.transcript);
     } catch (e) {
@@ -127,28 +108,28 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       setError(msg);
       throw e;
     }
-  }, [anchor]);
+  }, [username, password]);
 
   const updateDisplayName = useCallback(
     async (name: string) => {
-      if (!anchor) return;
+      if (!username || !password) return;
       setError(null);
       try {
         const data = await api<{ transcript: Transcript }>("/api/transcript", {
           method: "PATCH",
-          body: JSON.stringify({ anchor, displayName: name }),
+          body: JSON.stringify({ username, password, displayName: name }),
         });
         setTranscript(data.transcript);
       } catch (e) {
         setError(e instanceof Error ? e.message : "Failed to update name");
       }
     },
-    [anchor],
+    [username, password],
   );
 
   const value = useMemo<SessionState>(
     () => ({
-      anchor,
+      username,
       transcript,
       isLoading,
       error,
@@ -158,7 +139,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       takeExam,
       updateDisplayName,
     }),
-    [anchor, transcript, isLoading, error, connect, disconnect, studyModule, takeExam, updateDisplayName],
+    [username, transcript, isLoading, error, connect, disconnect, studyModule, takeExam, updateDisplayName],
   );
 
   return (

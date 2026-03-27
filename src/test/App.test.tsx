@@ -129,18 +129,17 @@ describe("Connect flow", () => {
     expect(screen.getByText(/等待 agent 接入/)).toBeInTheDocument();
   });
 
-  it("shows anchor input when not connected", () => {
+  it("shows username and password inputs when not connected", () => {
     renderApp();
-    expect(
-      screen.getByPlaceholderText(/身份锚点/),
-    ).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("用户名")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("密码")).toBeInTheDocument();
   });
 
-  it("connects via anchor input", async () => {
+  it("connects via username and password", async () => {
     renderApp();
-    const anchorInput = screen.getByPlaceholderText(/身份锚点/);
-    fireEvent.change(anchorInput, { target: { value: "test-agent" } });
-    fireEvent.click(screen.getByText("注册入学"));
+    fireEvent.change(screen.getByPlaceholderText("用户名"), { target: { value: "testuser" } });
+    fireEvent.change(screen.getByPlaceholderText("密码"), { target: { value: "pass123" } });
+    fireEvent.click(screen.getByText("注册 / 登录"));
 
     await waitFor(() => {
       expect(screen.getByText(/已接入/)).toBeInTheDocument();
@@ -159,9 +158,9 @@ describe("Module completion", () => {
 
   it("enables study buttons after connecting", async () => {
     renderApp();
-    const anchorInput = screen.getByPlaceholderText(/身份锚点/);
-    fireEvent.change(anchorInput, { target: { value: "test-agent" } });
-    fireEvent.click(screen.getByText("注册入学"));
+    fireEvent.change(screen.getByPlaceholderText("用户名"), { target: { value: "testuser" } });
+    fireEvent.change(screen.getByPlaceholderText("密码"), { target: { value: "pass123" } });
+    fireEvent.click(screen.getByText("注册 / 登录"));
 
     await waitFor(() => {
       const buttons = screen.getAllByText("学习模块");

@@ -57,7 +57,9 @@ async function writeBlob<T>(pathname: string, data: T): Promise<string> {
 
 export interface IdentityRecord {
   uid: string;
-  anchor: string;
+  username: string;
+  passwordHash: string;
+  salt: string;
   displayName: string;
   role: "student" | "professor";
   createdAt: string;
@@ -65,7 +67,7 @@ export interface IdentityRecord {
 }
 
 export interface IdentityRegistry {
-  anchors: Record<string, IdentityRecord>;
+  users: Record<string, IdentityRecord>;
   version: number;
 }
 
@@ -140,7 +142,10 @@ export interface StudentWallIndex {
 
 export async function getRegistry(): Promise<IdentityRegistry> {
   const data = await readBlob<IdentityRegistry>(REGISTRY_PATH);
-  return data ?? { anchors: {}, version: 1 };
+  if (data && !data.users && (data as Record<string, unknown>).anchors) {
+    return { users: (data as Record<string, unknown>).anchors as Record<string, IdentityRecord>, version: data.version };
+  }
+  return data ?? { users: {}, version: 1 };
 }
 
 export async function saveRegistry(
@@ -149,20 +154,20 @@ export async function saveRegistry(
   await writeBlob(REGISTRY_PATH, registry);
 }
 
-export async function lookupByAnchor(
-  normalizedAnchor: string,
+export async function lookupByUsername(
+  normalizedUsername: string,
 ): Promise<IdentityRecord | null> {
   const registry = await getRegistry();
-  return registry.anchors[normalizedAnchor] ?? null;
+  return registry.users[normalizedUsername] ?? null;
 }
 
 export async function registerIdentity(
-  normalizedAnchor: string,
+  normalizedUsername: string,
   record: IdentityRecord,
 ): Promise<void> {
   await withLock(REGISTRY_PATH, async () => {
     const registry = await getRegistry();
-    registry.anchors[normalizedAnchor] = record;
+    registry.users[normalizedUsername] = record;
     await saveRegistry(registry);
   });
 }

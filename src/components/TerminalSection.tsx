@@ -9,7 +9,7 @@ interface Props {
   error: string | null;
   terminalLogs: string[];
   examPassed: boolean;
-  onConnect: (anchor: string, displayName?: string) => void;
+  onConnect: (username: string, password: string, displayName?: string) => void;
   onExam: () => void;
 }
 
@@ -23,13 +23,19 @@ export default function TerminalSection({
   onConnect,
   onExam,
 }: Props) {
-  const [anchorInput, setAnchorInput] = useState("");
+  const [usernameInput, setUsernameInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState("");
   const [nameInput, setNameInput] = useState("");
 
   const handleSubmit = () => {
-    const trimmed = anchorInput.trim();
-    if (!trimmed) return;
-    onConnect(trimmed, nameInput.trim() || undefined);
+    const user = usernameInput.trim();
+    const pw = passwordInput;
+    if (!user || !pw) return;
+    onConnect(user, pw, nameInput.trim() || undefined);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") handleSubmit();
   };
 
   return (
@@ -52,16 +58,28 @@ export default function TerminalSection({
 
         {!isConnected && (
           <div className="terminal-enroll-form">
-            <p className="terminal-hint">{t.terminal.anchorHint}</p>
-            <label className="sr-only" htmlFor="anchor-input">{t.terminal.anchorPlaceholder}</label>
+            <p className="terminal-hint">{t.terminal.loginHint}</p>
+            <label className="sr-only" htmlFor="username-input">{t.terminal.usernamePlaceholder}</label>
             <input
-              id="anchor-input"
+              id="username-input"
               type="text"
               className="sorting-hat-input"
-              placeholder={t.terminal.anchorPlaceholder}
-              value={anchorInput}
-              onChange={(e) => setAnchorInput(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
+              placeholder={t.terminal.usernamePlaceholder}
+              value={usernameInput}
+              onChange={(e) => setUsernameInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+              autoComplete="username"
+            />
+            <label className="sr-only" htmlFor="password-input">{t.terminal.passwordPlaceholder}</label>
+            <input
+              id="password-input"
+              type="password"
+              className="sorting-hat-input"
+              placeholder={t.terminal.passwordPlaceholder}
+              value={passwordInput}
+              onChange={(e) => setPasswordInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+              autoComplete="current-password"
             />
             <label className="sr-only" htmlFor="display-name-input">{t.terminal.displayNamePlaceholder}</label>
             <input
@@ -71,13 +89,13 @@ export default function TerminalSection({
               placeholder={t.terminal.displayNamePlaceholder}
               value={nameInput}
               onChange={(e) => setNameInput(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
+              onKeyDown={handleKeyDown}
             />
             <button
               type="button"
               className="button button-primary"
               onClick={handleSubmit}
-              disabled={!anchorInput.trim() || isLoading}
+              disabled={!usernameInput.trim() || !passwordInput || isLoading}
             >
               {isLoading ? (
                 <Loader2 size={18} className="spin" />

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
-  normalizeAnchor,
+  normalizeUsername,
   generateUid,
   sortIntoHouse,
   isValidUid,
@@ -15,41 +15,41 @@ const HOUSE_ORDER = [
 ] as const;
 
 describe("identity generation", () => {
-  it("same anchor always produces the same UID", () => {
-    const a = generateUid(normalizeAnchor("my-agent-anchor"));
-    const b = generateUid(normalizeAnchor("my-agent-anchor"));
+  it("same username always produces the same UID", () => {
+    const a = generateUid(normalizeUsername("my-agent"));
+    const b = generateUid(normalizeUsername("my-agent"));
     expect(a).toBe(b);
   });
 
-  it("different anchors produce different UIDs", () => {
-    const a = generateUid(normalizeAnchor("agent-a"));
-    const b = generateUid(normalizeAnchor("agent-b"));
+  it("different usernames produce different UIDs", () => {
+    const a = generateUid(normalizeUsername("agent-a"));
+    const b = generateUid(normalizeUsername("agent-b"));
     expect(a).not.toBe(b);
   });
 
-  it("anchor normalization: trim + lowercase + whitespace collapse", () => {
-    const a = generateUid(normalizeAnchor("  My  Agent  "));
-    const b = generateUid(normalizeAnchor("my agent"));
+  it("username normalization: trim + lowercase + whitespace strip", () => {
+    const a = generateUid(normalizeUsername("  My  Agent  "));
+    const b = generateUid(normalizeUsername("myagent"));
     expect(a).toBe(b);
   });
 
   it("generated UIDs match the 16-hex-char pattern", () => {
-    const uid = generateUid(normalizeAnchor("test"));
+    const uid = generateUid(normalizeUsername("test"));
     expect(uid).toMatch(UID_PATTERN);
     expect(isValidUid(uid)).toBe(true);
   });
 
   it("sortIntoHouse is deterministic for the same UID", () => {
-    const uid = generateUid(normalizeAnchor("determinism-test"));
+    const uid = generateUid(normalizeUsername("determinism-test"));
     const house1 = sortIntoHouse(uid);
     const house2 = sortIntoHouse(uid);
     expect(house1).toBe(house2);
   });
 
   it("sortIntoHouse always returns a valid house", () => {
-    const testAnchors = ["alpha", "beta", "gamma", "delta"];
-    for (const anchor of testAnchors) {
-      const uid = generateUid(normalizeAnchor(anchor));
+    const testNames = ["alpha", "beta", "gamma", "delta"];
+    for (const name of testNames) {
+      const uid = generateUid(normalizeUsername(name));
       const house = sortIntoHouse(uid);
       expect(HOUSE_ORDER).toContain(house);
     }
@@ -58,7 +58,7 @@ describe("identity generation", () => {
   it("different UIDs can map to different houses", () => {
     const houses = new Set<string>();
     for (let i = 0; i < 100; i++) {
-      const uid = generateUid(normalizeAnchor(`test-anchor-${i}`));
+      const uid = generateUid(normalizeUsername(`test-user-${i}`));
       houses.add(sortIntoHouse(uid));
     }
     expect(houses.size).toBeGreaterThan(1);
