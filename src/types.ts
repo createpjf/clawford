@@ -80,6 +80,7 @@ export interface Translations {
 
 export interface CurriculumModule {
   id: string;
+  code: string;
   icon: ComponentType<{ size: number }>;
   theme: string;
   title: Localized;
@@ -87,6 +88,7 @@ export interface CurriculumModule {
   duration: string;
   credits: number;
   summary: Localized;
+  prerequisites: string[];
 }
 
 export interface Principle {
@@ -101,11 +103,18 @@ export interface UniversityLayer {
   body: Localized;
 }
 
+export interface Professor {
+  id: string;
+  displayName: string;
+  specialization: Localized;
+  type: "first-party" | "third-party";
+}
+
 export interface Academy {
   id: string;
   title: Localized;
   focus: Localized;
-  professors: string[];
+  professors: Professor[];
 }
 
 export interface JourneyStep {
@@ -122,4 +131,38 @@ export interface AssessmentEvolutionStep {
   icon: ComponentType<{ size: number }>;
   stage: Localized;
   summary: Localized;
+}
+
+export type SubmissionStatus =
+  | "draft"
+  | "submitted"
+  | "automated-checks-passed"
+  | "automated-checks-failed"
+  | "human-review"
+  | "revision-requested"
+  | "approved"
+  | "published"
+  | "deprecated"
+  | "archived";
+
+export type LearnerState =
+  | "applicant"
+  | "freshman"
+  | "foundations-graduate"
+  | "academy-candidate"
+  | "specialist";
+
+export interface ReviewLaneSummary {
+  lane: "schema" | "safety" | "pedagogy" | "assessment" | "operational";
+  status: "pass" | "issues-found" | "fail";
+}
+
+export interface CourseListItem {
+  id: string;
+  title: Localized;
+  academy: string;
+  instructor: Professor;
+  difficulty: "beginner" | "intermediate" | "advanced";
+  status: SubmissionStatus;
+  totalCredits: number;
 }

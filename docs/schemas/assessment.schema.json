@@ -1,0 +1,227 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://clawford.dev/schemas/assessment.schema.json",
+  "title": "Clawford Assessment",
+  "description": "Schema for assessment inputs and outputs used in Clawford evaluation. Compatible with the three-layer assessment model: practice checks, scenario exams, and capstones.",
+  "type": "object",
+  "properties": {
+    "input": { "$ref": "#/$defs/AssessmentInput" },
+    "output": { "$ref": "#/$defs/AssessmentOutput" },
+    "rubric": { "$ref": "#/$defs/Rubric" }
+  },
+  "$defs": {
+    "AssessmentInput": {
+      "type": "object",
+      "required": ["assessmentId", "learnerId", "track", "scenarioPrompt"],
+      "properties": {
+        "assessmentId": {
+          "type": "string",
+          "description": "Unique identifier for this assessment instance."
+        },
+        "learnerId": {
+          "type": "string",
+          "description": "Identifier for the learner being assessed."
+        },
+        "track": {
+          "type": "string",
+          "description": "Course or track identifier (e.g. 'foundations', 'safety-verification')."
+        },
+        "scenarioPrompt": {
+          "type": "string",
+          "description": "The scenario or question presented to the learner."
+        },
+        "learnerResponse": {
+          "type": "string",
+          "description": "The learner's answer or deliverable."
+        },
+        "evidence": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/EvidenceItem" },
+          "description": "Supporting evidence submitted by the learner."
+        },
+        "metadata": {
+          "type": "object",
+          "properties": {
+            "lang": { "type": "string", "default": "en" },
+            "attempt": { "type": "integer", "minimum": 1 },
+            "timestamp": { "type": "string", "format": "date-time" },
+            "courseVersion": { "type": "string" },
+            "assessmentType": {
+              "type": "string",
+              "enum": ["practice-check", "scenario-exam", "capstone", "practicum"]
+            }
+          }
+        }
+      }
+    },
+    "AssessmentOutput": {
+      "type": "object",
+      "required": ["assessmentId", "totalScore", "maxScore", "categories", "decision"],
+      "properties": {
+        "assessmentId": {
+          "type": "string"
+        },
+        "totalScore": {
+          "type": "number",
+          "minimum": 0
+        },
+        "maxScore": {
+          "type": "number",
+          "minimum": 1
+        },
+        "categories": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/CategoryScore" }
+        },
+        "decision": {
+          "type": "string",
+          "enum": ["pass", "revisit", "fail"],
+          "description": "Overall assessment decision."
+        },
+        "feedback": {
+          "$ref": "#/$defs/Feedback"
+        },
+        "gradedBy": {
+          "type": "string",
+          "enum": ["human", "automated", "hybrid"],
+          "description": "Who performed the grading."
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "CategoryScore": {
+      "type": "object",
+      "required": ["name", "score", "max"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Rubric category name, aligned with rubric.md."
+        },
+        "score": {
+          "type": "number",
+          "minimum": 0
+        },
+        "max": {
+          "type": "number",
+          "minimum": 1
+        },
+        "moduleMapping": {
+          "type": "string",
+          "description": "Module code this category maps to (e.g. 'FND-102')."
+        },
+        "notes": {
+          "type": "string",
+          "description": "Grader notes for this category."
+        }
+      }
+    },
+    "Feedback": {
+      "type": "object",
+      "properties": {
+        "strengths": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "gaps": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "recommendedModules": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Module codes to revisit for remediation."
+        },
+        "overallComments": {
+          "type": "string"
+        }
+      }
+    },
+    "EvidenceItem": {
+      "type": "object",
+      "required": ["type", "reference"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["test", "log", "diff", "trace", "user-feedback", "screenshot", "benchmark", "other"],
+          "description": "Kind of evidence."
+        },
+        "reference": {
+          "type": "string",
+          "description": "Path, URL, or inline content of the evidence."
+        },
+        "description": {
+          "type": "string",
+          "description": "Brief explanation of what this evidence demonstrates."
+        }
+      }
+    },
+    "Rubric": {
+      "type": "object",
+      "required": ["id", "categories", "passingThreshold"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique rubric identifier."
+        },
+        "courseId": {
+          "type": "string",
+          "description": "Course this rubric belongs to."
+        },
+        "categories": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/RubricCategory" }
+        },
+        "passingThreshold": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Minimum overall score fraction to pass."
+        },
+        "singleCategoryMinimum": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Minimum score fraction for any single category to avoid auto-fail."
+        }
+      }
+    },
+    "RubricCategory": {
+      "type": "object",
+      "required": ["name", "maxScore", "checks"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Category name."
+        },
+        "moduleMapping": {
+          "type": "string",
+          "description": "Module code this category assesses."
+        },
+        "maxScore": {
+          "type": "number",
+          "minimum": 1
+        },
+        "weight": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Optional weight for percentage-based grading."
+        },
+        "checks": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Specific behaviors or criteria to evaluate."
+        },
+        "scoringGuide": {
+          "type": "object",
+          "description": "Performance level descriptors for each score value.",
+          "additionalProperties": { "type": "string" }
+        }
+      }
+    }
+  }
+}

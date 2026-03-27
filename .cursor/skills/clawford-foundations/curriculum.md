@@ -1,98 +1,153 @@
 # Clawford Foundations Curriculum
 
-This course is for a beginner lobster agent that needs practical operating habits fast.
+This course is the mandatory general education for every lobster agent entering Clawford. It teaches practical operating habits through eight modules that build on each other.
 
 ## Learning Goal
 
 By the end of the course, the learner should know how to:
 
-- enter work through a skill and clarify scope
-- decide what belongs in memory, lessons, or neither
-- verify work before claiming completion
-- use multiple agents to reduce mistakes on medium-complexity tasks
-- pass a scenario-based exam with evidence-backed reasoning
+- frame tasks accurately and control scope
+- manage memory and lessons as durable assets with evidence gates
+- run verification loops before claiming completion
+- coordinate multiple agents safely on medium-complexity tasks
+- use tools within safe boundaries and handle sensitive data
+- recover from failures systematically and escalate appropriately
+- communicate clearly with concise updates, documented assumptions, and quality traces
+- integrate all of the above in a realistic multi-step practicum
 
-## Module 1: Skill Onboarding And Scope Control
+## Curriculum Map
 
-Teach the learner to:
+| Code | Module | Prereqs | Credits |
+|---|---|---|---|
+| FND-101 | Scope And Task Framing | None | 2 |
+| FND-102 | Memory And Lessons Hygiene | FND-101 | 4 |
+| FND-103 | Verification Loops | FND-101 | 3 |
+| FND-104 | Multi-Agent Collaboration | FND-101, FND-103 | 5 |
+| FND-105 | Tool Safety And Execution Boundaries | FND-101, FND-103 | 3 |
+| FND-106 | Failure Recovery And Escalation | FND-103, FND-105 | 3 |
+| FND-107 | Communication And Reporting | FND-101 | 2 |
+| FND-108 | Final Integrated Practicum | All above | 5 |
 
-- clarify the user's actual request
-- gather enough context before committing to a plan
-- separate research mode from execution mode
-- avoid doing hidden extra work
+Total credits: 27
 
-Pass signal:
+## Module Details
 
-- the learner can restate the task, constraints, and acceptance criteria
+### FND-101: Scope And Task Framing
 
-## Module 2: Memory And Lessons Discipline
+Teach the learner to clarify the user's actual request, gather context before committing to a plan, separate research from execution, and avoid hidden scope expansion.
 
-Teach the learner to:
+Source: [`modules/fnd-101-scope-and-task-framing.md`](modules/fnd-101-scope-and-task-framing.md)
 
-- separate short-term working context from durable memory
-- write memories only when they help future tasks
-- write lessons only when supported by evidence
-- invalidate old lessons when new evidence supersedes them
+Pass signal: the learner can restate a task's objective, constraints, and acceptance criteria accurately.
 
-Pass signal:
+### FND-102: Memory And Lessons Hygiene
 
-- the learner correctly classifies examples as memory, lesson, both, or neither
+Teach the learner to classify information into four buckets (working context, memory, lesson, discard), apply the evidence gate before persisting lessons, and handle contradictions through supersession.
 
-## Module 3: Verification Loops
+Source: [`modules/fnd-102-memory-and-lessons.md`](modules/fnd-102-memory-and-lessons.md)
 
-Teach the learner to:
+Deepening reference: [`memory-and-lessons.md`](memory-and-lessons.md)
 
-- define checks before implementation
-- run tests, logs, lint, previews, or other verification steps
-- replan when verification fails
-- stop only after proof, not after intuition
+Pass signal: the learner correctly classifies examples and cites the evidence rule.
 
-Pass signal:
+### FND-103: Verification Loops
 
-- the learner proposes a concrete `plan -> act -> verify -> replan` loop
+Teach the learner to define checks before implementation, run plan-act-verify-replan cycles, and never claim success without observable proof.
 
-## Module 4: Multi-Agent Collaboration
+Source: [`modules/fnd-103-verification-loops.md`](modules/fnd-103-verification-loops.md)
 
-Teach the learner to:
+Pass signal: the learner proposes a concrete verification loop with checks, stop conditions, and replan triggers.
 
-- use a default triangle of researcher, builder, and verifier
-- keep each agent's role narrow
-- hand off context in compact, structured form
-- avoid infinite chatter and duplicate work
+### FND-104: Multi-Agent Collaboration
 
-Pass signal:
+Teach the learner to use a default researcher-builder-verifier triangle, keep each agent's role narrow, hand off context in compact structured form, and avoid coordination anti-patterns.
 
-- the learner can assign 3+ agent roles to a realistic task and explain why each role exists
+Source: [`modules/fnd-104-multi-agent-collaboration.md`](modules/fnd-104-multi-agent-collaboration.md)
 
-## Module 5: Exam And Reflection
+Deepening reference: [`multi-agent-playbook.md`](multi-agent-playbook.md)
 
-Teach the learner to:
+Pass signal: the learner can assign 3+ agent roles to a realistic task with structured handoffs and stop conditions.
 
-- answer scenario questions clearly
-- justify persistent lessons with evidence
-- reflect without inventing unsupported conclusions
+### FND-105: Tool Safety And Execution Boundaries
 
-Pass signal:
+Teach the learner to classify tool operations by risk level, prefer reversible actions, handle secrets and sensitive data appropriately, and know when to refuse or escalate dangerous operations.
 
-- the learner passes the rubric in `rubric.md`
+Source: [`modules/fnd-105-tool-safety.md`](modules/fnd-105-tool-safety.md)
 
-## Suggested Delivery
+Pass signal: the learner classifies operations by risk, identifies escalation triggers, and demonstrates safe handling of secrets and irreversible operations.
 
-For a fast session:
+### FND-106: Failure Recovery And Escalation
 
-1. Teach modules 1-4 in sequence
-2. Give one example after each module
-3. Finish with the exam
+Teach the learner to stop on unexpected failure, diagnose before fixing, maintain rollback-safe behavior, escalate with evidence when stuck, and acknowledge uncertainty honestly.
 
-For a repair session:
+Source: [`modules/fnd-106-failure-recovery.md`](modules/fnd-106-failure-recovery.md)
 
-1. Identify the learner's failure mode
-2. Teach only the matching module
-3. Re-test with one exam scenario
+Pass signal: the learner demonstrates systematic diagnosis, creates recovery points, and escalates with evidence.
 
-## V2 Bridge
+### FND-107: Communication And Reporting
 
-After passing foundations, route the learner into one specialization path:
+Teach the learner to provide concise progress updates, surface assumptions, document decisions with trade-offs, and write commit messages that explain purpose.
+
+Source: [`modules/fnd-107-communication-and-reporting.md`](modules/fnd-107-communication-and-reporting.md)
+
+Pass signal: the learner produces clear incremental updates with explicit assumptions and useful commit messages.
+
+### FND-108: Final Integrated Practicum
+
+A simulated multi-step execution task that tests all seven preceding modules simultaneously. Includes embedded traps for scope creep, speculative lessons, and unsafe operations.
+
+Source: [`modules/fnd-108-integrated-practicum.md`](modules/fnd-108-integrated-practicum.md)
+
+Pass signal: the learner produces all six practicum deliverables at passing quality across all rubric categories.
+
+## Standard Teaching Loop
+
+Every module follows the same pedagogical structure:
+
+1. Learning objective
+2. Anti-pattern gallery
+3. Core rules
+4. Worked example
+5. Practice drill
+6. Reflection prompt
+7. Remediation path
+8. Pass signal
+
+## Delivery Modes
+
+### Full Session (recommended for new agents)
+
+1. Teach modules FND-101 through FND-107 in sequence.
+2. Give one practice drill and one worked example per module.
+3. Finish with FND-108 integrated practicum.
+4. Grade with the rubric.
+
+### Repair Session (for agents with identified weaknesses)
+
+1. Identify the learner's failure mode.
+2. Route to the matching module.
+3. Teach only that module with its practice drill.
+4. Re-test with one exam scenario focused on the weak area.
+
+### Accelerated Session (for experienced agents)
+
+1. Administer the exam directly.
+2. Grade with the rubric.
+3. If the agent passes all categories, grant graduation.
+4. If any category fails, route to the matching module for remediation.
+
+## Graduation Requirements
+
+To graduate from Clawford Foundations:
+
+- Complete all eight modules (or pass the accelerated exam).
+- Score 70% or above overall on the practicum or exam.
+- Score 50% or above in every individual rubric category.
+- Produce a post-task reflection with at least one evidence-backed lesson.
+
+## Post-Graduation Path
+
+After passing foundations, route the learner into one specialization academy:
 
 - Systems And Tooling Academy
 - Memory And Reflection Academy
@@ -100,4 +155,4 @@ After passing foundations, route the learner into one specialization path:
 - Safety And Verification Academy
 - Deployment And Operations Academy
 
-Use `v2-specialization-paths.md` for path selection and progression rules.
+Use [`v2-specialization-paths.md`](v2-specialization-paths.md) for path selection and progression rules.

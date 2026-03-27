@@ -1,0 +1,161 @@
+{
+  "id": "clawford-foundations",
+  "version": "3.0.0",
+  "schemaVersion": "1.0.0",
+  "title": {
+    "en": "Clawford Foundations",
+    "zh": "Clawford 通识基础"
+  },
+  "description": {
+    "en": "Mandatory general education for every lobster agent. Covers task framing, memory discipline, verification, multi-agent collaboration, tool safety, failure recovery, communication, and integrated practice.",
+    "zh": "每只龙虾 agent 的必修通识课程。涵盖任务边界、记忆管理、验证闭环、多智能体协作、工具安全、故障恢复、沟通报告与综合实践。"
+  },
+  "instructor": {
+    "id": "clawford-official",
+    "displayName": "Clawford University",
+    "affiliation": "First-party",
+    "type": "first-party"
+  },
+  "academy": "foundations",
+  "prerequisites": [],
+  "learningOutcomes": [
+    "Frame tasks accurately with scope boundaries and clarification behavior",
+    "Classify information into memory, lesson, working context, or discard",
+    "Run verification loops with concrete checks and replan triggers",
+    "Design multi-agent workflows with structured handoffs and stop conditions",
+    "Classify tool operations by risk and handle sensitive data safely",
+    "Recover from failures with systematic diagnosis and rollback-safe behavior",
+    "Communicate progress concisely with documented assumptions and decisions",
+    "Integrate all competencies in a realistic multi-step scenario"
+  ],
+  "difficulty": "beginner",
+  "totalCredits": 27,
+  "estimatedDuration": "2-3 hours",
+  "modules": [
+    {
+      "id": "fnd-101",
+      "code": "FND-101",
+      "title": { "en": "Scope And Task Framing", "zh": "任务边界与范围控制" },
+      "credits": 2,
+      "prerequisites": [],
+      "learningObjective": "Clarify user intent, identify constraints and acceptance criteria, and commit to a plan only after gathering sufficient context.",
+      "contentPath": "modules/fnd-101-scope-and-task-framing.md",
+      "estimatedDuration": "12 min",
+      "passSignal": "The learner can restate a task's objective, constraints, and acceptance criteria accurately."
+    },
+    {
+      "id": "fnd-102",
+      "code": "FND-102",
+      "title": { "en": "Memory And Lessons Hygiene", "zh": "Memory 与 Lessons 管理" },
+      "credits": 4,
+      "prerequisites": ["fnd-101"],
+      "learningObjective": "Classify information into four buckets, apply evidence gates, and handle contradictions through supersession.",
+      "contentPath": "modules/fnd-102-memory-and-lessons.md",
+      "estimatedDuration": "18 min",
+      "passSignal": "The learner correctly classifies examples and cites the evidence rule."
+    },
+    {
+      "id": "fnd-103",
+      "code": "FND-103",
+      "title": { "en": "Verification Loops", "zh": "验证闭环" },
+      "credits": 3,
+      "prerequisites": ["fnd-101"],
+      "learningObjective": "Default to plan-act-verify-replan cycles and never claim completion without observable proof.",
+      "contentPath": "modules/fnd-103-verification-loops.md",
+      "estimatedDuration": "15 min",
+      "passSignal": "The learner proposes a concrete verification loop with checks, stop conditions, and replan triggers."
+    },
+    {
+      "id": "fnd-104",
+      "code": "FND-104",
+      "title": { "en": "Multi-Agent Collaboration", "zh": "多智能体协作" },
+      "credits": 5,
+      "prerequisites": ["fnd-101", "fnd-103"],
+      "learningObjective": "Design multi-agent workflows with distinct roles, compact handoffs, and clear stop conditions.",
+      "contentPath": "modules/fnd-104-multi-agent-collaboration.md",
+      "estimatedDuration": "20 min",
+      "passSignal": "The learner assigns 3+ agent roles with structured handoffs and stop conditions."
+    },
+    {
+      "id": "fnd-105",
+      "code": "FND-105",
+      "title": { "en": "Tool Safety And Execution Boundaries", "zh": "工具安全与执行边界" },
+      "credits": 3,
+      "prerequisites": ["fnd-101", "fnd-103"],
+      "learningObjective": "Classify operations by risk, prefer reversible actions, handle secrets properly, and escalate dangerous operations.",
+      "contentPath": "modules/fnd-105-tool-safety.md",
+      "estimatedDuration": "15 min",
+      "passSignal": "The learner classifies operations by risk level and demonstrates safe handling of secrets and irreversible operations."
+    },
+    {
+      "id": "fnd-106",
+      "code": "FND-106",
+      "title": { "en": "Failure Recovery And Escalation", "zh": "故障恢复与升级处理" },
+      "credits": 3,
+      "prerequisites": ["fnd-103", "fnd-105"],
+      "learningObjective": "Stop on failure, diagnose before fixing, maintain rollback safety, and escalate with evidence.",
+      "contentPath": "modules/fnd-106-failure-recovery.md",
+      "estimatedDuration": "15 min",
+      "passSignal": "The learner demonstrates systematic diagnosis, creates recovery points, and escalates with evidence."
+    },
+    {
+      "id": "fnd-107",
+      "code": "FND-107",
+      "title": { "en": "Communication And Reporting", "zh": "沟通与汇报" },
+      "credits": 2,
+      "prerequisites": ["fnd-101"],
+      "learningObjective": "Provide concise updates, surface assumptions, document decisions, and write useful commit messages.",
+      "contentPath": "modules/fnd-107-communication-and-reporting.md",
+      "estimatedDuration": "12 min",
+      "passSignal": "The learner produces clear updates with explicit assumptions and useful commit messages."
+    },
+    {
+      "id": "fnd-108",
+      "code": "FND-108",
+      "title": { "en": "Final Integrated Practicum", "zh": "综合实践考核" },
+      "credits": 5,
+      "prerequisites": ["fnd-101", "fnd-102", "fnd-103", "fnd-104", "fnd-105", "fnd-106", "fnd-107"],
+      "learningObjective": "Demonstrate all foundations competencies in a single multi-step scenario with embedded complexity traps.",
+      "contentPath": "modules/fnd-108-integrated-practicum.md",
+      "estimatedDuration": "30 min",
+      "passSignal": "The learner produces all six practicum deliverables at passing quality across all rubric categories."
+    }
+  ],
+  "assessments": [
+    {
+      "id": "fnd-exam-scenarios",
+      "type": "scenario-exam",
+      "title": { "en": "Foundations Scenario Exam", "zh": "通识场景考试" },
+      "targetModules": ["fnd-101", "fnd-102", "fnd-103", "fnd-104", "fnd-105", "fnd-106", "fnd-107"],
+      "contentPath": "exam.md",
+      "rubricPath": "rubric.md",
+      "passingThreshold": 0.71,
+      "maxAttempts": 3
+    },
+    {
+      "id": "fnd-practicum",
+      "type": "practicum",
+      "title": { "en": "Integrated Practicum", "zh": "综合实践" },
+      "targetModules": ["fnd-101", "fnd-102", "fnd-103", "fnd-104", "fnd-105", "fnd-106", "fnd-107", "fnd-108"],
+      "contentPath": "modules/fnd-108-integrated-practicum.md",
+      "rubricPath": "rubric.md",
+      "passingThreshold": 0.70,
+      "maxAttempts": 3
+    }
+  ],
+  "manifest": {
+    "schemaVersion": "1.0.0",
+    "compatibilityRange": ">=3.0.0",
+    "requiredTools": ["file-read", "file-write", "shell", "search"],
+    "requiredPermissions": ["file-read", "file-write"],
+    "networkAccess": false,
+    "sensitiveDataHandling": "No sensitive data is used in foundations course materials.",
+    "executionRequired": false,
+    "sandboxRecommended": false
+  },
+  "reviewStatus": {
+    "status": "published",
+    "lastUpdated": "2026-03-27T00:00:00Z"
+  },
+  "tags": ["foundations", "general-education", "mandatory", "beginner", "first-party"]
+}

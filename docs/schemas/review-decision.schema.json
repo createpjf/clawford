@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://clawford.dev/schemas/review-decision.schema.json",
+  "title": "Clawford Review Decision",
+  "description": "Schema for structured review decisions on course package submissions. Used by first-party reviewers to approve, request changes, or reject third-party course submissions.",
+  "type": "object",
+  "required": ["reviewId", "submissionId", "courseId", "courseVersion", "decision", "lanes", "reviewer", "timestamp"],
+  "properties": {
+    "reviewId": {
+      "type": "string",
+      "description": "Unique identifier for this review."
+    },
+    "submissionId": {
+      "type": "string",
+      "description": "Identifier for the submission being reviewed."
+    },
+    "courseId": {
+      "type": "string",
+      "description": "Course package ID being reviewed."
+    },
+    "courseVersion": {
+      "type": "string",
+      "description": "Semantic version of the course package under review."
+    },
+    "decision": {
+      "type": "string",
+      "enum": ["approve", "request-changes", "reject"],
+      "description": "Overall review decision."
+    },
+    "lanes": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/ReviewLane" },
+      "description": "Detailed findings for each review lane."
+    },
+    "blockingFindings": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/Finding" },
+      "description": "Issues that must be resolved before approval."
+    },
+    "nonBlockingRecommendations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/Finding" },
+      "description": "Suggestions that do not block approval."
+    },
+    "reviewer": {
+      "$ref": "#/$defs/Reviewer"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Free-form reviewer notes."
+    },
+    "previousReviewId": {
+      "type": "string",
+      "description": "Reference to the previous review if this is a re-review."
+    }
+  },
+  "$defs": {
+    "ReviewLane": {
+      "type": "object",
+      "required": ["lane", "status"],
+      "properties": {
+        "lane": {
+          "type": "string",
+          "enum": ["schema", "safety", "pedagogy", "assessment", "operational"],
+          "description": "Which review lane this covers."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pass", "issues-found", "fail"],
+          "description": "Lane outcome."
+        },
+        "findings": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Finding" }
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "Finding": {
+      "type": "object",
+      "required": ["severity", "description"],
+      "properties": {
+        "severity": {
+          "type": "string",
+          "enum": ["critical", "major", "minor", "info"],
+          "description": "How severe this finding is."
+        },
+        "description": {
+          "type": "string",
+          "description": "What the issue is."
+        },
+        "location": {
+          "type": "string",
+          "description": "File path or section reference where the issue was found."
+        },
+        "suggestedFix": {
+          "type": "string",
+          "description": "How to resolve this finding."
+        },
+        "lane": {
+          "type": "string",
+          "enum": ["schema", "safety", "pedagogy", "assessment", "operational"]
+        }
+      }
+    },
+    "Reviewer": {
+      "type": "object",
+      "required": ["id", "type"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["automated", "human", "hybrid"],
+          "description": "Whether the review was automated, human, or a combination."
+        }
+      }
+    }
+  }
+}

@@ -22,9 +22,9 @@ export default function AcademiesSection({ lang, t }: Props) {
             <p>{academy.focus[lang]}</p>
             <div className="professor-list">
               {academy.professors.map((professor) => (
-                <span key={professor} className="badge-chip">
+                <span key={professor.id} className="badge-chip" title={professor.specialization[lang]}>
                   <Bot size={12} />
-                  {professor}
+                  {professor.displayName}
                 </span>
               ))}
             </div>

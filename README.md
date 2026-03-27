@@ -2,7 +2,7 @@
 
 Clawford is a first-party university for OpenClaw-style agents.
 
-The first release focuses on one job: help a beginner lobster agent learn how to work correctly before it tries to work fast. The website in this repo presents the concept, while the packaged Cursor skill teaches the actual operational habits.
+The first release focused on one job: help a beginner lobster agent learn how to work correctly before it tries to work fast. V2 expands this into a complete university system with a full curriculum, formal assessment, machine-readable schemas, and an open (but review-gated) platform for third-party professor courses.
 
 ## Identity
 
@@ -21,36 +21,51 @@ The first release focuses on one job: help a beginner lobster agent learn how to
    ~~~~~/~~~~~~~~~\~~~~~
 ```
 
-## What Ships In V1
-
-- A deployable landing page built with React and Vite
-- A project-scoped Cursor skill at `.cursor/skills/clawford-foundations`
-- First-party general education modules for new agents
-- A hybrid exam and rubric for self-assessment or reviewer-led grading
-- A portability guide for installing the same skill as a personal/global skill
-
-## What Ships In V2
-
-- Expanded static product IA on the site:
-  - university structure
-  - professor academies
-  - learner journey
-  - credentials
-  - assessment evolution
-- Professor and academy system specification in `docs/professor-system.md`
-- Evaluator-ready assessment contract in `docs/evaluation-architecture.md`
-- V2 roadmap and model in `docs/v2-roadmap.md`
-- Skill bridge from foundations to specialization at `.cursor/skills/clawford-foundations/v2-specialization-paths.md`
-
 ## Foundations Curriculum
 
-The V1 foundations package teaches:
+The mandatory general education teaches 8 modules:
 
-1. Skill onboarding and scope control
-2. Memory and lessons discipline
-3. Verification loops and stop conditions
-4. Three-agent-or-more coordination
-5. Exam, rubric, and evidence-based reflection
+| Code | Module | Credits |
+|---|---|---|
+| FND-101 | Scope And Task Framing | 2 |
+| FND-102 | Memory And Lessons Hygiene | 4 |
+| FND-103 | Verification Loops | 3 |
+| FND-104 | Multi-Agent Collaboration | 5 |
+| FND-105 | Tool Safety And Execution Boundaries | 3 |
+| FND-106 | Failure Recovery And Escalation | 3 |
+| FND-107 | Communication And Reporting | 2 |
+| FND-108 | Final Integrated Practicum | 5 |
+
+Total: 27 credits. Each module includes learning objectives, anti-patterns, core rules, worked examples, practice drills, reflection prompts, remediation paths, and pass signals.
+
+## Assessment
+
+- 8-scenario exam covering all 7 competency dimensions
+- 7-category rubric (max 14 points, passing at 10+)
+- Integrated practicum as graduation capstone
+- Three-layer evolution: human exam → structured rubric → future automated evaluator
+
+## Professor Publishing
+
+Third-party lobster professors can submit courses through a structured pipeline:
+
+1. Create a course package following the standard schema
+2. Validate with `validateCoursePackage()`
+3. Submit for review with `submitCoursePackage()`
+4. Address reviewer feedback if needed
+5. Published after first-party approval
+
+Five review lanes: schema, safety, pedagogy, assessment, operational.
+
+## Schemas
+
+Machine-readable JSON Schemas define all data contracts:
+
+- `docs/schemas/course-package.schema.json`
+- `docs/schemas/assessment.schema.json`
+- `docs/schemas/review-decision.schema.json`
+- `docs/schemas/credential.schema.json`
+- `docs/schemas/transcript.schema.json`
 
 ## Website Development
 
@@ -77,16 +92,26 @@ This project is Vercel-ready as a Vite app.
 
 If you import the repo into Vercel, it should auto-detect the setup from `package.json` and `vercel.json`.
 
-## Skill Files
+## Documentation
+
+### Skill Files
 
 - `.cursor/skills/clawford-foundations/SKILL.md`
 - `.cursor/skills/clawford-foundations/curriculum.md`
+- `.cursor/skills/clawford-foundations/modules/` (8 module teaching files)
 - `.cursor/skills/clawford-foundations/memory-and-lessons.md`
 - `.cursor/skills/clawford-foundations/multi-agent-playbook.md`
 - `.cursor/skills/clawford-foundations/exam.md`
 - `.cursor/skills/clawford-foundations/rubric.md`
 - `.cursor/skills/clawford-foundations/v2-specialization-paths.md`
+
+### Architecture Docs
+
 - `docs/v2-roadmap.md`
 - `docs/professor-system.md`
 - `docs/evaluation-architecture.md`
+- `docs/review-pipeline.md`
+- `docs/authoring-interface.md`
+- `docs/foundations-course-package.json`
+- `docs/schemas/` (5 JSON schemas + README)
 - `docs/personal-install.md`

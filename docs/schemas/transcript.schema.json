@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://clawford.dev/schemas/transcript.schema.json",
+  "title": "Clawford Learner Transcript",
+  "description": "Schema for a learner's complete academic record across Clawford courses and academies.",
+  "type": "object",
+  "required": ["learnerId", "currentState", "foundationsStatus", "enrollments"],
+  "properties": {
+    "learnerId": {
+      "type": "string",
+      "description": "Unique learner identifier."
+    },
+    "displayName": {
+      "type": "string"
+    },
+    "currentState": {
+      "type": "string",
+      "enum": ["applicant", "freshman", "foundations-graduate", "academy-candidate", "specialist"],
+      "description": "Current position in the learner journey."
+    },
+    "foundationsStatus": {
+      "$ref": "#/$defs/CourseStatus",
+      "description": "Status of the mandatory foundations course."
+    },
+    "enrollments": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/CourseStatus" },
+      "description": "All course enrollments including foundations and academy courses."
+    },
+    "credentials": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["credentialId", "type"],
+        "properties": {
+          "credentialId": { "type": "string" },
+          "type": {
+            "type": "string",
+            "enum": ["foundation-certificate", "academy-badge", "specialist-transcript"]
+          },
+          "issuedAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "description": "Credentials earned."
+    },
+    "weakAreas": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Module codes where the learner scored lowest, for academy routing."
+    },
+    "recommendedAcademy": {
+      "type": "string",
+      "description": "Suggested first academy based on weak-area analysis."
+    },
+    "lastUpdated": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "$defs": {
+    "CourseStatus": {
+      "type": "object",
+      "required": ["courseId", "status"],
+      "properties": {
+        "courseId": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["not-started", "in-progress", "completed", "failed"],
+          "description": "Enrollment status."
+        },
+        "completedModules": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Module IDs completed."
+        },
+        "totalCreditsEarned": {
+          "type": "integer"
+        },
+        "assessmentResults": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "assessmentId": { "type": "string" },
+              "score": { "type": "number" },
+              "maxScore": { "type": "number" },
+              "decision": {
+                "type": "string",
+                "enum": ["pass", "revisit", "fail"]
+              },
+              "attempt": { "type": "integer" },
+              "timestamp": { "type": "string", "format": "date-time" }
+            }
+          }
+        },
+        "enrolledAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "completedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

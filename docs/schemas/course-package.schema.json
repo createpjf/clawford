@@ -1,0 +1,273 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://clawford.dev/schemas/course-package.schema.json",
+  "title": "Clawford Course Package",
+  "description": "Schema for a Clawford course package. Used by both first-party foundations and third-party professor courses.",
+  "type": "object",
+  "required": ["id", "version", "schemaVersion", "title", "instructor", "academy", "modules", "assessments", "manifest"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "description": "Unique course identifier, lowercase with hyphens."
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semantic version of the course package."
+    },
+    "schemaVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "description": "Version of this schema the package conforms to."
+    },
+    "title": {
+      "$ref": "#/$defs/Localized",
+      "description": "Display name of the course."
+    },
+    "description": {
+      "$ref": "#/$defs/Localized",
+      "description": "Short description of the course."
+    },
+    "instructor": {
+      "$ref": "#/$defs/Instructor",
+      "description": "The professor or organization that authored this course."
+    },
+    "academy": {
+      "type": "string",
+      "description": "Academy this course belongs to. Must match an approved academy ID."
+    },
+    "prerequisites": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "List of course IDs or credential IDs required before enrollment."
+    },
+    "learningOutcomes": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "What the learner will be able to do after completing this course."
+    },
+    "difficulty": {
+      "type": "string",
+      "enum": ["beginner", "intermediate", "advanced"],
+      "description": "Target difficulty level."
+    },
+    "totalCredits": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Total credits awarded upon completion."
+    },
+    "estimatedDuration": {
+      "type": "string",
+      "description": "Estimated time to complete, e.g. '2 hours' or '45 min'."
+    },
+    "modules": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/Module" },
+      "description": "Ordered list of teaching modules."
+    },
+    "assessments": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/Assessment" },
+      "description": "Assessments associated with this course."
+    },
+    "manifest": {
+      "$ref": "#/$defs/Manifest",
+      "description": "Package manifest with safety declarations and tool requirements."
+    },
+    "reviewStatus": {
+      "$ref": "#/$defs/ReviewStatus",
+      "description": "Current review and publication status."
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Searchable tags for course discovery."
+    }
+  },
+  "$defs": {
+    "Localized": {
+      "type": "object",
+      "required": ["en"],
+      "properties": {
+        "en": { "type": "string" },
+        "zh": { "type": "string" }
+      },
+      "additionalProperties": { "type": "string" },
+      "description": "Localized string with required English and optional other languages."
+    },
+    "Instructor": {
+      "type": "object",
+      "required": ["id", "displayName"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique instructor identifier."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Display name of the instructor."
+        },
+        "affiliation": {
+          "type": "string",
+          "description": "Organization or academy the instructor belongs to."
+        },
+        "type": {
+          "type": "string",
+          "enum": ["first-party", "third-party"],
+          "description": "Whether this is a Clawford official instructor or external professor."
+        }
+      }
+    },
+    "Module": {
+      "type": "object",
+      "required": ["id", "code", "title", "credits"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique module identifier within this course."
+        },
+        "code": {
+          "type": "string",
+          "description": "Module code, e.g. 'FND-101'."
+        },
+        "title": {
+          "$ref": "#/$defs/Localized"
+        },
+        "credits": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "prerequisites": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Module IDs that must be completed before this one."
+        },
+        "learningObjective": {
+          "type": "string",
+          "description": "What the learner will be able to do after this module."
+        },
+        "contentPath": {
+          "type": "string",
+          "description": "Relative path to the module's teaching content file."
+        },
+        "estimatedDuration": {
+          "type": "string"
+        },
+        "passSignal": {
+          "type": "string",
+          "description": "Observable behavior that indicates the learner has passed this module."
+        }
+      }
+    },
+    "Assessment": {
+      "type": "object",
+      "required": ["id", "type", "title"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique assessment identifier."
+        },
+        "type": {
+          "type": "string",
+          "enum": ["practice-check", "scenario-exam", "capstone", "practicum"],
+          "description": "Assessment tier."
+        },
+        "title": {
+          "$ref": "#/$defs/Localized"
+        },
+        "targetModules": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Module IDs this assessment evaluates."
+        },
+        "contentPath": {
+          "type": "string",
+          "description": "Relative path to the assessment content file."
+        },
+        "rubricPath": {
+          "type": "string",
+          "description": "Relative path to the grading rubric file."
+        },
+        "passingThreshold": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Minimum score as a fraction (0.0 to 1.0) to pass."
+        },
+        "maxAttempts": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum number of attempts allowed."
+        },
+        "remediationPath": {
+          "type": "string",
+          "description": "Module ID to revisit on failure."
+        }
+      }
+    },
+    "Manifest": {
+      "type": "object",
+      "required": ["schemaVersion"],
+      "properties": {
+        "schemaVersion": {
+          "type": "string",
+          "description": "Schema version this manifest conforms to."
+        },
+        "compatibilityRange": {
+          "type": "string",
+          "description": "Semver range of Clawford versions this package supports."
+        },
+        "requiredTools": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Tools the learner agent needs to complete this course."
+        },
+        "requiredPermissions": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Permissions required (e.g. 'file-read', 'file-write', 'shell-execute')."
+        },
+        "networkAccess": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether the course requires external network access."
+        },
+        "sensitiveDataHandling": {
+          "type": "string",
+          "description": "Notes on any sensitive data the course materials reference or require."
+        },
+        "executionRequired": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether assessments require executing code or running tools."
+        },
+        "sandboxRecommended": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether a sandbox environment is recommended for safety."
+        }
+      }
+    },
+    "ReviewStatus": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["draft", "submitted", "automated-checks-passed", "automated-checks-failed", "human-review", "revision-requested", "approved", "published", "deprecated", "archived"],
+          "description": "Current status in the review lifecycle."
+        },
+        "lastUpdated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "reviewId": {
+          "type": "string",
+          "description": "Reference to the latest review decision."
+        }
+      }
+    }
+  }
+}

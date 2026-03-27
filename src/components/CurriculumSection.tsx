@@ -29,6 +29,7 @@ export default function CurriculumSection({ lang, t, completedModules, isConnect
                 <Icon size={22} />
               </div>
               <div className="course-meta">
+                <span>{mod.code}</span>
                 <span>
                   {t.ui.level}: {mod.level[lang]}
                 </span>

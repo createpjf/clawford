@@ -3,16 +3,28 @@ import type { AssessmentEvolutionStep, Localized } from "@/types";
 
 export const examCriteria: Localized[] = [
   {
+    zh: "能准确复述任务目标、约束与交付边界",
+    en: "Can accurately restate task objectives, constraints, and scope boundaries",
+  },
+  {
     zh: "能区分 memory、lesson、临时上下文与不应保留的信息",
     en: "Can distinguish memory, lesson, temporary context, and what should not be retained",
+  },
+  {
+    zh: "在交付前主动验证结果，而不是先宣称完成",
+    en: "Verifies before claiming completion, with concrete checks and replan triggers",
   },
   {
     zh: "遇到中等复杂任务时，默认会设计 3+ agent 协同方案",
     en: "Defaults to a 3+ agent collaboration pattern for medium-complexity tasks",
   },
   {
-    zh: "在交付前主动验证结果，而不是先宣称完成",
-    en: "Verifies before claiming completion",
+    zh: "按风险等级分类工具操作，正确处理秘钥与不可逆操作",
+    en: "Classifies tool operations by risk and handles secrets and irreversible operations safely",
+  },
+  {
+    zh: "遇到故障先停下诊断，保持回滚安全，带着证据升级",
+    en: "Stops and diagnoses on failure, maintains rollback safety, escalates with evidence",
   },
   {
     zh: "反思能引用测试、日志或代码证据，而不是空泛总结",
@@ -25,24 +37,24 @@ export const assessmentEvolution: AssessmentEvolutionStep[] = [
     icon: ClipboardCheck,
     stage: { zh: "Layer 1: Human-Readable Exam", en: "Layer 1: Human-Readable Exam" },
     summary: {
-      zh: "延续 V1 场景题与作答规范。",
-      en: "Continue V1 scenario prompts and answer discipline.",
+      zh: "8 个场景题覆盖全部 7 个能力维度，加综合实践预览。",
+      en: "8 scenario prompts covering all 7 competency dimensions, plus integrated practicum preview.",
     },
   },
   {
     icon: CheckCircle2,
     stage: { zh: "Layer 2: Structured Rubric", en: "Layer 2: Structured Rubric" },
     summary: {
-      zh: "标准化评分维度、证据格式与毕业门槛。",
-      en: "Standardize scoring dimensions, evidence format, and graduation gates.",
+      zh: "7 个评分维度（满分 14），映射到对应模块，支持补考与定向重修。",
+      en: "7 scoring categories (max 14), mapped to modules, with remediation and retake support.",
     },
   },
   {
     icon: Sparkles,
     stage: { zh: "Layer 3: Evaluator Contract", en: "Layer 3: Evaluator Contract" },
     summary: {
-      zh: "V2 提供接口契约文档，为后续自动判卷服务铺路。",
-      en: "V2 defines the interface contract for future automated grading services.",
+      zh: "基于 JSON Schema 的评测输入/输出契约，为自动判卷服务铺路。",
+      en: "JSON Schema based assessment input/output contracts, ready for future automated grading.",
     },
   },
 ];
@@ -50,14 +62,19 @@ export const assessmentEvolution: AssessmentEvolutionStep[] = [
 export const docs: string[] = [
   ".cursor/skills/clawford-foundations/SKILL.md",
   ".cursor/skills/clawford-foundations/curriculum.md",
+  ".cursor/skills/clawford-foundations/modules/ (8 module files)",
   ".cursor/skills/clawford-foundations/memory-and-lessons.md",
   ".cursor/skills/clawford-foundations/multi-agent-playbook.md",
   ".cursor/skills/clawford-foundations/exam.md",
   ".cursor/skills/clawford-foundations/rubric.md",
   ".cursor/skills/clawford-foundations/v2-specialization-paths.md",
-  "docs/personal-install.md",
-  "docs/v2-roadmap.md",
+  "docs/schemas/ (5 JSON schemas)",
+  "docs/foundations-course-package.json",
+  "docs/review-pipeline.md",
+  "docs/authoring-interface.md",
   "docs/professor-system.md",
   "docs/evaluation-architecture.md",
+  "docs/v2-roadmap.md",
+  "docs/personal-install.md",
   "README.md",
 ];
