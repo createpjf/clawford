@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { put, list, getDownloadUrl } from "@vercel/blob";
+import { put, list } from "@vercel/blob";
 
 const RATE_LIMITS_PATH = "clawford/rate-limits.json";
 const REGISTRATION_COOLDOWN_MS = 7 * 24 * 60 * 60 * 1000;
@@ -55,8 +55,10 @@ async function readRateLimits(): Promise<RateLimitRegistry> {
     const { blobs } = await list({ prefix: RATE_LIMITS_PATH, limit: 1 });
     const blob = blobs.find((b) => b.pathname === RATE_LIMITS_PATH);
     if (!blob) return { registrations: {}, loginFailures: {} };
-    const signedUrl = await getDownloadUrl(blob.url);
-    const res = await fetch(signedUrl);
+    const token = process.env.BLOB_READ_WRITE_TOKEN;
+    const res = await fetch(blob.url, {
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+    });
     if (!res.ok) return { registrations: {}, loginFailures: {} };
     return (await res.json()) as RateLimitRegistry;
   } catch {

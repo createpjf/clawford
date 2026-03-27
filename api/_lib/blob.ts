@@ -1,4 +1,4 @@
-import { put, list, getDownloadUrl } from "@vercel/blob";
+import { put, list } from "@vercel/blob";
 import type { HouseId } from "./identity.js";
 
 const REGISTRY_PATH = "clawford/identity-registry.json";
@@ -31,8 +31,10 @@ async function readBlob<T>(pathname: string): Promise<T | null> {
     const { blobs } = await list({ prefix: pathname, limit: 1 });
     const blob = blobs.find((b) => b.pathname === pathname);
     if (!blob) return null;
-    const signedUrl = await getDownloadUrl(blob.url);
-    const res = await fetch(signedUrl);
+    const token = process.env.BLOB_READ_WRITE_TOKEN;
+    const res = await fetch(blob.url, {
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+    });
     if (!res.ok) return null;
     return res.json() as Promise<T>;
   } catch (err) {
