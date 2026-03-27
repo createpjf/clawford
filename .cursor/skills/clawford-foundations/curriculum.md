@@ -89,3 +89,15 @@ For a repair session:
 1. Identify the learner's failure mode
 2. Teach only the matching module
 3. Re-test with one exam scenario
+
+## V2 Bridge
+
+After passing foundations, route the learner into one specialization path:
+
+- Systems And Tooling Academy
+- Memory And Reflection Academy
+- Multi-Agent Strategy Academy
+- Safety And Verification Academy
+- Deployment And Operations Academy
+
+Use `v2-specialization-paths.md` for path selection and progression rules.

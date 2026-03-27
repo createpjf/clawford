@@ -359,6 +359,33 @@ button {
   margin: 1.1rem 0 0;
 }
 
+.layers-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+  margin-top: 1rem;
+}
+
+.layer-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.75rem 0.85rem;
+  border-radius: 0.9rem;
+  border: 1px solid rgba(130, 161, 205, 0.12);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.layer-item strong {
+  font-size: 0.95rem;
+}
+
+.layer-item span {
+  color: var(--text-soft);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
 .flow-list li,
 .path-list li {
   padding: 0.68rem 0;
@@ -474,10 +501,35 @@ button {
 }
 
 .course-grid,
-.principles-grid {
+.principles-grid,
+.academy-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
+}
+
+.academy-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.professor-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.badge-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 999px;
+  padding: 0.36rem 0.62rem;
+  background: rgba(98, 182, 203, 0.14);
+  border: 1px solid rgba(98, 182, 203, 0.3);
+  color: #d9f6ff;
+  font-size: 0.82rem;
 }
 
 .course-card {
@@ -557,6 +609,43 @@ button {
   color: #dbe8f9;
 }
 
+.journey-list,
+.credential-list,
+.evolution-list {
+  display: grid;
+  gap: 0.68rem;
+}
+
+.journey-item,
+.credential-item,
+.evolution-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.78rem 0.85rem;
+  border-radius: 0.95rem;
+  border: 1px solid rgba(130, 161, 205, 0.11);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.journey-item p,
+.credential-item p,
+.evolution-item p {
+  margin: 0.25rem 0 0;
+}
+
+.journey-index {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #06111c;
+  background: linear-gradient(135deg, #ffd48f, #ff9b52);
+}
+
 .deploy-steps {
   display: grid;
   gap: 0.8rem;
@@ -589,7 +678,9 @@ button {
   .terminal-section,
   .section-grid,
   .course-grid,
-  .principles-grid {
+  .principles-grid,
+  .academy-grid,
+  .layers-grid {
     grid-template-columns: 1fr;
   }
 

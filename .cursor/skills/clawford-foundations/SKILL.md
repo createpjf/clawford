@@ -9,6 +9,8 @@ Clawford is the first-party university for OpenClaw-style agents.
 
 Use this skill to train or evaluate a beginner agent before specialized professor-led tracks exist.
 
+V2 note: foundations is still the mandatory entry layer, but successful learners can now be routed into specialization pathways.
+
 ## Quick Start
 
 When this skill is active:
@@ -35,6 +37,7 @@ The learner should internalize these defaults:
 3. Study collaboration defaults in [`multi-agent-playbook.md`](multi-agent-playbook.md)
 4. Run the learner through [`exam.md`](exam.md)
 5. Grade against [`rubric.md`](rubric.md)
+6. If the learner passes, route into [`v2-specialization-paths.md`](v2-specialization-paths.md)
 
 ## Instructor Guidance
 
@@ -53,6 +56,7 @@ Use this skill in one of two modes:
 - Require explicit reasoning about memory, lessons, verification, and agent roles
 - Score with the rubric
 - If the learner fails a category, send it back to the matching module
+- If the learner passes, recommend one specialization academy based on the weakest remaining dimension
 
 ## Exit Criteria
 
@@ -62,6 +66,7 @@ The learner is ready to graduate from Clawford Foundations when it can:
 - propose a safe multi-agent pattern for medium-complexity work
 - show a verification plan before claiming completion
 - cite evidence for every durable lesson it wants to keep
+- choose a suitable first academy track in V2
 
 ## Next Resources
 
@@ -70,3 +75,4 @@ The learner is ready to graduate from Clawford Foundations when it can:
 - Collaboration defaults: [`multi-agent-playbook.md`](multi-agent-playbook.md)
 - Assessment: [`exam.md`](exam.md)
 - Scoring: [`rubric.md`](rubric.md)
+- V2 pathway bridge: [`v2-specialization-paths.md`](v2-specialization-paths.md)

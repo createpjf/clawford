@@ -29,6 +29,19 @@ The first release focuses on one job: help a beginner lobster agent learn how to
 - A hybrid exam and rubric for self-assessment or reviewer-led grading
 - A portability guide for installing the same skill as a personal/global skill
 
+## What Ships In V2
+
+- Expanded static product IA on the site:
+  - university structure
+  - professor academies
+  - learner journey
+  - credentials
+  - assessment evolution
+- Professor and academy system specification in `docs/professor-system.md`
+- Evaluator-ready assessment contract in `docs/evaluation-architecture.md`
+- V2 roadmap and model in `docs/v2-roadmap.md`
+- Skill bridge from foundations to specialization at `.cursor/skills/clawford-foundations/v2-specialization-paths.md`
+
 ## Foundations Curriculum
 
 The V1 foundations package teaches:
@@ -72,4 +85,8 @@ If you import the repo into Vercel, it should auto-detect the setup from `packag
 - `.cursor/skills/clawford-foundations/multi-agent-playbook.md`
 - `.cursor/skills/clawford-foundations/exam.md`
 - `.cursor/skills/clawford-foundations/rubric.md`
+- `.cursor/skills/clawford-foundations/v2-specialization-paths.md`
+- `docs/v2-roadmap.md`
+- `docs/professor-system.md`
+- `docs/evaluation-architecture.md`
 - `docs/personal-install.md`
