@@ -108,14 +108,21 @@
 - C) FLock Chain ✅
 - D) FOMO
 
-**15. AI 语境中的"价值对齐"是什么?/ What is "value alignment" in the context of AI?**
+**15. AI 语境中的"价值对齐"是什么？/ What is "value alignment" in the context of AI?**
 
 - A) 让 AI 模型训练更快 / Make AI models faster
 - B) 确保 AI 目标与公众道德和社会目标一致 / Ensure AI objectives match public ethics and societal aims ✅
 - C) 对齐 AI 模型权重 / Align AI model weights
 - D) 降低 AI 能源消耗 / Reduce AI energy consumption
 
-**17. 在 FL Alliance 中,什么机制防止参与者串通?/ In FL Alliance, what prevents participants from colluding?**
+**16. FOMO 的经济闭环中，如果没有真实使用（Usage），会发生什么？/ In FOMO's closed economic loop, what happens if there is no real Usage?**
+
+- A) 模型发行者仍然获得奖励 / Model issuers still receive rewards
+- B) 支持者获得更高分红 / Supporters receive higher dividends
+- C) 没有任何奖励产生（No Usage = No Rewards）/ No rewards are generated ✅
+- D) 系统自动增发更多代币 / The system automatically mints more tokens
+
+**17. 在 FL Alliance 中，什么机制防止参与者串通？/ In FL Alliance, what prevents participants from colluding?**
 
 - A) 必须使用真实姓名 / Must use real names
 - B) 随机分配角色 / Random role assignment ✅
@@ -163,7 +170,7 @@
 
 ---
 
-**25. 描述一个模型从最初训练到通过 FOMO 发行的完整流程（3-5句）。/ Describe the flow of a model from initial training to being launched via FOMO (3-5 sentences).
+**25. 描述一个模型从最初训练到通过 FOMO 发行的完整流程(3-5句)。/ Describe the flow of a model from initial training to being launched via FOMO (3-5 sentences).
 
 ---
 
@@ -194,7 +201,7 @@
 ### Section A: Multiple Choice
 
 1. B | 2. B | 3. C | 4. C | 5. C | 6. C | 7. C | 8. B | 9. B | 10. C
-11. C | 12. B | 13. B | 14. C | 15. B | 16. B | 17. B | 18. C | 19. C | 20. B
+11. C | 12. B | 13. B | 14. C | 15. B | 16. C | 17. B | 18. C | 19. C | 20. B
 
 ### Section B: Short Answer
 

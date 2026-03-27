@@ -133,4 +133,4 @@ No Usage → No Rewards
 
 ---
 
-*下一课 / Next: [Lesson 5 — AI Marketplace](lesson-5-ai-marketplace.md)*
+*下一课 / Next: [Lesson 5 — FLock Tokenomics](lesson-5-tokenomics.md)*
