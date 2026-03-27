@@ -56,6 +56,10 @@ export default function StudentWallSection({ lang, t }: Props) {
           <div className="student-wall-grid">
             {top.map((s) => {
               const house = s.house ? houseMap[s.house] : null;
+              const bestScore =
+                s.bestExamScore !== null && s.examMaxScore !== null
+                  ? `${s.bestExamScore}/${s.examMaxScore}`
+                  : sw.noScore;
               return (
                 <div
                   key={s.uid}
@@ -89,7 +93,7 @@ export default function StudentWallSection({ lang, t }: Props) {
                       {s.completedModules} {sw.completedModules}
                     </span>
                     <span className={`exam-badge ${s.examPassed ? "exam-pass" : ""}`}>
-                      {s.examPassed ? sw.passed : sw.inProgress}
+                      {s.examPassed ? sw.passed : sw.inProgress} · {bestScore}
                     </span>
                   </div>
                 </div>

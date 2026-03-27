@@ -160,3 +160,46 @@ Code review fixes completed across all 4 phases.
 - Correctness: UID collision risk reduced from ~65K to ~4B users, CSS variables fixed, context memoized
 - UX/a11y: error feedback in terminal, ARIA labels/table roles, prefers-reduced-motion, i18n completeness
 - Maintainability: shared language state, HouseId type safety, PascalCase naming, terminal log cap, SPA catch-all
+
+# QA Walkthrough Of Live Site
+
+- [x] Inspect live homepage and agent-native navigation clarity
+- [x] Complete admission / identity / security bypass path as a fresh learner
+- [x] Attempt the full foundations learning flow and exam
+- [x] Verify house assignment, academy ownership, and student ID visibility
+- [x] Document unclear guidance, broken expectations, and UX gaps
+- [x] Produce QA report with improvement and upgrade plan
+
+## Review
+
+- Live walkthrough completed on `https://www.clawford.university/`
+- Admission in IP-restricted environments is not completable from UI because manual enrollment never exposes `adminCode`; workaround only exists at raw API level
+- Fresh admin-assisted registration is eventually consistent: immediate normal login can fail with registration cooldown before identity lookup becomes visible
+- Curriculum module progression is unreliable across repeated `/api/progress` calls: completed module sets can regress/overwrite before exam force-completes everything
+- Logged-in UI exposes house assignment, but student ID / UID is not clearly surfaced in the main journey
+- `/students` route loads and includes the learner in ranking, but the rendered directory only exposed rank/name/credits during live test even though backend data contains UID, house, module count, and exam state
+- Foundation completion plus exam produced a valid graduate transcript, house `hufflepinch`, 27 credits, and a foundation credential via API
+
+# Student Score, House, And Retake
+
+- [x] Add exam score metadata projection to student wall entries (`best`, `latest`, `attempts`, `max`)
+- [x] Enable exam retakes in `/api/progress` without duplicating first-pass graduation effects
+- [x] Keep module completion append-only and credit totals deterministic on progress updates
+- [x] Render house + score in `/students` and homepage student wall
+- [x] Preserve house/exam visibility on mobile student directory layout
+- [x] Add manual admin code support in enrollment flow for restricted test environments
+- [x] Improve admission consistency by retrying existing-user resolution before cooldown response
+- [x] Update EN/ZH copy for score, attempts, retake, and admin-code testing hint
+- [x] Add regression tests for directory score/house rendering and retake CTA flow
+- [x] Publish engineering QA backlog with P0/P1/P2 acceptance criteria
+
+## Review
+
+- `api/_lib/blob.ts` now projects `examAttempts`, `bestExamScore`, `latestExamScore`, `examMaxScore`, and `lastExamAt` into wall entries
+- `api/progress.ts` now records repeat exam attempts, returns best/latest metadata, and avoids duplicate foundation credentials
+- `api/admission.ts` now re-checks identity before returning registration cooldown to reduce false negatives immediately after registration
+- `src/components/StudentsPage.tsx` and `src/components/StudentWallSection.tsx` now surface house + score (not credits-only)
+- `src/components/TerminalSection.tsx` now supports optional admin code input and retake exam action copy
+- `src/styles.css` now keeps full directory columns accessible on mobile via horizontal overflow instead of hiding house/exam fields
+- Added `docs/qa-backlog.md` to track prioritized fixes and acceptance criteria
+- Verification passed: `npm run test -- --run`, `npm run build`, and no linter errors in edited paths

@@ -57,6 +57,8 @@ export interface TerminalTranslations {
   connectButton: string;
   usernamePlaceholder: string;
   passwordPlaceholder: string;
+  adminCodePlaceholder: string;
+  adminCodeHint: string;
   loginHint: string;
   displayNamePlaceholder: string;
   connecting: string;
@@ -69,6 +71,7 @@ export interface UiTranslations {
   learn: string;
   learned: string;
   startExam: string;
+  retakeExam: string;
   passed: string;
   duration: string;
   level: string;
@@ -99,9 +102,15 @@ export interface StudentWallTranslations {
   subtitle: string;
   viewAll: string;
   noStudents: string;
+  name: string;
+  uid: string;
+  house: string;
   totalCredits: string;
   completedModules: string;
   examStatus: string;
+  bestScore: string;
+  noScore: string;
+  attemptsSuffix: string;
   passed: string;
   inProgress: string;
   enrolled: string;
@@ -254,6 +263,11 @@ export interface StudentWallEntry {
   totalCredits: number;
   completedModules: number;
   examPassed: boolean;
+  examAttempts: number;
+  bestExamScore: number | null;
+  latestExamScore: number | null;
+  examMaxScore: number | null;
+  lastExamAt: string | null;
   credentials: number;
   enrolledAt: string;
 }

@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { lookupByUsername, getTranscript, saveTranscript } from "./_lib/blob.js";
+import { lookupByUsername, updateTranscript } from "./_lib/blob.js";
 import {
   normalizeUsername,
   verifyPassword,
@@ -19,6 +19,7 @@ const MODULE_CREDITS: Record<string, number> = {
 };
 
 const ALL_MODULE_IDS = Object.keys(MODULE_CREDITS);
+const FOUNDATIONS_CREDENTIAL = "foundation-certificate";
 
 export default async function handler(
   req: VercelRequest,
@@ -51,11 +52,6 @@ export default async function handler(
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    const transcript = await getTranscript(identity.uid);
-    if (!transcript) {
-      return res.status(404).json({ error: "Transcript not found" });
-    }
-
     if (action === "complete-module") {
       if (!moduleId || typeof moduleId !== "string") {
         return res.status(400).json({ error: "moduleId is required" });
@@ -65,62 +61,102 @@ export default async function handler(
           .status(400)
           .json({ error: `Invalid moduleId: ${moduleId}` });
       }
-      if (
-        transcript.foundationsStatus.completedModules.includes(moduleId)
-      ) {
-        return res.status(200).json({ ok: true, transcript });
+      const transcript = await updateTranscript(identity.uid, (current) => {
+        const completed = new Set(current.foundationsStatus.completedModules);
+        completed.add(moduleId);
+        const orderedCompleted = ALL_MODULE_IDS.filter((id) => completed.has(id));
+        const totalCredits = orderedCompleted.reduce(
+          (sum, id) => sum + (MODULE_CREDITS[id] ?? 0),
+          0,
+        );
+
+        current.foundationsStatus.completedModules = orderedCompleted;
+        current.foundationsStatus.totalCreditsEarned = totalCredits;
+        if (current.foundationsStatus.status === "not-started") {
+          current.foundationsStatus.status = "in-progress";
+        }
+        return current;
+      });
+      if (!transcript) {
+        return res.status(404).json({ error: "Transcript not found" });
       }
-
-      transcript.foundationsStatus.completedModules.push(moduleId);
-      const credits = MODULE_CREDITS[moduleId] ?? 0;
-      transcript.foundationsStatus.totalCreditsEarned += credits;
-
-      if (transcript.foundationsStatus.status === "not-started") {
-        transcript.foundationsStatus.status = "in-progress";
-      }
-
-      await saveTranscript(transcript);
       return res.status(200).json({ ok: true, transcript });
     }
 
     if (action === "pass-exam") {
-      if (transcript.foundationsStatus.status === "completed") {
-        return res
-          .status(200)
-          .json({ ok: true, transcript, alreadyPassed: true });
-      }
-
       const { score } = req.body ?? {};
       const examScore =
         typeof score === "number" && score >= 0 && score <= 14 ? score : 12;
       const now = new Date().toISOString();
+      let attempt = 1;
+      let alreadyPassed = false;
+      let improved = false;
+      let bestScore = examScore;
+      let latestScore = examScore;
 
-      transcript.foundationsStatus.status = "completed";
-      transcript.foundationsStatus.completedAt = now;
-      transcript.foundationsStatus.completedModules = ALL_MODULE_IDS;
-      transcript.foundationsStatus.totalCreditsEarned = Object.values(
-        MODULE_CREDITS,
-      ).reduce((a, b) => a + b, 0);
+      const transcript = await updateTranscript(identity.uid, (current) => {
+        alreadyPassed = current.foundationsStatus.status === "completed";
+        const previousBest = current.foundationsStatus.assessmentResults
+          .filter((result) => result.assessmentId.startsWith("exam-"))
+          .reduce((best, result) => Math.max(best, result.score), -1);
 
-      transcript.foundationsStatus.assessmentResults.push({
-        assessmentId: `exam-${Date.now()}`,
-        score: examScore,
-        maxScore: 14,
-        decision: "pass",
-        attempt:
-          transcript.foundationsStatus.assessmentResults.length + 1,
-        timestamp: now,
+        attempt =
+          current.foundationsStatus.assessmentResults.filter((result) =>
+            result.assessmentId.startsWith("exam-"),
+          ).length + 1;
+
+        current.foundationsStatus.assessmentResults.push({
+          assessmentId: `exam-${Date.now()}-${attempt}`,
+          score: examScore,
+          maxScore: 14,
+          decision: "pass",
+          attempt,
+          timestamp: now,
+        });
+
+        if (!alreadyPassed) {
+          current.foundationsStatus.status = "completed";
+          current.foundationsStatus.completedAt = now;
+          current.foundationsStatus.completedModules = [...ALL_MODULE_IDS];
+          current.foundationsStatus.totalCreditsEarned = Object.values(
+            MODULE_CREDITS,
+          ).reduce((a, b) => a + b, 0);
+          current.currentState = "foundations-graduate";
+        }
+
+        if (
+          !current.credentials.some(
+            (credential) => credential.type === FOUNDATIONS_CREDENTIAL,
+          )
+        ) {
+          current.credentials.push({
+            credentialId: `cred-${current.uid}-foundations`,
+            type: FOUNDATIONS_CREDENTIAL,
+            issuedAt: now,
+          });
+        }
+
+        const examResults = current.foundationsStatus.assessmentResults.filter(
+          (result) => result.assessmentId.startsWith("exam-"),
+        );
+        latestScore = examResults.at(-1)?.score ?? examScore;
+        bestScore = examResults.reduce((best, result) => Math.max(best, result.score), 0);
+        improved = previousBest >= 0 && bestScore > previousBest;
+        return current;
       });
+      if (!transcript) {
+        return res.status(404).json({ error: "Transcript not found" });
+      }
 
-      transcript.currentState = "foundations-graduate";
-      transcript.credentials.push({
-        credentialId: `cred-${transcript.uid}-foundations`,
-        type: "foundation-certificate",
-        issuedAt: now,
+      return res.status(200).json({
+        ok: true,
+        transcript,
+        alreadyPassed,
+        attempt,
+        bestScore,
+        latestScore,
+        improved,
       });
-
-      await saveTranscript(transcript);
-      return res.status(200).json({ ok: true, transcript });
     }
 
     return res.status(400).json({ error: "Unknown action" });

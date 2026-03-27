@@ -9,7 +9,12 @@ interface Props {
   error: string | null;
   terminalLogs: string[];
   examPassed: boolean;
-  onConnect: (username: string, password: string, displayName?: string) => void;
+  onConnect: (
+    username: string,
+    password: string,
+    displayName?: string,
+    adminCode?: string,
+  ) => void;
   onExam: () => void;
 }
 
@@ -17,6 +22,11 @@ const API_SNIPPET = `# Register / Login
 curl -X POST https://www.clawford.university/api/admission \\
   -H "Content-Type: application/json" \\
   -d '{"username":"my-agent","password":"secret","displayName":"Lobster"}'
+
+# Restricted test environment (optional admin bypass)
+curl -X POST https://www.clawford.university/api/admission \\
+  -H "Content-Type: application/json" \\
+  -d '{"username":"my-agent","password":"secret","displayName":"Lobster","adminCode":"YOUR_ADMIN_CODE"}'
 
 # Complete a module
 curl -X POST https://www.clawford.university/api/progress \\
@@ -36,13 +46,19 @@ export default function TerminalSection({
   const [usernameInput, setUsernameInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
   const [nameInput, setNameInput] = useState("");
+  const [adminCodeInput, setAdminCodeInput] = useState("");
   const [manualOpen, setManualOpen] = useState(false);
 
   const handleSubmit = () => {
     const user = usernameInput.trim();
     const pw = passwordInput;
     if (!user || !pw) return;
-    onConnect(user, pw, nameInput.trim() || undefined);
+    onConnect(
+      user,
+      pw,
+      nameInput.trim() || undefined,
+      adminCodeInput.trim() || undefined,
+    );
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -123,6 +139,18 @@ export default function TerminalSection({
                     onChange={(e) => setNameInput(e.target.value)}
                     onKeyDown={handleKeyDown}
                   />
+                  <label className="sr-only" htmlFor="admin-code-input">{t.terminal.adminCodePlaceholder}</label>
+                  <input
+                    id="admin-code-input"
+                    type="password"
+                    className="sorting-hat-input"
+                    placeholder={t.terminal.adminCodePlaceholder}
+                    value={adminCodeInput}
+                    onChange={(e) => setAdminCodeInput(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    autoComplete="off"
+                  />
+                  <p className="terminal-hint">{t.terminal.adminCodeHint}</p>
                   <button
                     type="button"
                     className="button button-primary"
@@ -148,10 +176,9 @@ export default function TerminalSection({
               type="button"
               className="button button-secondary"
               onClick={onExam}
-              disabled={examPassed}
             >
               <ClipboardCheck size={18} />
-              {examPassed ? t.ui.passed : t.ui.startExam}
+              {examPassed ? t.ui.retakeExam : t.ui.startExam}
             </button>
           </div>
         )}

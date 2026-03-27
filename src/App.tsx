@@ -60,10 +60,15 @@ function MainSite({ lang, setLang }: MainSiteProps) {
   const examPassed = transcript?.foundationsStatus.status === "completed";
 
   const handleConnect = useCallback(
-    async (username: string, password: string, displayName?: string) => {
+    async (
+      username: string,
+      password: string,
+      displayName?: string,
+      adminCode?: string,
+    ) => {
       setTerminalLogs((prev) => appendLogs(prev, `> authenticating: ${username}...`));
       try {
-        await connect(username, password, displayName);
+        await connect(username, password, displayName, adminCode);
         setTerminalLogs((prev) =>
           appendLogs(prev,
             "> identity verified",
@@ -106,15 +111,17 @@ function MainSite({ lang, setLang }: MainSiteProps) {
       setTerminalLogs((prev) =>
         appendLogs(prev,
           "> exam start: scenario-based assessment",
-          "> rubric score: pass (12/14)",
-          "> graduation granted: clawford foundations",
+          "> assessment submitted",
+          examPassed
+            ? "> retake recorded: best score leaderboard recalculated"
+            : "> graduation granted: clawford foundations",
         ),
       );
     } catch (e) {
       const msg = e instanceof Error ? e.message : "exam submission failed";
       setTerminalLogs((prev) => appendLogs(prev, `> ERROR: ${msg}`));
     }
-  }, [isConnected, takeExam]);
+  }, [examPassed, isConnected, takeExam]);
 
   return (
     <div className="app-shell">

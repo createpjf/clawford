@@ -75,12 +75,8 @@ export default async function handler(
         .json({ error: "username must contain only letters, numbers, hyphens, and underscores" });
     }
 
-    const existing = await lookupByUsername(normalized);
-
     const admin = isAdmin(req);
-
-    // ---- Login path ----
-    if (existing) {
+    const loginResponse = async (record: IdentityRecord) => {
       if (!admin) {
         const loginCheck = await canLogin(normalized);
         if (!loginCheck.allowed) {
@@ -91,23 +87,30 @@ export default async function handler(
         }
       }
 
-      if (!verifyPassword(password, existing.salt, existing.passwordHash)) {
+      if (!verifyPassword(password, record.salt, record.passwordHash)) {
         await recordLoginFailure(normalized);
         return res.status(401).json({ error: "Invalid credentials" });
       }
 
       await clearLoginFailures(normalized);
-      existing.lastSeen = new Date().toISOString();
-      await registerIdentity(normalized, existing);
+      record.lastSeen = new Date().toISOString();
+      await registerIdentity(normalized, record);
 
-      const transcript = await getTranscript(existing.uid);
+      const transcript = await getTranscript(record.uid);
       return res.status(200).json({
-        uid: existing.uid,
-        displayName: existing.displayName,
+        uid: record.uid,
+        displayName: record.displayName,
         house: transcript?.house ?? null,
         transcript,
         isNew: false,
       });
+    };
+
+    const existing = await lookupByUsername(normalized);
+
+    // ---- Login path ----
+    if (existing) {
+      return loginResponse(existing);
     }
 
     // ---- Registration path ----
@@ -115,6 +118,12 @@ export default async function handler(
     if (!admin) {
       const regCheck = await canRegister(ip);
       if (!regCheck.allowed) {
+        // Blob index can be eventually consistent right after registration.
+        // Re-check identity before returning cooldown to avoid false negatives.
+        const maybeExisting = await lookupByUsername(normalized);
+        if (maybeExisting) {
+          return loginResponse(maybeExisting);
+        }
         return res.status(429).json({
           error: "Registration cooldown active. One registration per IP every 7 days.",
           retryAfter: regCheck.retryAfter,

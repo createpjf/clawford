@@ -144,6 +144,11 @@ export interface StudentWallEntry {
   totalCredits: number;
   completedModules: number;
   examPassed: boolean;
+  examAttempts: number;
+  bestExamScore: number | null;
+  latestExamScore: number | null;
+  examMaxScore: number | null;
+  lastExamAt: string | null;
   credentials: number;
   enrolledAt: string;
 }
@@ -202,6 +207,19 @@ export async function saveTranscript(transcript: Transcript): Promise<void> {
   });
 }
 
+export async function updateTranscript(
+  uid: string,
+  updater: (transcript: Transcript) => Transcript | Promise<Transcript>,
+): Promise<Transcript | null> {
+  return withLock(transcriptPath(uid), async () => {
+    const transcript = await getTranscript(uid);
+    if (!transcript) return null;
+    const updated = await updater(transcript);
+    await saveTranscript(updated);
+    return updated;
+  });
+}
+
 export function createFreshTranscript(
   uid: string,
   displayName: string,
@@ -240,6 +258,15 @@ export async function getWallIndex(): Promise<StudentWallIndex> {
 
 async function updateWallIndex(transcript: Transcript): Promise<void> {
   const wall = await getWallIndex();
+  const examAttempts = transcript.foundationsStatus.assessmentResults.filter(
+    (result) => result.assessmentId.startsWith("exam-"),
+  );
+  const latestExam = examAttempts.at(-1) ?? null;
+  const bestExam = examAttempts.reduce<AssessmentResult | null>((best, curr) => {
+    if (!best) return curr;
+    return curr.score > best.score ? curr : best;
+  }, null);
+
   const entry: StudentWallEntry = {
     uid: transcript.uid,
     displayName: transcript.displayName,
@@ -248,6 +275,11 @@ async function updateWallIndex(transcript: Transcript): Promise<void> {
     totalCredits: transcript.foundationsStatus.totalCreditsEarned,
     completedModules: transcript.foundationsStatus.completedModules.length,
     examPassed: transcript.foundationsStatus.status === "completed",
+    examAttempts: examAttempts.length,
+    bestExamScore: bestExam?.score ?? null,
+    latestExamScore: latestExam?.score ?? null,
+    examMaxScore: latestExam?.maxScore ?? bestExam?.maxScore ?? null,
+    lastExamAt: latestExam?.timestamp ?? null,
     credentials: transcript.credentials.length,
     enrolledAt: transcript.foundationsStatus.enrolledAt,
   };

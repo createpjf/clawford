@@ -31,7 +31,14 @@ export default function StudentsPage({ lang, setLang }: Props) {
   }, []);
 
   const sorted = useMemo(
-    () => [...students].sort((a, b) => b.totalCredits - a.totalCredits),
+    () =>
+      [...students].sort((a, b) => {
+        const creditDiff = b.totalCredits - a.totalCredits;
+        if (creditDiff !== 0) return creditDiff;
+        const aBest = a.bestExamScore ?? -1;
+        const bBest = b.bestExamScore ?? -1;
+        return bBest - aBest;
+      }),
     [students],
   );
 
@@ -70,21 +77,29 @@ export default function StudentsPage({ lang, setLang }: Props) {
             <div className="students-table-header" role="row">
               <span className="col-rank" role="columnheader">#</span>
               <span className="col-name" role="columnheader">
-                {lang === "zh" ? "名称" : "Name"}
+                {sw.name}
               </span>
-              <span className="col-uid" role="columnheader">UID</span>
+              <span className="col-uid" role="columnheader">{sw.uid}</span>
               <span className="col-house" role="columnheader">
-                {lang === "zh" ? "学院" : "House"}
+                {sw.house}
               </span>
               <span className="col-credits" role="columnheader">{sw.totalCredits}</span>
               <span className="col-modules" role="columnheader">{sw.completedModules}</span>
               <span className="col-exam" role="columnheader">{sw.examStatus}</span>
+              <span className="col-score" role="columnheader">{sw.bestScore}</span>
             </div>
 
             {sorted.map((s, i) => {
               const house = s.house
                 ? houseMap[s.house as HouseId]
                 : null;
+              const bestScore =
+                s.bestExamScore !== null && s.examMaxScore !== null
+                  ? `${s.bestExamScore}/${s.examMaxScore}`
+                  : sw.noScore;
+              const attemptCount =
+                s.examAttempts > 0 ? ` · ${s.examAttempts} ${sw.attemptsSuffix}` : "";
+
               return (
                 <div
                   key={s.uid}
@@ -130,6 +145,10 @@ export default function StudentsPage({ lang, setLang }: Props) {
                     >
                       {s.examPassed ? sw.passed : sw.inProgress}
                     </span>
+                    {attemptCount}
+                  </span>
+                  <span className="col-score" role="cell">
+                    {bestScore}
                   </span>
                 </div>
               );

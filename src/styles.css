@@ -1614,7 +1614,7 @@ button {
 .students-table-header,
 .students-table-row {
   display: grid;
-  grid-template-columns: 40px 1.5fr 1fr 0.8fr 0.7fr 0.7fr 0.7fr;
+  grid-template-columns: 40px 1.5fr 1fr 0.9fr 0.7fr 0.7fr 0.8fr 0.9fr;
   align-items: center;
   padding: 0.7rem 1rem;
   gap: 0.5rem;
@@ -1656,10 +1656,15 @@ button {
 }
 
 .col-credits,
-.col-modules {
+.col-modules,
+.col-score {
   display: flex;
   align-items: center;
   gap: 0.3rem;
+}
+
+.col-score {
+  font-weight: 600;
 }
 
 .house-badge {
@@ -1668,17 +1673,14 @@ button {
 }
 
 @media (max-width: 720px) {
-  .students-table-header,
-  .students-table-row {
-    grid-template-columns: 30px 1fr 1fr;
-    font-size: 0.82rem;
+  .students-page-table {
+    overflow-x: auto;
   }
 
-  .col-uid,
-  .col-house,
-  .col-modules,
-  .col-exam {
-    display: none;
+  .students-table-header,
+  .students-table-row {
+    min-width: 880px;
+    font-size: 0.82rem;
   }
 
   .student-wall-grid {
