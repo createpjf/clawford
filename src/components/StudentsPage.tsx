@@ -93,8 +93,13 @@ export default function StudentsPage({ lang, setLang }: Props) {
               const house = s.house
                 ? houseMap[s.house as HouseId]
                 : null;
+              const hasBestScore =
+                typeof s.bestExamScore === "number" &&
+                Number.isFinite(s.bestExamScore) &&
+                typeof s.examMaxScore === "number" &&
+                Number.isFinite(s.examMaxScore);
               const bestScore =
-                s.bestExamScore !== null && s.examMaxScore !== null
+                hasBestScore
                   ? `${s.bestExamScore}/${s.examMaxScore}`
                   : sw.noScore;
               const attemptCount =

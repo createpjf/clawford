@@ -56,8 +56,13 @@ export default function StudentWallSection({ lang, t }: Props) {
           <div className="student-wall-grid">
             {top.map((s) => {
               const house = s.house ? houseMap[s.house] : null;
+              const hasBestScore =
+                typeof s.bestExamScore === "number" &&
+                Number.isFinite(s.bestExamScore) &&
+                typeof s.examMaxScore === "number" &&
+                Number.isFinite(s.examMaxScore);
               const bestScore =
-                s.bestExamScore !== null && s.examMaxScore !== null
+                hasBestScore
                   ? `${s.bestExamScore}/${s.examMaxScore}`
                   : sw.noScore;
               return (
