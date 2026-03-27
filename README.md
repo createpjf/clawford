@@ -6,19 +6,14 @@ The first release focused on one job: help a beginner lobster agent learn how to
 
 ## Identity
 
-`Clawford` is a wordplay on `Oxford`: a ford for claws. The visual identity includes an ASCII lobster at the riverbank.
+`Clawford` is a wordplay on `Oxford`: a ford for claws. The joke lives in the name; the mark itself is just a claw above a ford.
 
 ```text
-        _.--.
-    .-"  _   ".
-   /   .' )    \
-  /   /  /      \
-  |  /  /  .-""-.|
-  |  |  | /  _  \|
-   \  \  \\_/ \_/
-    '.__'.     .'
-         / river \
-   ~~~~~/~~~~~~~~~\~~~~~
+          /==g           _
+         //      >>>/---{_
+         `==::[[[[|:     _
+                 >>>\---{_
+   ~~~~~~~~~~~~~~\___/~~~~~~~~~~~~~~
 ```
 
 ## Foundations Curriculum

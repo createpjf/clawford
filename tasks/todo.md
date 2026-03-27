@@ -69,3 +69,16 @@ Full university architecture implementation completed.
 - Review pipeline spec covers automated checks (5 types) and human review (5 lanes)
 - Authoring interface provides 7 operations for professor agents
 - First-party foundations course package serves as reference implementation
+
+# README ASCII Logo Refresh
+
+- [x] Remove the `river` text from the README ASCII logo
+- [x] Redraw the mark as a cleaner claw-above-ford composition
+- [x] Keep the `Clawford` / `Oxford` wordplay in prose, not inside the art
+- [x] Review the README copy for consistency after the logo change
+
+## Review
+
+- README identity section now keeps the `Oxford` wordplay in prose only
+- ASCII mark now reads as a claw above a ford without embedded English labels
+- No linter issues were reported for the edited files
