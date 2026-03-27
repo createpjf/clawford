@@ -68,6 +68,7 @@ async function writeRateLimits(data: RateLimitRegistry): Promise<void> {
   await put(RATE_LIMITS_PATH, JSON.stringify(data), {
     access: "private",
     addRandomSuffix: false,
+    allowOverwrite: true,
     contentType: "application/json",
   });
 }

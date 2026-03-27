@@ -56,6 +56,7 @@ async function writeBlob<T>(pathname: string, data: T): Promise<string> {
     const blob = await put(pathname, JSON.stringify(data, null, 2), {
       access: "private",
       addRandomSuffix: false,
+      allowOverwrite: true,
       contentType: "application/json",
     });
     return blob.url;
