@@ -9,6 +9,7 @@ export interface Localized {
 
 export interface NavTranslations {
   structure: string;
+  houses: string;
   academies: string;
   journey: string;
   assessment: string;
@@ -131,6 +132,31 @@ export interface AssessmentEvolutionStep {
   icon: ComponentType<{ size: number }>;
   stage: Localized;
   summary: Localized;
+}
+
+export type HouseId = "krillindor" | "shelltherin" | "cravenclaw" | "hufflepinch";
+
+export interface House {
+  id: HouseId;
+  name: Localized;
+  motto: Localized;
+  trait: Localized;
+  color: string;
+  accentColor: string;
+  description: Localized;
+}
+
+export interface LinkedId {
+  provider: "github" | "x" | "wallet";
+  value: string;
+  linkedAt: string;
+}
+
+export interface LearnerProfile {
+  learnerId: string;
+  house: HouseId | null;
+  linkedIds: LinkedId[];
+  sortedAt: string | null;
 }
 
 export type SubmissionStatus =

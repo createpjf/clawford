@@ -735,6 +735,288 @@ button {
   color: var(--brand-strong);
 }
 
+/* ── Sorting Hat Section ── */
+
+.sorting-hat-input-area {
+  max-width: 36rem;
+  margin: 0 auto;
+}
+
+.sorting-hat-card {
+  text-align: center;
+}
+
+.sorting-hat-icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(255, 140, 66, 0.18), rgba(98, 182, 203, 0.18));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--brand-strong);
+  margin-bottom: 1.2rem;
+}
+
+.sorting-hat-hint {
+  max-width: 30rem;
+  margin: 0.6rem auto 1.4rem;
+  font-size: 0.92rem;
+}
+
+.sorting-hat-form {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.sorting-hat-input {
+  flex: 1;
+  min-width: 14rem;
+  padding: 0.78rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(130, 161, 205, 0.2);
+  background: rgba(9, 19, 30, 0.8);
+  color: #ebf4ff;
+  font: inherit;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.sorting-hat-input:focus {
+  border-color: var(--accent);
+}
+
+.sorting-hat-input::placeholder {
+  color: var(--text-muted);
+}
+
+.sorting-hat-select {
+  padding: 0.78rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(130, 161, 205, 0.2);
+  background: rgba(9, 19, 30, 0.8);
+  color: #ebf4ff;
+  font: inherit;
+  font-size: 0.92rem;
+  cursor: pointer;
+  outline: none;
+}
+
+.sorting-hat-select:focus {
+  border-color: var(--accent);
+}
+
+.sorting-hat-animation {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--brand-strong);
+  font-size: 1.1rem;
+}
+
+.hat-pulse {
+  width: 4rem;
+  height: 4rem;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 179, 71, 0.4), transparent 70%);
+  animation: hatPulse 0.9s ease-in-out infinite alternate;
+}
+
+@keyframes hatPulse {
+  from {
+    transform: scale(0.85);
+    opacity: 0.5;
+  }
+  to {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+.sorting-hat-result {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.house-reveal-card {
+  background: var(--panel);
+  border: 1px solid var(--house-color, var(--panel-border));
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow:
+    0 0 40px color-mix(in srgb, var(--house-color) 15%, transparent),
+    var(--shadow);
+  animation: houseReveal 0.6s ease-out both;
+}
+
+@keyframes houseReveal {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.house-reveal-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.house-color-badge {
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, var(--house-color), var(--house-accent));
+  flex-shrink: 0;
+}
+
+.house-reveal-name {
+  margin: 0;
+  font-size: 1.6rem;
+}
+
+.house-reveal-name-alt {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.house-reveal-motto {
+  font-style: italic;
+  color: var(--house-accent);
+  font-size: 1.05rem;
+  margin: 0.6rem 0;
+}
+
+.house-reveal-trait {
+  display: inline-block;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--house-color) 18%, transparent);
+  border: 1px solid color-mix(in srgb, var(--house-color) 35%, transparent);
+  color: var(--house-accent);
+  font-size: 0.88rem;
+  margin-bottom: 0.8rem;
+}
+
+.house-reveal-description {
+  color: var(--text-soft);
+  line-height: 1.7;
+}
+
+.house-reveal-id {
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(130, 161, 205, 0.1);
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.house-reveal-id code {
+  color: var(--accent);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.sorting-hat-link-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.sorting-hat-link-card h3 {
+  margin: 0;
+}
+
+.sorting-hat-link-card p {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 0.92rem;
+}
+
+.linked-ids-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.sorting-hat-link-form {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.sorting-hat-link-form .sorting-hat-input {
+  flex: 1;
+  min-width: 8rem;
+}
+
+/* ── Houses Grid ── */
+
+.houses-overview h3 {
+  margin-bottom: 1rem;
+}
+
+.houses-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.house-card {
+  border-radius: 1.2rem;
+  padding: 1.25rem;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.house-card:hover {
+  border-color: color-mix(in srgb, var(--house-color) 50%, transparent);
+}
+
+.house-card-active {
+  border-color: var(--house-color);
+  box-shadow: 0 0 24px color-mix(in srgb, var(--house-color) 20%, transparent);
+}
+
+.house-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+}
+
+.house-color-dot {
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 50%;
+  background: var(--house-color);
+  flex-shrink: 0;
+}
+
+.house-card-trait {
+  display: inline-block;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.house-card-motto {
+  font-style: italic;
+  font-size: 0.88rem;
+  color: var(--text-soft);
+  margin: 0.5rem 0 0;
+}
+
 .footer {
   width: min(1200px, calc(100% - 2rem));
   margin: 0 auto;
@@ -749,8 +1031,13 @@ button {
   .course-grid,
   .principles-grid,
   .academy-grid,
-  .layers-grid {
+  .layers-grid,
+  .sorting-hat-result {
     grid-template-columns: 1fr;
+  }
+
+  .houses-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .topbar {
@@ -787,6 +1074,10 @@ button {
   .mobile-nav {
     display: flex;
     order: 4;
+  }
+
+  .houses-grid {
+    grid-template-columns: 1fr;
   }
 
   .hero-actions,

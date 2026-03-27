@@ -7,8 +7,10 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import JourneySection from "@/components/JourneySection";
 import PrinciplesSection from "@/components/PrinciplesSection";
+import SortingHatSection from "@/components/SortingHatSection";
 import StructureSection from "@/components/StructureSection";
 import TerminalSection from "@/components/TerminalSection";
+import { useLearnerProfile } from "@/hooks/useLearnerProfile";
 import translations from "@/i18n";
 import type { Lang } from "@/types";
 
@@ -35,6 +37,7 @@ function App() {
   const [terminalLogs, setTerminalLogs] = useState(INITIAL_LOGS);
   const [completedModules, setCompletedModules] = useState<string[]>([]);
   const [examPassed, setExamPassed] = useState(false);
+  const { profile, sortLearner, addLinkedId } = useLearnerProfile();
 
   const t = translations[lang];
 
@@ -110,6 +113,15 @@ function App() {
           completedModules={completedModules}
           isConnected={isConnected}
           onStudy={handleStudy}
+        />
+
+        <SortingHatSection
+          lang={lang}
+          t={t}
+          profile={profile}
+          onSort={sortLearner}
+          onLinkId={addLinkedId}
+          examPassed={examPassed || profile?.house != null}
         />
 
         <AcademiesSection lang={lang} t={t} />

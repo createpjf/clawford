@@ -3,6 +3,7 @@ import type { Translations } from "@/types";
 const zh: Translations = {
   nav: {
     structure: "大学结构",
+    houses: "四大学院",
     academies: "教授学院",
     journey: "学习旅程",
     assessment: "评测演进",

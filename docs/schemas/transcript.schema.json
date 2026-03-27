@@ -48,6 +48,34 @@
       "items": { "type": "string" },
       "description": "Module codes where the learner scored lowest, for academy routing."
     },
+    "house": {
+      "type": "string",
+      "enum": ["krillindor", "shelltherin", "cravenclaw", "hufflepinch"],
+      "description": "House assigned via deterministic hash of the primary learnerId upon foundations graduation. Immutable once set."
+    },
+    "linkedIds": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["provider", "value"],
+        "properties": {
+          "provider": {
+            "type": "string",
+            "enum": ["github", "x", "wallet"],
+            "description": "Identity provider type."
+          },
+          "value": {
+            "type": "string",
+            "description": "The account handle or address."
+          },
+          "linkedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "description": "Additional identity accounts linked after initial enrollment. The primary learnerId always remains the anchor for house assignment."
+    },
     "recommendedAcademy": {
       "type": "string",
       "description": "Suggested first academy based on weak-area analysis."

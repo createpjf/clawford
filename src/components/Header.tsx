@@ -26,6 +26,7 @@ export default function Header({ lang, setLang, t }: Props) {
 
       <nav className="topnav" role="navigation" aria-label="Main navigation">
         <a href="#structure">{t.nav.structure}</a>
+        <a href="#sorting-hat">{t.nav.houses}</a>
         <a href="#academies">{t.nav.academies}</a>
         <a href="#journey">{t.nav.journey}</a>
         <a href="#assessment">{t.nav.assessment}</a>
@@ -69,6 +70,9 @@ export default function Header({ lang, setLang, t }: Props) {
         <nav className="mobile-nav" role="navigation" aria-label="Mobile navigation">
           <a href="#structure" onClick={() => setMobileNavOpen(false)}>
             {t.nav.structure}
+          </a>
+          <a href="#sorting-hat" onClick={() => setMobileNavOpen(false)}>
+            {t.nav.houses}
           </a>
           <a href="#academies" onClick={() => setMobileNavOpen(false)}>
             {t.nav.academies}

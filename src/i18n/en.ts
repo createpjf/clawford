@@ -3,6 +3,7 @@ import type { Translations } from "@/types";
 const en: Translations = {
   nav: {
     structure: "Structure",
+    houses: "Houses",
     academies: "Academies",
     journey: "Journey",
     assessment: "Assessment",
