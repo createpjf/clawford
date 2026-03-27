@@ -94,3 +94,69 @@ Full university architecture implementation completed.
 - `src/components/Hero.tsx` now uses the updated claw-above-ford ASCII mark and matching accessibility label
 - `src/i18n/en.ts` and `src/i18n/zh.ts` now describe the identity as name-based wordplay with a claw-above-ford symbol
 - `npm run build` succeeds after the homepage identity sync
+
+# Centralized Agent Onboarding And Student Wall
+
+- [x] Define identity-binding contract: `docs/schemas/identity-binding.schema.json` with UID format `CLW-{8hex}`, anchor mapping, displayName, role, house
+- [x] Rename `learnerId` to `uid` across all schemas (transcript, credential, assessment) for universal identity
+- [x] Add Vercel Blob-backed API: `api/admission.ts`, `api/transcript.ts`, `api/progress.ts`, `api/students.ts`
+- [x] Add API lib: `api/_lib/blob.ts` (registry, transcript, wall-index CRUD), `api/_lib/identity.ts` (UID generation, house sorting)
+- [x] Refactor terminal: anchor input + real enrollment instead of simulated timer logs
+- [x] Refactor Sorting Hat: no manual ID entry, display server-issued UID, editable displayName only
+- [x] Move progress to server truth: module completion and exam pass via POST `/api/progress`
+- [x] Add session context: `src/contexts/SessionContext.tsx` (connect, studyModule, takeExam, updateDisplayName, localStorage persistence)
+- [x] Add client-side routing: react-router-dom for `/students` page, Vercel rewrite in `vercel.json`
+- [x] Add homepage student wall section: top-6 by credits from `GET /api/students`
+- [x] Add full `/students` page: ranked table with UID, displayName, house, credits, modules, exam status
+- [x] Update i18n: remove "simulation" wording, add student wall strings in en/zh
+- [x] Update existing tests for new architecture (Router + SessionProvider + mocked fetch)
+- [x] Add new identity/schema tests: UID determinism, house determinism, schema pattern validation
+- [x] Full verification: 0 type errors, 0 lint errors, build succeeds, 34/34 tests pass
+
+## Review
+
+Full centralized onboarding and student wall implementation completed.
+
+- 4 API routes (`admission`, `transcript`, `progress`, `students`) with Vercel Blob persistence
+- Identity binding schema defines UID format, write authority, and Blob storage layout
+- All 3 existing schemas updated: `learnerId` → `uid` for universal identity (students + professors)
+- Terminal section now accepts an anchor input for real enrollment instead of simulated flow
+- Sorting Hat shows server-assigned UID and house with editable displayName only
+- Session context manages connection state, persists anchor in localStorage, and provides API-backed actions
+- Homepage features a student wall highlight section; `/students` page shows a ranked student directory
+- 34 tests pass covering legacy profile hook, new identity logic, schema patterns, App routing, and enrollment flow
+
+# Code Review Fixes (Post-Onboarding)
+
+- [x] C1: Add write mutex for Blob read-modify-write operations to prevent concurrent data loss
+- [x] C2: Add try/catch + error display in all async UI handlers; surface error state in terminal
+- [x] C3: Fix undefined CSS variables (--border -> --panel-border, --muted -> --text-muted)
+- [x] C4: Memoize SessionContext.Provider value to prevent unnecessary full-tree re-renders
+- [x] H1: Add input length limits, UID regex validation, moduleId allow-list on all API endpoints
+- [x] H2: Increase UID hash from 8 to 16 hex chars (32-bit -> 64-bit) and update all schema patterns
+- [x] H3: Add idempotency check on pass-exam (skip if already passed), accept configurable score
+- [x] H4: Document Blob public access limitation; no endpoint exposes registry URL
+- [x] H5: Rewrite identity tests to import actual production generateUid/sortIntoHouse functions
+- [x] H6: Lift language state to App-level so StudentsPage inherits user's language choice
+- [x] M1: Change StudentWallEntry.house type from string to HouseId union; remove unsafe casts
+- [x] M2: Import HouseId in api/_lib/blob.ts for type consistency with frontend types
+- [x] M3: Add sr-only labels to terminal inputs; add ARIA table roles to StudentsPage grid
+- [x] M4: Fix SortingHat state sync (derive nameInput from prop when not editing); cleanup setTimeout
+- [x] M5: Add error/loading states to StudentWallSection and StudentsPage (no more silent swallowing)
+- [x] M6: Translate 4 untranslated section titles in zh.ts to Chinese
+- [x] M7: Add required arrays to assessment schema top-level and transcript assessmentResults items; reconcile house-assignment docs
+- [x] M8: Add prefers-reduced-motion media query for all animations
+- [x] L3: Replace single /students rewrite with SPA catch-all in vercel.json
+- [x] L4: Improve anchor normalization (whitespace collapse)
+- [x] L5: Cap terminal logs at 200 entries to prevent unbounded growth
+- [x] L7: Rename CourseStatus_Display to CourseStatusDisplay (PascalCase consistency)
+- [x] Full verification: 0 type errors, 0 lint errors, build succeeds, 35/35 tests pass
+
+## Review
+
+Code review fixes completed across all 4 phases.
+
+- Security: write mutex, input validation (length limits, UID regex, moduleId allow-list), exam idempotency
+- Correctness: UID collision risk reduced from ~65K to ~4B users, CSS variables fixed, context memoized
+- UX/a11y: error feedback in terminal, ARIA labels/table roles, prefers-reduced-motion, i18n completeness
+- Maintainability: shared language state, HouseId type safety, PascalCase naming, terminal log cap, SPA catch-all

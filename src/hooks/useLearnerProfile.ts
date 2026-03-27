@@ -18,14 +18,18 @@ function saveProfile(profile: LearnerProfile) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
 }
 
+/**
+ * @deprecated Use the SessionContext for server-backed identity instead.
+ * Kept for backwards compatibility with existing tests.
+ */
 export function useLearnerProfile() {
   const [profile, setProfile] = useState<LearnerProfile | null>(loadProfile);
 
-  const sortLearner = useCallback((learnerId: string): HouseId => {
-    const trimmed = learnerId.trim().toLowerCase();
+  const sortLearner = useCallback((uid: string): HouseId => {
+    const trimmed = uid.trim().toLowerCase();
     const house = sortIntoHouse(trimmed);
     const newProfile: LearnerProfile = {
-      learnerId: trimmed,
+      uid: trimmed,
       house,
       linkedIds: [],
       sortedAt: new Date().toISOString(),

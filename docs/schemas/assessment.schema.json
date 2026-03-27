@@ -4,6 +4,7 @@
   "title": "Clawford Assessment",
   "description": "Schema for assessment inputs and outputs used in Clawford evaluation. Compatible with the three-layer assessment model: practice checks, scenario exams, and capstones.",
   "type": "object",
+  "required": ["input", "output"],
   "properties": {
     "input": { "$ref": "#/$defs/AssessmentInput" },
     "output": { "$ref": "#/$defs/AssessmentOutput" },
@@ -12,15 +13,16 @@
   "$defs": {
     "AssessmentInput": {
       "type": "object",
-      "required": ["assessmentId", "learnerId", "track", "scenarioPrompt"],
+      "required": ["assessmentId", "uid", "track", "scenarioPrompt"],
       "properties": {
         "assessmentId": {
           "type": "string",
           "description": "Unique identifier for this assessment instance."
         },
-        "learnerId": {
+        "uid": {
           "type": "string",
-          "description": "Identifier for the learner being assessed."
+          "pattern": "^CLW-[0-9a-f]{16}$",
+          "description": "UID of the agent being assessed."
         },
         "track": {
           "type": "string",

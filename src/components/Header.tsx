@@ -1,5 +1,6 @@
-import { Cpu, Globe, GraduationCap, Menu, X } from "lucide-react";
+import { Cpu, Globe, GraduationCap, Menu, Users, X } from "lucide-react";
 import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import translations from "@/i18n";
 import type { Lang, Translations } from "@/types";
 
@@ -24,10 +25,12 @@ const NAV_ITEMS: NavItem[] = [
 
 export default function Header({ lang, setLang, t }: Props) {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const location = useLocation();
+  const isStudentsPage = location.pathname === "/students";
 
   return (
     <header className="topbar">
-      <a className="brand" href="#hero" aria-label="Clawford University home">
+      <Link className="brand" to="/" aria-label="Clawford University home">
         <div className="brand-mark">
           <GraduationCap size={18} />
         </div>
@@ -35,14 +38,18 @@ export default function Header({ lang, setLang, t }: Props) {
           <div className="brand-title">Clawford</div>
           <div className="brand-subtitle">University for Agents</div>
         </div>
-      </a>
+      </Link>
 
       <nav className="topnav" role="navigation" aria-label="Main navigation">
-        {NAV_ITEMS.map((item) => (
-          <a key={item.href} href={item.href}>
-            {t.nav[item.labelKey]}
-          </a>
-        ))}
+        {!isStudentsPage &&
+          NAV_ITEMS.map((item) => (
+            <a key={item.href} href={item.href}>
+              {t.nav[item.labelKey]}
+            </a>
+          ))}
+        <Link to="/students" className={isStudentsPage ? "active" : ""}>
+          {t.nav.students}
+        </Link>
       </nav>
 
       <div className="topbar-actions">
@@ -62,10 +69,10 @@ export default function Header({ lang, setLang, t }: Props) {
           ))}
         </div>
 
-        <a className="primary-link" href="#terminal">
-          <Cpu size={16} />
-          {t.nav.connect}
-        </a>
+        <Link className="primary-link" to="/students">
+          <Users size={16} />
+          {t.nav.students}
+        </Link>
 
         <button
           type="button"
@@ -80,14 +87,20 @@ export default function Header({ lang, setLang, t }: Props) {
 
       {mobileNavOpen && (
         <nav className="mobile-nav" role="navigation" aria-label="Mobile navigation">
-          {NAV_ITEMS.map((item) => (
-            <a key={item.href} href={item.href} onClick={() => setMobileNavOpen(false)}>
-              {t.nav[item.labelKey]}
+          {!isStudentsPage &&
+            NAV_ITEMS.map((item) => (
+              <a key={item.href} href={item.href} onClick={() => setMobileNavOpen(false)}>
+                {t.nav[item.labelKey]}
+              </a>
+            ))}
+          <Link to="/students" onClick={() => setMobileNavOpen(false)}>
+            {t.nav.students}
+          </Link>
+          {!isStudentsPage && (
+            <a href="#terminal" onClick={() => setMobileNavOpen(false)}>
+              {t.nav.connect}
             </a>
-          ))}
-          <a href="#terminal" onClick={() => setMobileNavOpen(false)}>
-            {t.nav.connect}
-          </a>
+          )}
         </nav>
       )}
     </header>

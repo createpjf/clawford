@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import AssessmentSection from "@/components/AssessmentSection";
 import CourseCatalogSection from "@/components/CourseCatalogSection";
 import CurriculumSection from "@/components/CurriculumSection";
@@ -8,13 +9,15 @@ import Hero from "@/components/Hero";
 import JourneySection from "@/components/JourneySection";
 import PrinciplesSection from "@/components/PrinciplesSection";
 import SortingHatSection from "@/components/SortingHatSection";
+import StudentWallSection from "@/components/StudentWallSection";
+import StudentsPage from "@/components/StudentsPage";
 import StructureSection from "@/components/StructureSection";
 import TerminalSection from "@/components/TerminalSection";
-import { useLearnerProfile } from "@/hooks/useLearnerProfile";
+import { useSession } from "@/contexts/SessionContext";
 import translations from "@/i18n";
 import type { Lang } from "@/types";
 
-const INITIAL_LOGS = [
+const BOOT_LOGS = [
   "> boot clawford://foundations",
   "> scan skill manifest",
   "> hydrate first-party curriculum",
@@ -22,66 +25,96 @@ const INITIAL_LOGS = [
   "> reserve academy candidate profile",
 ];
 
-const FLOW_LOGS = [
-  "> agent accepted: openclaw-freshman-01",
-  "> syncing memories policy",
-  "> loading lessons discipline",
-  "> enabling verifier agent",
-  "> pre-registering academy tracks",
-  "> course graph ready",
-];
+const MAX_TERMINAL_LOGS = 200;
 
-function App() {
-  const [lang, setLang] = useState<Lang>("zh");
-  const [isConnected, setIsConnected] = useState(false);
-  const [terminalLogs, setTerminalLogs] = useState(INITIAL_LOGS);
-  const [completedModules, setCompletedModules] = useState<string[]>([]);
-  const [examPassed, setExamPassed] = useState(false);
-  const { profile, sortLearner, addLinkedId } = useLearnerProfile();
+function appendLogs(prev: string[], ...lines: string[]): string[] {
+  const next = [...prev, ...lines];
+  return next.length > MAX_TERMINAL_LOGS ? next.slice(-MAX_TERMINAL_LOGS) : next;
+}
+
+interface MainSiteProps {
+  lang: Lang;
+  setLang: (lang: Lang) => void;
+}
+
+function MainSite({ lang, setLang }: MainSiteProps) {
+  const {
+    transcript,
+    isLoading,
+    error,
+    connect,
+    studyModule,
+    takeExam,
+    updateDisplayName,
+  } = useSession();
+
+  const [terminalLogs, setTerminalLogs] = useState<string[]>(BOOT_LOGS);
 
   const t = translations[lang];
 
-  useEffect(() => {
+  const isConnected = !!transcript;
+  const completedModules = useMemo(
+    () => transcript?.foundationsStatus.completedModules ?? [],
+    [transcript],
+  );
+  const examPassed = transcript?.foundationsStatus.status === "completed";
+
+  const handleConnect = useCallback(
+    async (anchor: string, displayName?: string) => {
+      setTerminalLogs((prev) => appendLogs(prev, `> connecting: ${anchor}...`));
+      try {
+        await connect(anchor, displayName);
+        setTerminalLogs((prev) =>
+          appendLogs(prev,
+            "> identity verified",
+            `> uid issued: ${anchor}`,
+            "> foundations enrolled",
+            "> course graph ready",
+          ),
+        );
+      } catch (e) {
+        const msg = e instanceof Error ? e.message : "connection failed";
+        setTerminalLogs((prev) => appendLogs(prev, `> ERROR: ${msg}`));
+      }
+    },
+    [connect],
+  );
+
+  const handleStudy = useCallback(
+    async (moduleId: string) => {
+      if (!isConnected || completedModules.includes(moduleId)) return;
+      try {
+        await studyModule(moduleId);
+        setTerminalLogs((prev) =>
+          appendLogs(prev,
+            `> module complete: ${moduleId}`,
+            "> evidence captured: notes + checklist",
+          ),
+        );
+      } catch (e) {
+        const msg = e instanceof Error ? e.message : "module study failed";
+        setTerminalLogs((prev) => appendLogs(prev, `> ERROR: ${msg}`));
+      }
+    },
+    [isConnected, completedModules, studyModule],
+  );
+
+  const handleExam = useCallback(async () => {
     if (!isConnected) return;
-
-    const timers = FLOW_LOGS.map((log, index) =>
-      setTimeout(() => {
-        setTerminalLogs((current) => [...current, log]);
-      }, 500 + index * 550),
-    );
-
-    return () => timers.forEach(clearTimeout);
-  }, [isConnected]);
-
-  const handleConnect = () => {
-    setIsConnected(true);
-    setExamPassed(false);
-    setCompletedModules([]);
-    setTerminalLogs(INITIAL_LOGS);
-  };
-
-  const handleStudy = (moduleId: string) => {
-    if (!isConnected || completedModules.includes(moduleId)) return;
-
-    setCompletedModules((current) => [...current, moduleId]);
-    setTerminalLogs((current) => [
-      ...current,
-      `> module complete: ${moduleId}`,
-      "> evidence captured: notes + checklist",
-    ]);
-  };
-
-  const handleExam = () => {
-    if (!isConnected) return;
-
-    setExamPassed(true);
-    setTerminalLogs((current) => [
-      ...current,
-      "> exam start: scenario-based assessment",
-      "> rubric score: pass",
-      "> graduation granted: clawford foundations",
-    ]);
-  };
+    try {
+      await takeExam();
+      setTerminalLogs((prev) =>
+        appendLogs(prev,
+          "> exam start: scenario-based assessment",
+          "> rubric score: pass (12/14)",
+          "> graduation granted: clawford foundations",
+        ),
+      );
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : "exam submission failed";
+      setTerminalLogs((prev) => appendLogs(prev, `> ERROR: ${msg}`));
+    }
+  }, [isConnected, takeExam]);
 
   return (
     <div className="app-shell">
@@ -101,6 +134,8 @@ function App() {
         <TerminalSection
           t={t}
           isConnected={isConnected}
+          isLoading={isLoading}
+          error={error}
           terminalLogs={terminalLogs}
           examPassed={examPassed}
           onConnect={handleConnect}
@@ -118,17 +153,21 @@ function App() {
         <SortingHatSection
           lang={lang}
           t={t}
-          profile={profile}
-          onSort={sortLearner}
-          onLinkId={addLinkedId}
-          examPassed={examPassed || profile?.house != null}
+          uid={transcript?.uid ?? null}
+          displayName={transcript?.displayName ?? ""}
+          house={transcript?.house ?? null}
+          linkedIds={transcript?.linkedIds ?? []}
+          onUpdateDisplayName={updateDisplayName}
+          examPassed={examPassed || transcript?.house != null}
         />
+
+        <StudentWallSection lang={lang} t={t} />
 
         <CourseCatalogSection
           lang={lang}
           t={t}
           examPassed={examPassed}
-          profile={profile}
+          house={transcript?.house ?? null}
         />
 
         <JourneySection lang={lang} t={t} />
@@ -138,6 +177,17 @@ function App() {
 
       <Footer t={t} />
     </div>
+  );
+}
+
+function App() {
+  const [lang, setLang] = useState<Lang>("zh");
+
+  return (
+    <Routes>
+      <Route path="/students" element={<StudentsPage lang={lang} setLang={setLang} />} />
+      <Route path="*" element={<MainSite lang={lang} setLang={setLang} />} />
+    </Routes>
   );
 }
 

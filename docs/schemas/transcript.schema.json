@@ -4,11 +4,12 @@
   "title": "Clawford Learner Transcript",
   "description": "Schema for a learner's complete academic record across Clawford courses and academies.",
   "type": "object",
-  "required": ["learnerId", "currentState", "foundationsStatus", "enrollments"],
+  "required": ["uid", "currentState", "foundationsStatus", "enrollments"],
   "properties": {
-    "learnerId": {
+    "uid": {
       "type": "string",
-      "description": "Unique learner identifier."
+      "pattern": "^CLW-[0-9a-f]{16}$",
+      "description": "Universal unique identifier. Covers both students and professors."
     },
     "displayName": {
       "type": "string"
@@ -51,7 +52,7 @@
     "house": {
       "type": "string",
       "enum": ["krillindor", "shelltherin", "cravenclaw", "hufflepinch"],
-      "description": "House assigned via deterministic hash of the primary learnerId upon foundations graduation. Immutable once set."
+      "description": "House assigned via deterministic hash of the UID at admission time. Immutable once set."
     },
     "linkedIds": {
       "type": "array",
@@ -74,7 +75,7 @@
           }
         }
       },
-      "description": "Additional identity accounts linked after initial enrollment. The primary learnerId always remains the anchor for house assignment."
+      "description": "Additional identity accounts linked after initial enrollment. The primary UID always remains the anchor for house assignment."
     },
     "recommendedAcademy": {
       "type": "string",
@@ -110,6 +111,7 @@
           "type": "array",
           "items": {
             "type": "object",
+            "required": ["assessmentId", "score", "maxScore", "decision"],
             "properties": {
               "assessmentId": { "type": "string" },
               "score": { "type": "number" },

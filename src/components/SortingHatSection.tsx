@@ -1,14 +1,16 @@
 import { useEffect, useRef, useState } from "react";
-import { AtSign, GitFork, Sparkles, Wallet } from "lucide-react";
+import { AtSign, Check, GitFork, Pencil, Wallet } from "lucide-react";
 import { houseMap, houses } from "@/data/houses";
-import type { HouseId, Lang, LearnerProfile, LinkedId, Translations } from "@/types";
+import type { HouseId, Lang, LinkedId, Translations } from "@/types";
 
 interface Props {
   lang: Lang;
   t: Translations;
-  profile: LearnerProfile | null;
-  onSort: (learnerId: string) => HouseId;
-  onLinkId: (provider: LinkedId["provider"], value: string) => void;
+  uid: string | null;
+  displayName: string;
+  house: HouseId | null;
+  linkedIds: LinkedId[];
+  onUpdateDisplayName: (name: string) => void;
   examPassed: boolean;
 }
 
@@ -24,44 +26,46 @@ const PROVIDER_LABELS: Record<LinkedId["provider"], string> = {
   wallet: "Wallet",
 };
 
-export default function SortingHatSection({ lang, t, profile, onSort, onLinkId, examPassed }: Props) {
-  const [learnerId, setLearnerId] = useState("");
-  const [showResult, setShowResult] = useState(false);
-  const [animating, setAnimating] = useState(false);
-  const [linkProvider, setLinkProvider] = useState<LinkedId["provider"]>("github");
-  const [linkValue, setLinkValue] = useState("");
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+export default function SortingHatSection({
+  lang,
+  t,
+  uid,
+  displayName,
+  house,
+  linkedIds,
+  onUpdateDisplayName,
+  examPassed,
+}: Props) {
+  const [editingName, setEditingName] = useState(false);
+  const [draftName, setDraftName] = useState(displayName);
+  const [saved, setSaved] = useState(false);
+  const savedTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+  const nameInput = editingName ? draftName : displayName;
 
   useEffect(() => {
     return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
+      if (savedTimer.current) clearTimeout(savedTimer.current);
     };
   }, []);
 
-  const isSorted = profile?.house != null;
+  const isSorted = house != null;
   const sh = t.sortingHat;
 
-  const handleSort = () => {
-    const trimmed = learnerId.trim();
-    if (!trimmed) return;
-    setAnimating(true);
-    timerRef.current = setTimeout(() => {
-      onSort(trimmed);
-      setShowResult(true);
-      setAnimating(false);
-      timerRef.current = null;
-    }, 1800);
-  };
+  const houseData = isSorted ? houseMap[house] : null;
 
-  const handleLinkId = () => {
-    const trimmed = linkValue.trim();
-    if (!trimmed) return;
-    onLinkId(linkProvider, trimmed);
-    setLinkValue("");
+  const handleSaveName = () => {
+    const trimmed = draftName.trim();
+    if (!trimmed || trimmed === displayName) {
+      setEditingName(false);
+      return;
+    }
+    onUpdateDisplayName(trimmed);
+    setEditingName(false);
+    setSaved(true);
+    if (savedTimer.current) clearTimeout(savedTimer.current);
+    savedTimer.current = setTimeout(() => setSaved(false), 2000);
   };
-
-  const house = isSorted && profile.house ? houseMap[profile.house] : null;
-  const showSortingForm = (examPassed || isSorted) && !isSorted && !showResult;
 
   return (
     <section id="sorting-hat" className="section">
@@ -70,112 +74,111 @@ export default function SortingHatSection({ lang, t, profile, onSort, onLinkId, 
         <p>{sh.subtitle}</p>
       </div>
 
-      {showSortingForm && (
-        <div className="sorting-hat-input-area">
-          <div className="card sorting-hat-card">
-            <div className="sorting-hat-icon-wrap" aria-hidden="true">
-              <Sparkles size={48} />
-            </div>
-            <h3>{sh.inputTitle}</h3>
-            <p className="sorting-hat-hint">{sh.inputHint}</p>
-            <div className="sorting-hat-form">
-              <input
-                type="text"
-                className="sorting-hat-input"
-                placeholder={sh.inputPlaceholder}
-                value={learnerId}
-                onChange={(e) => setLearnerId(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleSort()}
-              />
-              <button
-                className="button button-primary"
-                onClick={handleSort}
-                disabled={!learnerId.trim() || animating}
-              >
-                {animating ? sh.thinking : sh.sortButton}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {animating && (
-        <div className="sorting-hat-animation" aria-live="polite">
-          <div className="hat-pulse" />
-          <p>{sh.sensing}</p>
-        </div>
-      )}
-
-      {isSorted && house && (
+      {isSorted && houseData && uid && (
         <div className="sorting-hat-result">
           <div
             className="house-reveal-card"
-            style={{
-              "--house-color": house.color,
-              "--house-accent": house.accentColor,
-            } as React.CSSProperties}
+            style={
+              {
+                "--house-color": houseData.color,
+                "--house-accent": houseData.accentColor,
+              } as React.CSSProperties
+            }
           >
             <div className="house-reveal-header">
               <div className="house-color-badge" />
               <div>
-                <h3 className="house-reveal-name">{house.name[lang]}</h3>
+                <h3 className="house-reveal-name">{houseData.name[lang]}</h3>
                 <span className="house-reveal-name-alt">
-                  {lang === "zh" ? house.name.en : house.name.zh}
+                  {lang === "zh" ? houseData.name.en : houseData.name.zh}
                 </span>
               </div>
             </div>
-            <p className="house-reveal-motto">"{house.motto[lang]}"</p>
-            <p className="house-reveal-trait">{house.trait[lang]}</p>
-            <p className="house-reveal-description">{house.description[lang]}</p>
+            <p className="house-reveal-motto">"{houseData.motto[lang]}"</p>
+            <p className="house-reveal-trait">{houseData.trait[lang]}</p>
+            <p className="house-reveal-description">
+              {houseData.description[lang]}
+            </p>
+
             <div className="house-reveal-id">
-              <span>{sh.studentId}: </span>
-              <code>{profile.learnerId}</code>
+              <span>{sh.uid}: </span>
+              <code>{uid}</code>
+            </div>
+
+            <div className="house-reveal-display-name">
+              <span>{sh.displayNameLabel}: </span>
+              {editingName ? (
+                <span className="display-name-edit">
+                  <input
+                    type="text"
+                    className="sorting-hat-input sorting-hat-input-sm"
+                    value={nameInput}
+                    onChange={(e) => setDraftName(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleSaveName()}
+                    placeholder={sh.displayNamePlaceholder}
+                  />
+                  <button
+                    type="button"
+                    className="button button-small button-primary"
+                    onClick={handleSaveName}
+                  >
+                    <Check size={14} />
+                    {sh.displayNameSave}
+                  </button>
+                </span>
+              ) : (
+                <span className="display-name-view">
+                  <strong>{displayName}</strong>
+                  <button
+                    className="button-icon"
+                    onClick={() => {
+                      setDraftName(displayName);
+                      setEditingName(true);
+                    }}
+                    aria-label="Edit display name"
+                  >
+                    <Pencil size={14} />
+                  </button>
+                  {saved && (
+                    <span className="saved-indicator">
+                      <Check size={12} /> {sh.displayNameSaved}
+                    </span>
+                  )}
+                </span>
+              )}
             </div>
           </div>
 
-          <div className="card sorting-hat-link-card">
-            <h3>{sh.linkTitle}</h3>
-            <p>{sh.linkHint}</p>
-            {profile.linkedIds.length > 0 && (
+          {linkedIds.length > 0 && (
+            <div className="card sorting-hat-link-card">
+              <h3>{sh.linkTitle}</h3>
+              <p>{sh.linkHint}</p>
               <div className="linked-ids-list">
-                {profile.linkedIds.map((lid) => {
+                {linkedIds.map((lid) => {
                   const Icon = PROVIDER_ICONS[lid.provider];
                   return (
-                    <span key={`${lid.provider}:${lid.value}`} className="badge-chip">
+                    <span
+                      key={`${lid.provider}:${lid.value}`}
+                      className="badge-chip"
+                    >
                       <Icon size={12} />
                       {lid.value}
                     </span>
                   );
                 })}
               </div>
-            )}
-            <div className="sorting-hat-link-form">
-              <select
-                className="sorting-hat-select"
-                value={linkProvider}
-                onChange={(e) => setLinkProvider(e.target.value as LinkedId["provider"])}
-              >
-                {(Object.keys(PROVIDER_LABELS) as LinkedId["provider"][]).map((p) => (
-                  <option key={p} value={p}>{PROVIDER_LABELS[p]}</option>
-                ))}
-              </select>
-              <input
-                type="text"
-                className="sorting-hat-input"
-                placeholder={sh.linkPlaceholder}
-                value={linkValue}
-                onChange={(e) => setLinkValue(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleLinkId()}
-              />
-              <button
-                className="button button-secondary"
-                onClick={handleLinkId}
-                disabled={!linkValue.trim()}
-              >
-                {sh.linkButton}
-              </button>
             </div>
-          </div>
+          )}
+        </div>
+      )}
+
+      {!examPassed && !isSorted && (
+        <div className="sorting-hat-locked">
+          <p>
+            {lang === "zh"
+              ? "完成 Foundations 通识课后即可查看你的分院结果。"
+              : "Complete Foundations to reveal your house assignment."}
+          </p>
         </div>
       )}
 
@@ -184,11 +187,13 @@ export default function SortingHatSection({ lang, t, profile, onSort, onLinkId, 
           {houses.map((h) => (
             <div
               key={h.id}
-              className={`house-card${isSorted && profile.house === h.id ? " house-card-active" : ""}`}
-              style={{
-                "--house-color": h.color,
-                "--house-accent": h.accentColor,
-              } as React.CSSProperties}
+              className={`house-card${isSorted && house === h.id ? " house-card-active" : ""}`}
+              style={
+                {
+                  "--house-color": h.color,
+                  "--house-accent": h.accentColor,
+                } as React.CSSProperties
+              }
             >
               <div className="house-card-header">
                 <div className="house-color-dot" />

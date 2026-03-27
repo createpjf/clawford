@@ -14,6 +14,7 @@ export interface NavTranslations {
   journey: string;
   assessment: string;
   connect: string;
+  students: string;
 }
 
 export interface HeroTranslations {
@@ -54,6 +55,10 @@ export interface TerminalTranslations {
   idle: string;
   connected: string;
   connectButton: string;
+  anchorPlaceholder: string;
+  anchorHint: string;
+  displayNamePlaceholder: string;
+  connecting: string;
 }
 
 export interface UiTranslations {
@@ -74,17 +79,31 @@ export interface UiTranslations {
 export interface SortingHatTranslations {
   title: string;
   subtitle: string;
-  inputTitle: string;
-  inputHint: string;
-  inputPlaceholder: string;
-  sortButton: string;
-  thinking: string;
-  sensing: string;
-  studentId: string;
+  uid: string;
+  displayNameLabel: string;
+  displayNamePlaceholder: string;
+  displayNameSave: string;
+  displayNameSaved: string;
   linkTitle: string;
   linkHint: string;
   linkPlaceholder: string;
   linkButton: string;
+}
+
+export interface StudentWallTranslations {
+  title: string;
+  subtitle: string;
+  viewAll: string;
+  noStudents: string;
+  totalCredits: string;
+  completedModules: string;
+  examStatus: string;
+  passed: string;
+  inProgress: string;
+  enrolled: string;
+  pageTitle: string;
+  pageSubtitle: string;
+  backHome: string;
 }
 
 export interface Translations {
@@ -94,8 +113,11 @@ export interface Translations {
   sortingHat: SortingHatTranslations;
   terminal: TerminalTranslations;
   ui: UiTranslations;
+  studentWall: StudentWallTranslations;
   footer: string;
 }
+
+// ---- Curriculum ----
 
 export interface CurriculumModule {
   id: string;
@@ -152,6 +174,8 @@ export interface AssessmentEvolutionStep {
   summary: Localized;
 }
 
+// ---- Houses ----
+
 export type HouseId = "krillindor" | "shelltherin" | "cravenclaw" | "hufflepinch";
 
 export interface House {
@@ -164,6 +188,8 @@ export interface House {
   description: Localized;
 }
 
+// ---- Identity & Transcript ----
+
 export interface LinkedId {
   provider: "github" | "x" | "wallet";
   value: string;
@@ -171,11 +197,64 @@ export interface LinkedId {
 }
 
 export interface LearnerProfile {
-  learnerId: string;
+  uid: string;
   house: HouseId | null;
   linkedIds: LinkedId[];
   sortedAt: string | null;
 }
+
+export interface AssessmentResult {
+  assessmentId: string;
+  score: number;
+  maxScore: number;
+  decision: "pass" | "revisit" | "fail";
+  attempt: number;
+  timestamp: string;
+}
+
+export interface CourseStatus {
+  courseId: string;
+  status: "not-started" | "in-progress" | "completed" | "failed";
+  completedModules: string[];
+  totalCreditsEarned: number;
+  assessmentResults: AssessmentResult[];
+  enrolledAt: string;
+  completedAt: string | null;
+}
+
+export interface Credential {
+  credentialId: string;
+  type: "foundation-certificate" | "academy-badge" | "specialist-transcript";
+  issuedAt: string;
+}
+
+export interface Transcript {
+  uid: string;
+  displayName: string;
+  currentState: "applicant" | "freshman" | "foundations-graduate" | "academy-candidate" | "specialist";
+  house: HouseId | null;
+  foundationsStatus: CourseStatus;
+  enrollments: CourseStatus[];
+  credentials: Credential[];
+  weakAreas: string[];
+  linkedIds: LinkedId[];
+  recommendedAcademy: string | null;
+  lastUpdated: string;
+}
+
+export interface StudentWallEntry {
+  uid: string;
+  displayName: string;
+  house: HouseId | null;
+  currentState: string;
+  totalCredits: number;
+  completedModules: number;
+  examPassed: boolean;
+  credentials: number;
+  enrolledAt: string;
+}
+
+// ---- Courses ----
 
 export interface CourseLesson {
   number: number;
@@ -192,7 +271,7 @@ export interface CourseProfessor {
   github?: string;
 }
 
-export type CourseStatus = "reviewed" | "pending";
+export type CourseStatusDisplay = "reviewed" | "pending";
 export type CourseDifficulty = "beginner" | "intermediate" | "advanced";
 
 export interface ElectiveCourse {
@@ -211,6 +290,5 @@ export interface ElectiveCourse {
   lessons: CourseLesson[];
   examIncluded: boolean;
   coursePath: string;
-  status: CourseStatus;
+  status: CourseStatusDisplay;
 }
-

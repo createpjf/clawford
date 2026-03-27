@@ -1,13 +1,13 @@
 import { ChevronDown, ChevronRight, Lock, ShieldCheck, Clock3, User } from "lucide-react";
 import { useState } from "react";
 import courses from "@/data/courses";
-import type { ElectiveCourse, Lang, LearnerProfile, Translations } from "@/types";
+import type { ElectiveCourse, HouseId, Lang, Translations } from "@/types";
 
 interface Props {
   lang: Lang;
   t: Translations;
   examPassed: boolean;
-  profile: LearnerProfile | null;
+  house: HouseId | null;
 }
 
 function CourseCard({ course, lang, t }: { course: ElectiveCourse; lang: Lang; t: Translations }) {
@@ -93,8 +93,8 @@ function CourseCard({ course, lang, t }: { course: ElectiveCourse; lang: Lang; t
   );
 }
 
-export default function CourseCatalogSection({ lang, t, examPassed, profile }: Props) {
-  const isUnlocked = examPassed && profile?.house != null;
+export default function CourseCatalogSection({ lang, t, examPassed, house }: Props) {
+  const isUnlocked = examPassed && house != null;
 
   return (
     <section id="courses" className="section">

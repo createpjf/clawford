@@ -11,6 +11,7 @@ Machine-readable schemas that define the data contracts for the Clawford univers
 | Review Decision | Structured review outcomes for course submissions | [`review-decision.schema.json`](review-decision.schema.json) |
 | Credential | Certificates, badges, and transcripts awarded to learners | [`credential.schema.json`](credential.schema.json) |
 | Transcript | Learner academic record across courses and academies | [`transcript.schema.json`](transcript.schema.json) |
+| Identity Binding | Maps agent anchors to canonical UIDs for admission | [`identity-binding.schema.json`](identity-binding.schema.json) |
 
 ## Schema Version
 

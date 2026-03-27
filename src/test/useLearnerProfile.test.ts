@@ -21,7 +21,7 @@ describe("useLearnerProfile", () => {
 
   it("loads existing profile from localStorage", () => {
     const stored = {
-      learnerId: "alice",
+      uid: "alice",
       house: "krillindor",
       linkedIds: [],
       sortedAt: "2026-01-01T00:00:00.000Z",
@@ -40,12 +40,12 @@ describe("useLearnerProfile", () => {
     });
 
     expect(result.current.profile).not.toBeNull();
-    expect(result.current.profile!.learnerId).toBe("testuser");
+    expect(result.current.profile!.uid).toBe("testuser");
     expect(result.current.profile!.house).toBeTruthy();
     expect(result.current.profile!.linkedIds).toEqual([]);
 
     const persisted = JSON.parse(localStorage.getItem(STORAGE_KEY)!);
-    expect(persisted.learnerId).toBe("testuser");
+    expect(persisted.uid).toBe("testuser");
   });
 
   it("addLinkedId appends a linked account", () => {
