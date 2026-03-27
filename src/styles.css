@@ -1304,13 +1304,68 @@ button {
   }
 }
 
+/* ---- Terminal Skill Guide ---- */
+
+.terminal-skill-guide {
+  margin-top: 1.2rem;
+}
+
+.terminal-skill-guide h3 {
+  font-size: 1rem;
+  margin: 0 0 0.4rem;
+}
+
+.skill-install-box {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  margin-top: 0.5rem;
+  font-family: "SF Mono", "Fira Code", monospace;
+  font-size: 0.85rem;
+  color: var(--brand);
+  user-select: all;
+}
+
+.terminal-manual-section {
+  margin-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 0.75rem;
+}
+
+.manual-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0;
+  transition: color 0.15s;
+}
+
+.manual-toggle:hover {
+  color: var(--text-primary);
+}
+
+.terminal-api-snippet {
+  font-size: 0.78rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  white-space: pre-wrap;
+  word-break: break-all;
+  margin: 0;
+}
+
 /* ---- Terminal Enroll Form ---- */
 
 .terminal-enroll-form {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
-  margin-top: 1rem;
+  margin-top: 0.75rem;
   max-width: 420px;
 }
 

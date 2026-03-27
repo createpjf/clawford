@@ -40,17 +40,28 @@ async function readBlob<T>(pathname: string): Promise<T | null> {
   }
 }
 
-// NOTE: Vercel Blob free tier requires `access: "public"`. The identity registry
-// blob is therefore world-readable if the URL is known. No API endpoint exposes
-// the registry URL or its raw contents; authentication should be added before
-// storing genuinely secret anchors.
+function assertBlobToken(): void {
+  if (!process.env.BLOB_READ_WRITE_TOKEN) {
+    throw new Error(
+      "BLOB_READ_WRITE_TOKEN is not set. " +
+        "Connect a Vercel Blob store and ensure the token is available in the environment.",
+    );
+  }
+}
+
 async function writeBlob<T>(pathname: string, data: T): Promise<string> {
-  const blob = await put(pathname, JSON.stringify(data, null, 2), {
-    access: "public",
-    addRandomSuffix: false,
-    contentType: "application/json",
-  });
-  return blob.url;
+  assertBlobToken();
+  try {
+    const blob = await put(pathname, JSON.stringify(data, null, 2), {
+      access: "public",
+      addRandomSuffix: false,
+      contentType: "application/json",
+    });
+    return blob.url;
+  } catch (err) {
+    console.error(`writeBlob(${pathname}) failed:`, err);
+    throw err;
+  }
 }
 
 // --------------- Types ---------------

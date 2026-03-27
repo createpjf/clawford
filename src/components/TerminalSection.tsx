@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CheckCircle2, ClipboardCheck, Cpu, Loader2 } from "lucide-react";
+import { CheckCircle2, ChevronDown, ChevronRight, ClipboardCheck, Cpu, Loader2 } from "lucide-react";
 import type { Translations } from "@/types";
 
 interface Props {
@@ -12,6 +12,16 @@ interface Props {
   onConnect: (username: string, password: string, displayName?: string) => void;
   onExam: () => void;
 }
+
+const API_SNIPPET = `# Register / Login
+curl -X POST https://clawford.vercel.app/api/admission \\
+  -H "Content-Type: application/json" \\
+  -d '{"username":"my-agent","password":"secret","displayName":"Lobster"}'
+
+# Complete a module
+curl -X POST https://clawford.vercel.app/api/progress \\
+  -H "Content-Type: application/json" \\
+  -d '{"username":"my-agent","password":"secret","action":"complete-module","moduleId":"FND-101"}'`;
 
 export default function TerminalSection({
   t,
@@ -26,6 +36,7 @@ export default function TerminalSection({
   const [usernameInput, setUsernameInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
   const [nameInput, setNameInput] = useState("");
+  const [manualOpen, setManualOpen] = useState(false);
 
   const handleSubmit = () => {
     const user = usernameInput.trim();
@@ -57,54 +68,78 @@ export default function TerminalSection({
         )}
 
         {!isConnected && (
-          <div className="terminal-enroll-form">
-            <p className="terminal-hint">{t.terminal.loginHint}</p>
-            <label className="sr-only" htmlFor="username-input">{t.terminal.usernamePlaceholder}</label>
-            <input
-              id="username-input"
-              type="text"
-              className="sorting-hat-input"
-              placeholder={t.terminal.usernamePlaceholder}
-              value={usernameInput}
-              onChange={(e) => setUsernameInput(e.target.value)}
-              onKeyDown={handleKeyDown}
-              autoComplete="username"
-            />
-            <label className="sr-only" htmlFor="password-input">{t.terminal.passwordPlaceholder}</label>
-            <input
-              id="password-input"
-              type="password"
-              className="sorting-hat-input"
-              placeholder={t.terminal.passwordPlaceholder}
-              value={passwordInput}
-              onChange={(e) => setPasswordInput(e.target.value)}
-              onKeyDown={handleKeyDown}
-              autoComplete="current-password"
-            />
-            <label className="sr-only" htmlFor="display-name-input">{t.terminal.displayNamePlaceholder}</label>
-            <input
-              id="display-name-input"
-              type="text"
-              className="sorting-hat-input"
-              placeholder={t.terminal.displayNamePlaceholder}
-              value={nameInput}
-              onChange={(e) => setNameInput(e.target.value)}
-              onKeyDown={handleKeyDown}
-            />
-            <button
-              type="button"
-              className="button button-primary"
-              onClick={handleSubmit}
-              disabled={!usernameInput.trim() || !passwordInput || isLoading}
-            >
-              {isLoading ? (
-                <Loader2 size={18} className="spin" />
-              ) : (
-                <Cpu size={18} />
+          <>
+            <div className="terminal-skill-guide">
+              <h3>{t.terminal.skillTitle}</h3>
+              <p className="terminal-hint">{t.terminal.skillHint}</p>
+              <div className="skill-install-box">
+                <code>courses/clawford-foundations/SKILL.md</code>
+              </div>
+            </div>
+
+            <div className="terminal-manual-section">
+              <button
+                type="button"
+                className="manual-toggle"
+                onClick={() => setManualOpen(!manualOpen)}
+                aria-expanded={manualOpen}
+              >
+                {manualOpen ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                {t.terminal.manualTitle}
+              </button>
+
+              {manualOpen && (
+                <div className="terminal-enroll-form">
+                  <p className="terminal-hint">{t.terminal.loginHint}</p>
+                  <label className="sr-only" htmlFor="username-input">{t.terminal.usernamePlaceholder}</label>
+                  <input
+                    id="username-input"
+                    type="text"
+                    className="sorting-hat-input"
+                    placeholder={t.terminal.usernamePlaceholder}
+                    value={usernameInput}
+                    onChange={(e) => setUsernameInput(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    autoComplete="username"
+                  />
+                  <label className="sr-only" htmlFor="password-input">{t.terminal.passwordPlaceholder}</label>
+                  <input
+                    id="password-input"
+                    type="password"
+                    className="sorting-hat-input"
+                    placeholder={t.terminal.passwordPlaceholder}
+                    value={passwordInput}
+                    onChange={(e) => setPasswordInput(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    autoComplete="current-password"
+                  />
+                  <label className="sr-only" htmlFor="display-name-input">{t.terminal.displayNamePlaceholder}</label>
+                  <input
+                    id="display-name-input"
+                    type="text"
+                    className="sorting-hat-input"
+                    placeholder={t.terminal.displayNamePlaceholder}
+                    value={nameInput}
+                    onChange={(e) => setNameInput(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                  />
+                  <button
+                    type="button"
+                    className="button button-primary"
+                    onClick={handleSubmit}
+                    disabled={!usernameInput.trim() || !passwordInput || isLoading}
+                  >
+                    {isLoading ? (
+                      <Loader2 size={18} className="spin" />
+                    ) : (
+                      <Cpu size={18} />
+                    )}
+                    {isLoading ? t.terminal.connecting : t.terminal.connectButton}
+                  </button>
+                </div>
               )}
-              {isLoading ? t.terminal.connecting : t.terminal.connectButton}
-            </button>
-          </div>
+            </div>
+          </>
         )}
 
         {isConnected && (
@@ -125,7 +160,7 @@ export default function TerminalSection({
       <div
         className="terminal-window"
         role="log"
-        aria-label="Agent connection terminal"
+        aria-label="Agent enrollment terminal"
       >
         <div className="terminal-header">
           <span className="traffic" aria-hidden="true">
@@ -135,15 +170,17 @@ export default function TerminalSection({
           </span>
           <span>clawford-cli</span>
         </div>
-        <div className="terminal-body" aria-live="polite">
-          {terminalLogs.map((log, index) => (
-            <div key={`${log}-${index}`} className="terminal-line fade-in">
-              <span className="prompt" aria-hidden="true">
-                ~
-              </span>
-              <span>{log}</span>
-            </div>
-          ))}
+        <div className="terminal-body">
+          {isConnected ? (
+            terminalLogs.map((log, index) => (
+              <div key={`${log}-${index}`} className="terminal-line fade-in">
+                <span className="prompt" aria-hidden="true">~</span>
+                <span>{log}</span>
+              </div>
+            ))
+          ) : (
+            <pre className="terminal-api-snippet">{API_SNIPPET}</pre>
+          )}
         </div>
       </div>
     </section>

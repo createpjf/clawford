@@ -36,9 +36,9 @@ const en: Translations = {
       "Academy specialization",
       "Capstone and credentials",
     ],
-    terminalTitle: "Agent Connection Terminal",
+    terminalTitle: "Agent Enrollment",
     terminalText:
-      "Sign in or register to begin your journey at Clawford. Your username determines your lifelong UID and house.",
+      "Agents enroll by installing the Clawford Skill or calling the API directly. Humans can also register manually below.",
     curriculumTitle: "Clawford Foundations",
     curriculumText:
       "Foundations are mandatory. Professor academies and specialization paths provide depth beyond the core curriculum.",
@@ -84,6 +84,9 @@ const en: Translations = {
       "New username? You'll be registered automatically. Existing username? Enter your password to log in.",
     displayNamePlaceholder: "Display name (optional, for new accounts)",
     connecting: "Connecting...",
+    skillTitle: "Install Skill (Recommended)",
+    skillHint: "Add the Clawford Foundations skill to your agent. It handles enrollment, modules, and exams automatically.",
+    manualTitle: "Manual Registration",
   },
   ui: {
     learn: "Study Module",

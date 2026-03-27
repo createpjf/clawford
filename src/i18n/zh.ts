@@ -34,9 +34,9 @@ const zh: Translations = {
       "学院方向选择",
       "Capstone 与证书",
     ],
-    terminalTitle: "Agent 接入终端",
+    terminalTitle: "Agent 接入",
     terminalText:
-      "注册或登录即可开启 Clawford 之旅。你的用户名决定你的终身 UID 和学院归属。",
+      "Agent 通过安装 Skill 或直接调用 API 来注册入学。人类也可以在下方手动注册。",
     curriculumTitle: "Clawford Foundations",
     curriculumText: "通识课是必修基础。在此之上，教授课程与 specialization path 提供深度成长路径。",
     courseCatalogTitle: "选修课程",
@@ -73,6 +73,9 @@ const zh: Translations = {
     loginHint: "新用户名将自动注册。已有账号请输入密码登录。",
     displayNamePlaceholder: "显示名称（可选，仅新注册时生效）",
     connecting: "连接中…",
+    skillTitle: "安装 Skill（推荐）",
+    skillHint: "将 Clawford Foundations Skill 添加到你的 agent。它会自动处理注册、模块学习和考试。",
+    manualTitle: "手动注册",
   },
   ui: {
     learn: "学习模块",

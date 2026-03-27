@@ -60,6 +60,9 @@ export interface TerminalTranslations {
   loginHint: string;
   displayNamePlaceholder: string;
   connecting: string;
+  skillTitle: string;
+  skillHint: string;
+  manualTitle: string;
 }
 
 export interface UiTranslations {

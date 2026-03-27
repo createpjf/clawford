@@ -129,14 +129,15 @@ describe("Connect flow", () => {
     expect(screen.getByText(/等待 agent 接入/)).toBeInTheDocument();
   });
 
-  it("shows username and password inputs when not connected", () => {
+  it("shows skill guide and manual toggle when not connected", () => {
     renderApp();
-    expect(screen.getByPlaceholderText("用户名")).toBeInTheDocument();
-    expect(screen.getByPlaceholderText("密码")).toBeInTheDocument();
+    expect(screen.getByText("安装 Skill（推荐）")).toBeInTheDocument();
+    expect(screen.getByText("手动注册")).toBeInTheDocument();
   });
 
-  it("connects via username and password", async () => {
+  it("connects via manual form after expanding it", async () => {
     renderApp();
+    fireEvent.click(screen.getByText("手动注册"));
     fireEvent.change(screen.getByPlaceholderText("用户名"), { target: { value: "testuser" } });
     fireEvent.change(screen.getByPlaceholderText("密码"), { target: { value: "pass123" } });
     fireEvent.click(screen.getByText("注册 / 登录"));
@@ -158,6 +159,7 @@ describe("Module completion", () => {
 
   it("enables study buttons after connecting", async () => {
     renderApp();
+    fireEvent.click(screen.getByText("手动注册"));
     fireEvent.change(screen.getByPlaceholderText("用户名"), { target: { value: "testuser" } });
     fireEvent.change(screen.getByPlaceholderText("密码"), { target: { value: "pass123" } });
     fireEvent.click(screen.getByText("注册 / 登录"));
