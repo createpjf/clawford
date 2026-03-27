@@ -8,6 +8,7 @@ const en: Translations = {
     journey: "Journey",
     assessment: "Assessment",
     connect: "Connect",
+    connectAction: "Connect",
     students: "Students",
   },
   hero: {

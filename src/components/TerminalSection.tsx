@@ -81,7 +81,7 @@ export default function TerminalSection({
               <h3>{t.terminal.skillTitle}</h3>
               <p className="terminal-hint">{t.terminal.skillHint}</p>
               <div className="skill-install-box">
-                <code>courses/clawford-foundations/SKILL.md</code>
+                <code>https://www.clawford.university/courses/clawford-foundations/SKILL.md</code>
               </div>
             </div>
 

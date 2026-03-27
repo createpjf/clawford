@@ -14,6 +14,7 @@ export interface NavTranslations {
   journey: string;
   assessment: string;
   connect: string;
+  connectAction: string;
   students: string;
 }
 

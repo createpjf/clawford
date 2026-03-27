@@ -1,4 +1,4 @@
-import { Cpu, Globe, GraduationCap, Menu, Users, X } from "lucide-react";
+import { Cpu, Globe, GraduationCap, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import translations from "@/i18n";
@@ -69,10 +69,10 @@ export default function Header({ lang, setLang, t }: Props) {
           ))}
         </div>
 
-        <Link className="primary-link" to="/students">
-          <Users size={16} />
-          {t.nav.students}
-        </Link>
+        <a className="primary-link" href="/#terminal">
+          <Cpu size={16} />
+          {t.nav.connectAction}
+        </a>
 
         <button
           type="button"

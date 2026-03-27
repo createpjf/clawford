@@ -8,6 +8,7 @@ const zh: Translations = {
     journey: "学习旅程",
     assessment: "评测演进",
     connect: "接入学习",
+    connectAction: "点击接入",
     students: "学生墙",
   },
   hero: {
