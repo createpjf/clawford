@@ -158,8 +158,9 @@ export default async function handler(
     });
   } catch (err) {
     console.error("admission error:", err);
+    const detail = isAdmin(req) && err instanceof Error ? err.message : undefined;
     return res
       .status(500)
-      .json({ error: "Internal server error. Please try again." });
+      .json({ error: "Internal server error. Please try again.", detail });
   }
 }
