@@ -1,0 +1,132 @@
+import { ChevronDown, ChevronRight, Lock, ShieldCheck, Clock3, User } from "lucide-react";
+import { useState } from "react";
+import courses from "@/data/courses";
+import type { ElectiveCourse, Lang, LearnerProfile, Translations } from "@/types";
+
+interface Props {
+  lang: Lang;
+  t: Translations;
+  examPassed: boolean;
+  profile: LearnerProfile | null;
+}
+
+function CourseCard({ course, lang, t }: { course: ElectiveCourse; lang: Lang; t: Translations }) {
+  const [expanded, setExpanded] = useState(false);
+  const Icon = course.icon;
+
+  return (
+    <article className={`course-catalog-card theme-${course.theme}`}>
+      <div className="course-catalog-header">
+        <div className="course-catalog-icon">
+          <Icon size={22} />
+        </div>
+        <div className="course-catalog-status">
+          <span className={`status-badge status-${course.status}`}>
+            {course.status === "reviewed" ? (
+              <>
+                <ShieldCheck size={12} />
+                {t.ui.reviewed}
+              </>
+            ) : (
+              <>
+                <Clock3 size={12} />
+                {t.ui.pending}
+              </>
+            )}
+          </span>
+        </div>
+      </div>
+
+      <div className="course-catalog-meta">
+        <span>{course.code}</span>
+        <span>{t.ui.level}: {course.difficulty}</span>
+        <span>{course.language}</span>
+        <span>{t.ui.duration}: {course.totalDuration}</span>
+        <span>{t.ui.credits}: {course.credits}</span>
+      </div>
+
+      <h3>{course.title[lang]}</h3>
+      <p>{course.summary[lang]}</p>
+
+      <div className="course-catalog-professor">
+        <User size={14} />
+        <span>
+          {course.professor.displayName}
+          {course.professor.organization && (
+            <span className="professor-org"> · {course.professor.organization}</span>
+          )}
+        </span>
+      </div>
+
+      {course.lessons.length > 0 && (
+        <div className="course-catalog-lessons">
+          <button
+            type="button"
+            className="lessons-toggle"
+            onClick={() => setExpanded(!expanded)}
+            aria-expanded={expanded}
+            aria-label={`${t.ui.lessons} (${course.lessons.length})`}
+          >
+            {expanded ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+            {t.ui.lessons} ({course.lessons.length})
+          </button>
+
+          {expanded && (
+            <ol className="lessons-list">
+              {course.lessons.map((lesson) => (
+                <li key={lesson.number}>
+                  <span className="lesson-code">{lesson.code}</span>
+                  <span className="lesson-title">{lesson.title[lang]}</span>
+                  <span className="lesson-duration">{lesson.duration}</span>
+                </li>
+              ))}
+            </ol>
+          )}
+        </div>
+      )}
+
+      <button type="button" className="button button-secondary" disabled>
+        <ChevronRight size={18} />
+        {t.ui.exploreCourse}
+      </button>
+    </article>
+  );
+}
+
+export default function CourseCatalogSection({ lang, t, examPassed, profile }: Props) {
+  const isUnlocked = examPassed && profile?.house != null;
+
+  return (
+    <section id="courses" className="section">
+      <div className="section-heading">
+        <h2>{t.sections.courseCatalogTitle}</h2>
+        <p>{t.sections.courseCatalogText}</p>
+      </div>
+
+      <div className={`course-catalog-container ${!isUnlocked ? "course-catalog-locked" : ""}`}>
+        {!isUnlocked && (
+          <div className="course-catalog-overlay" aria-live="polite">
+            <Lock size={32} />
+            <p>{t.sections.courseCatalogLocked}</p>
+          </div>
+        )}
+
+        {courses.length === 0 ? (
+          <div className="course-catalog-empty">
+            <p>
+              {lang === "zh"
+                ? "暂无选修课程。成为第一个贡献课程的开源教授！"
+                : "No elective courses yet. Be the first open-source professor to contribute!"}
+            </p>
+          </div>
+        ) : (
+          <div className="course-catalog-grid">
+            {courses.map((course) => (
+              <CourseCard key={course.id} course={course} lang={lang} t={t} />
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}

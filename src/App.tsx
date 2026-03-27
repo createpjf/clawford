@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import AcademiesSection from "@/components/AcademiesSection";
 import AssessmentSection from "@/components/AssessmentSection";
+import CourseCatalogSection from "@/components/CourseCatalogSection";
 import CurriculumSection from "@/components/CurriculumSection";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
@@ -122,6 +123,13 @@ function App() {
           onSort={sortLearner}
           onLinkId={addLinkedId}
           examPassed={examPassed || profile?.house != null}
+        />
+
+        <CourseCatalogSection
+          lang={lang}
+          t={t}
+          examPassed={examPassed}
+          profile={profile}
         />
 
         <AcademiesSection lang={lang} t={t} />

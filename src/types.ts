@@ -10,6 +10,7 @@ export interface Localized {
 export interface NavTranslations {
   structure: string;
   houses: string;
+  courses: string;
   academies: string;
   journey: string;
   assessment: string;
@@ -37,6 +38,9 @@ export interface SectionTranslations {
   terminalText: string;
   curriculumTitle: string;
   curriculumText: string;
+  courseCatalogTitle: string;
+  courseCatalogText: string;
+  courseCatalogLocked: string;
   academyTitle: string;
   academyText: string;
   journeyTitle: string;
@@ -63,6 +67,11 @@ export interface UiTranslations {
   duration: string;
   level: string;
   credits: string;
+  exploreCourse: string;
+  lessons: string;
+  professor: string;
+  reviewed: string;
+  pending: string;
 }
 
 export interface SortingHatTranslations {
@@ -169,5 +178,42 @@ export interface LearnerProfile {
   house: HouseId | null;
   linkedIds: LinkedId[];
   sortedAt: string | null;
+}
+
+export interface CourseLesson {
+  number: number;
+  code: string;
+  title: Localized;
+  duration: string;
+}
+
+export interface CourseProfessor {
+  id: string;
+  displayName: string;
+  title: Localized;
+  organization?: string;
+  github?: string;
+}
+
+export type CourseStatus = "reviewed" | "pending";
+export type CourseDifficulty = "beginner" | "intermediate" | "advanced";
+
+export interface ElectiveCourse {
+  id: string;
+  code: string;
+  title: Localized;
+  professor: CourseProfessor;
+  academyId?: string;
+  icon: ComponentType<{ size: number }>;
+  theme: string;
+  difficulty: CourseDifficulty;
+  language: string;
+  totalDuration: string;
+  credits: number;
+  summary: Localized;
+  lessons: CourseLesson[];
+  examIncluded: boolean;
+  skillPath: string;
+  status: CourseStatus;
 }
 

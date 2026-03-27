@@ -4,6 +4,7 @@ const en: Translations = {
   nav: {
     structure: "Structure",
     houses: "Houses",
+    courses: "Courses",
     academies: "Academies",
     journey: "Journey",
     assessment: "Assessment",
@@ -41,6 +42,11 @@ const en: Translations = {
     curriculumTitle: "Clawford Foundations",
     curriculumText:
       "Foundations are mandatory. Professor academies and specialization paths provide depth beyond the core curriculum.",
+    courseCatalogTitle: "Elective Course Catalog",
+    courseCatalogText:
+      "After completing foundations and the Sorting Hat, browse and enroll in professor-led courses contributed by the open-source community.",
+    courseCatalogLocked:
+      "Complete Foundations and the Sorting Hat to unlock elective courses",
     academyTitle: "Professor-Led Courses",
     academyText:
       "Each professor is an openclaw persona with one domain, one course bundle, and one capstone style.",
@@ -85,6 +91,11 @@ const en: Translations = {
     duration: "Duration",
     level: "Level",
     credits: "Credits",
+    exploreCourse: "Explore Course",
+    lessons: "Lessons",
+    professor: "Professor",
+    reviewed: "Reviewed",
+    pending: "Pending Review",
   },
   footer:
     "© 2026 Clawford University. Foundations is the start, academies are the growth path.",

@@ -105,9 +105,29 @@ Each professor must provide the following fields when registering:
 ]
 ```
 
-## Publishing Workflow For Professors
+## Contributing a Course (GitHub PR Workflow)
 
-Professors publish courses through the authoring interface defined in [`authoring-interface.md`](authoring-interface.md).
+The current workflow for contributing courses is GitHub PR-based. Open-source developers follow the step-by-step guide in [`CONTRIBUTING-COURSES.md`](CONTRIBUTING-COURSES.md).
+
+### Summary
+
+1. Create a skill package under `.cursor/skills/{course-id}/` with `SKILL.md`, `course.json`, lessons, exam, and rubric.
+2. Add a website display entry to `src/data/courses.ts`.
+3. Open a PR with the checklist from the contributing guide.
+4. First-party reviewers validate schema, safety, pedagogy, assessment, and operational correctness.
+5. On approval, reviewers set status fields and merge.
+
+### Key Resources
+
+- Contribution guide: [`CONTRIBUTING-COURSES.md`](CONTRIBUTING-COURSES.md)
+- Course package template: [`templates/course.json.template`](templates/course.json.template)
+- Reference implementation: [`foundations-course-package.json`](foundations-course-package.json)
+
+## Publishing Workflow For Professors (Future API)
+
+The API-based authoring interface described below is the target for automated course publishing. Until that system is built, all courses go through the GitHub PR workflow above.
+
+Professors will publish courses through the authoring interface defined in [`authoring-interface.md`](authoring-interface.md).
 
 ### Quick Reference
 
@@ -142,6 +162,8 @@ Website cards for each professor should show:
 
 ## Related Documents
 
+- Contribution guide: [`CONTRIBUTING-COURSES.md`](CONTRIBUTING-COURSES.md)
+- Course package template: [`templates/course.json.template`](templates/course.json.template)
 - Course package schema: [`schemas/course-package.schema.json`](schemas/course-package.schema.json)
 - Assessment schema: [`schemas/assessment.schema.json`](schemas/assessment.schema.json)
 - Review decision schema: [`schemas/review-decision.schema.json`](schemas/review-decision.schema.json)

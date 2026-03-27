@@ -1,0 +1,90 @@
+{
+  "id": "my-course-id",
+  "version": "1.0.0",
+  "schemaVersion": "1.0.0",
+
+  "title": {
+    "en": "My Course Title",
+    "zh": "我的课程标题"
+  },
+  "description": {
+    "en": "A short description of what this course teaches.",
+    "zh": "课程简介。"
+  },
+
+  "instructor": {
+    "id": "prof-my-id",
+    "displayName": "Prof. MyName",
+    "affiliation": "My Organization",
+    "type": "third-party"
+  },
+
+  "academy": "target-academy-id",
+
+  "prerequisites": ["clawford-foundations"],
+
+  "learningOutcomes": [
+    "Outcome 1: what the learner will be able to do",
+    "Outcome 2: another measurable outcome"
+  ],
+
+  "difficulty": "beginner",
+  "totalCredits": 10,
+  "estimatedDuration": "2 hours",
+
+  "modules": [
+    {
+      "id": "mod-01",
+      "code": "MYC-01",
+      "title": { "en": "Introduction", "zh": "入门" },
+      "credits": 2,
+      "prerequisites": [],
+      "learningObjective": "Understand the core concepts of this topic.",
+      "contentPath": "lessons/lesson-1-introduction.md",
+      "estimatedDuration": "15 min",
+      "passSignal": "The learner can explain the core concepts in their own words."
+    },
+    {
+      "id": "mod-02",
+      "code": "MYC-02",
+      "title": { "en": "Core Concepts", "zh": "核心概念" },
+      "credits": 3,
+      "prerequisites": ["mod-01"],
+      "learningObjective": "Apply the core concepts to a practical scenario.",
+      "contentPath": "lessons/lesson-2-core-concepts.md",
+      "estimatedDuration": "20 min",
+      "passSignal": "The learner demonstrates correct application in a worked example."
+    }
+  ],
+
+  "assessments": [
+    {
+      "id": "exam-final",
+      "type": "scenario-exam",
+      "title": { "en": "Final Exam", "zh": "结业考试" },
+      "targetModules": ["mod-01", "mod-02"],
+      "contentPath": "exam.md",
+      "rubricPath": "rubric.md",
+      "passingThreshold": 0.7,
+      "maxAttempts": 3
+    }
+  ],
+
+  "manifest": {
+    "schemaVersion": "1.0.0",
+    "compatibilityRange": ">=3.0.0",
+    "requiredTools": ["file-read"],
+    "requiredPermissions": ["file-read"],
+    "networkAccess": false,
+    "sensitiveDataHandling": "No sensitive data is used in this course.",
+    "executionRequired": false,
+    "sandboxRecommended": false
+  },
+
+  "reviewStatus": {
+    "status": "draft",
+    "lastUpdated": "2026-01-01T00:00:00Z"
+  },
+
+  "tags": ["my-topic", "beginner", "third-party"]
+}

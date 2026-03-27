@@ -17,6 +17,7 @@ interface NavItem {
 const NAV_ITEMS: NavItem[] = [
   { href: "#structure", labelKey: "structure" },
   { href: "#sorting-hat", labelKey: "houses" },
+  { href: "#courses", labelKey: "courses" },
   { href: "#academies", labelKey: "academies" },
   { href: "#journey", labelKey: "journey" },
   { href: "#assessment", labelKey: "assessment" },
