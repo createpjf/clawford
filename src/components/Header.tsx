@@ -30,7 +30,6 @@ export default function Header({ lang, setLang, t }: Props) {
         <a href="#academies">{t.nav.academies}</a>
         <a href="#journey">{t.nav.journey}</a>
         <a href="#assessment">{t.nav.assessment}</a>
-        <a href="#deploy">{t.nav.deploy}</a>
       </nav>
 
       <div className="topbar-actions">
@@ -82,9 +81,6 @@ export default function Header({ lang, setLang, t }: Props) {
           </a>
           <a href="#assessment" onClick={() => setMobileNavOpen(false)}>
             {t.nav.assessment}
-          </a>
-          <a href="#deploy" onClick={() => setMobileNavOpen(false)}>
-            {t.nav.deploy}
           </a>
           <a href="#terminal" onClick={() => setMobileNavOpen(false)}>
             {t.nav.connect}

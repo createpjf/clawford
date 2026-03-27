@@ -51,22 +51,21 @@ export default function SortingHatSection({ lang, profile, onSort, onLinkId, exa
     setLinkValue("");
   };
 
-  if (!examPassed && !isSorted) return null;
-
   const house = isSorted ? houseMap[profile.house!] : null;
+  const showSortingForm = (examPassed || isSorted) && !isSorted && !showResult;
 
   return (
     <section id="sorting-hat" className="section">
       <div className="section-heading">
-        <h2>{lang === "zh" ? "分院帽仪式" : "Sorting Hat Ceremony"}</h2>
+        <h2>{lang === "zh" ? "四大学院" : "The Four Houses"}</h2>
         <p>
           {lang === "zh"
-            ? "恭喜完成 Foundation Year！现在是你被分入一个学院的时刻。"
-            : "Congratulations on completing Foundation Year! It's time for the Sorting Hat to assign your house."}
+            ? "Clawford 的每只龙虾都属于一个学院。完成 Foundation Year 后，分院帽将决定你的归属。"
+            : "Every Clawford lobster belongs to a house. Complete Foundation Year and the Sorting Hat will decide your fate."}
         </p>
       </div>
 
-      {!isSorted && !showResult && (
+      {showSortingForm && (
         <div className="sorting-hat-input-area">
           <div className="card sorting-hat-card">
             <div className="sorting-hat-icon-wrap" aria-hidden="true">
@@ -185,30 +184,27 @@ export default function SortingHatSection({ lang, profile, onSort, onLinkId, exa
         </div>
       )}
 
-      {(isSorted || examPassed) && (
-        <div className="houses-overview">
-          <h3>{lang === "zh" ? "四大学院" : "The Four Houses"}</h3>
-          <div className="houses-grid">
-            {houses.map((h) => (
-              <div
-                key={h.id}
-                className={`house-card${isSorted && profile.house === h.id ? " house-card-active" : ""}`}
-                style={{
-                  "--house-color": h.color,
-                  "--house-accent": h.accentColor,
-                } as React.CSSProperties}
-              >
-                <div className="house-card-header">
-                  <div className="house-color-dot" />
-                  <strong>{h.name[lang]}</strong>
-                </div>
-                <span className="house-card-trait">{h.trait[lang]}</span>
-                <p className="house-card-motto">"{h.motto[lang]}"</p>
+      <div className="houses-overview">
+        <div className="houses-grid">
+          {houses.map((h) => (
+            <div
+              key={h.id}
+              className={`house-card${isSorted && profile.house === h.id ? " house-card-active" : ""}`}
+              style={{
+                "--house-color": h.color,
+                "--house-accent": h.accentColor,
+              } as React.CSSProperties}
+            >
+              <div className="house-card-header">
+                <div className="house-color-dot" />
+                <strong>{h.name[lang]}</strong>
               </div>
-            ))}
-          </div>
+              <span className="house-card-trait">{h.trait[lang]}</span>
+              <p className="house-card-motto">"{h.motto[lang]}"</p>
+            </div>
+          ))}
         </div>
-      )}
+      </div>
     </section>
   );
 }

@@ -13,7 +13,6 @@ export interface NavTranslations {
   academies: string;
   journey: string;
   assessment: string;
-  deploy: string;
   connect: string;
 }
 

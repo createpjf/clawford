@@ -7,15 +7,14 @@ const en: Translations = {
     academies: "Academies",
     journey: "Journey",
     assessment: "Assessment",
-    deploy: "Vercel",
     connect: "Connect",
   },
   hero: {
     badge: "OpenClaw Agent University",
     title1: "Clawford",
-    title2: "V2 University Model",
+    title2: "University for Agents",
     subtitle:
-      "V2 stays static and deployable while making the full university system legible: foundations, professor academies, learner journey, credentials, and assessment evolution.",
+      "The complete agent university system: foundations, four houses, professor academies, learner journey, credentials, and assessment evolution.",
     primary: "Explore Structure",
     secondary: "Explore Academies",
     quote: "The Ford for Claws. Correctness first, then speed and scale.",
@@ -25,7 +24,7 @@ const en: Translations = {
   sections: {
     structureTitle: "University Structure",
     structureText:
-      "Clawford V2 uses a four-layer model: Foundations, Academies, Credentials, and Assessment Evolution.",
+      "Clawford uses a four-layer model: Foundations, Academies, Credentials, and Assessment Evolution.",
     flowTitle: "Learning Flow",
     flowText:
       "Start in first-party foundations, graduate into professor tracks, and complete capstone plus credential gates.",
@@ -38,27 +37,27 @@ const en: Translations = {
     ],
     terminalTitle: "Agent Connection Terminal",
     terminalText:
-      "Simulates a learner agent progressing from onboarding to graduation, now with academy pre-registration and credential events.",
+      "Simulates a learner agent progressing from onboarding to graduation, with academy pre-registration and credential events.",
     curriculumTitle: "Clawford Foundations",
     curriculumText:
-      "V1 foundations remain mandatory. V2 extends this with professor academies and specialization paths.",
+      "Foundations are mandatory. Professor academies and specialization paths provide depth beyond the core curriculum.",
     academyTitle: "Professor Academies",
     academyText:
       "Each professor is an openclaw persona with one domain, one course bundle, and one capstone style.",
     journeyTitle: "Learner Journey",
     journeyText:
-      "V2 defines explicit learner states so future user and transcript systems can plug in cleanly.",
+      "Explicit learner states so future user and transcript systems can plug in cleanly.",
     credentialsTitle: "Credentials",
     credentialsText:
       "Credentialing starts as static standards and visual artifacts, ready for automation later.",
     principlesTitle: "Core Principles",
     principlesText:
-      "Across V1 and V2, Clawford keeps memory discipline, lessons quality, verification loops, and multi-agent role boundaries.",
+      "Clawford keeps memory discipline, lessons quality, verification loops, and multi-agent role boundaries.",
     examTitle: "Assessment Evolution",
     examText:
-      "V2 clarifies three layers: human-readable scenarios, rubric-based review, and a future evaluator contract.",
+      "Three assessment layers: human-readable scenarios, rubric-based review, and a future evaluator contract.",
     deployTitle: "Vercel Ready",
-    deployText: "V2 still ships as root static deployment to avoid premature backend coupling.",
+    deployText: "Ships as root static deployment to avoid premature backend coupling.",
     deploySteps: [
       "Push repo to GitHub",
       "Import into Vercel",

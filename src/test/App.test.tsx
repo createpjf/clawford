@@ -13,21 +13,21 @@ describe("App", () => {
 
   it("defaults to Chinese language", () => {
     render(<App />);
-    expect(screen.getByText("龙虾智能体大学 V2")).toBeInTheDocument();
+    expect(screen.getByText("龙虾智能体大学")).toBeInTheDocument();
   });
 
   it("switches language to English", () => {
     render(<App />);
     fireEvent.click(screen.getByLabelText("Switch to EN"));
-    expect(screen.getByText("V2 University Model")).toBeInTheDocument();
+    expect(screen.getByText(/Correctness first, then speed and scale/)).toBeInTheDocument();
   });
 
   it("switches language back to Chinese", () => {
     render(<App />);
     fireEvent.click(screen.getByLabelText("Switch to EN"));
-    expect(screen.getByText("V2 University Model")).toBeInTheDocument();
+    expect(screen.getByText(/Correctness first, then speed and scale/)).toBeInTheDocument();
     fireEvent.click(screen.getByLabelText("Switch to ZH"));
-    expect(screen.getByText("龙虾智能体大学 V2")).toBeInTheDocument();
+    expect(screen.getByText("龙虾智能体大学")).toBeInTheDocument();
   });
 });
 
