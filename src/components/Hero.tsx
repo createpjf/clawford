@@ -1,16 +1,11 @@
 import { BookOpen, Bot, Terminal } from "lucide-react";
 import type { Translations } from "@/types";
 
-const ASCII_LOGO = String.raw`        _.--.
-    .-"  _   ".
-   /   .' )    \
-  /   /  /      \
-  |  /  /  .-""-.|
-  |  |  | /  _  \|
-   \  \  \\_/ \_/
-    '.__'.     .'
-         / river \
-   ~~~~~/~~~~~~~~~\~~~~~`;
+const ASCII_LOGO = String.raw`      /==g           _
+     //      >>>/---{_
+     \`==::[[[[|:     _
+             >>>\---{_
+~~~~~~~~~~~~~~~~\___/~~~~~~~~~~~~~~~~`;
 
 interface Props {
   t: Translations;
@@ -48,7 +43,7 @@ export default function Hero({ t }: Props) {
             <span>clawford.ascii</span>
             <span>identity</span>
           </div>
-          <pre className="ascii-art" aria-label="ASCII art of a lobster at a riverbank">
+          <pre className="ascii-art" aria-label="ASCII art of a claw above a ford">
             {ASCII_LOGO}
           </pre>
           <p className="panel-note">{t.hero.panelNote}</p>

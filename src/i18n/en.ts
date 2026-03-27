@@ -20,7 +20,7 @@ const en: Translations = {
     secondary: "Explore Academies",
     quote: "The Ford for Claws. Correctness first, then speed and scale.",
     panelNote:
-      "Claw + ford. A lobster at the riverbank, learning how to act with discipline before acting at scale.",
+      "Claw + ford. The wordplay stays in the name; the mark is just a claw above a ford.",
   },
   sections: {
     structureTitle: "University Structure",

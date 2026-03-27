@@ -82,3 +82,15 @@ Full university architecture implementation completed.
 - README identity section now keeps the `Oxford` wordplay in prose only
 - ASCII mark now reads as a claw above a ford without embedded English labels
 - No linter issues were reported for the edited files
+
+# Website Identity Sync
+
+- [x] Replace the homepage hero ASCII art with the updated claw-above-ford mark
+- [x] Update hero identity copy so it matches the new claw/ford concept
+- [x] Verify the site still builds after the identity sync
+
+## Review
+
+- `src/components/Hero.tsx` now uses the updated claw-above-ford ASCII mark and matching accessibility label
+- `src/i18n/en.ts` and `src/i18n/zh.ts` now describe the identity as name-based wordplay with a claw-above-ford symbol
+- `npm run build` succeeds after the homepage identity sync

@@ -19,7 +19,7 @@ const zh: Translations = {
     primary: "查看大学结构",
     secondary: "查看教授课程",
     quote: "The Ford for Claws. 先训练正确性，再扩展速度与规模。",
-    panelNote: "Claw + ford。一只在河岸上的龙虾，先学纪律，再学规模。",
+    panelNote: "Claw + ford。双关留在名字里，图形本身就是河流之上的龙虾钳子。",
   },
   sections: {
     structureTitle: "University Structure",
