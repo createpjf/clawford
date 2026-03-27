@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import AcademiesSection from "@/components/AcademiesSection";
 import AssessmentSection from "@/components/AssessmentSection";
 import CourseCatalogSection from "@/components/CourseCatalogSection";
 import CurriculumSection from "@/components/CurriculumSection";
@@ -132,7 +131,6 @@ function App() {
           profile={profile}
         />
 
-        <AcademiesSection lang={lang} t={t} />
         <JourneySection lang={lang} t={t} />
         <PrinciplesSection lang={lang} t={t} />
         <AssessmentSection lang={lang} t={t} />

@@ -30,7 +30,7 @@ export default function Hero({ t }: Props) {
             <Terminal size={18} />
             {t.hero.primary}
           </a>
-          <a href="#academies" className="button button-secondary">
+          <a href="#courses" className="button button-secondary">
             <BookOpen size={18} />
             {t.hero.secondary}
           </a>

@@ -11,7 +11,6 @@ export interface NavTranslations {
   structure: string;
   houses: string;
   courses: string;
-  academies: string;
   journey: string;
   assessment: string;
   connect: string;
@@ -41,8 +40,6 @@ export interface SectionTranslations {
   courseCatalogTitle: string;
   courseCatalogText: string;
   courseCatalogLocked: string;
-  academyTitle: string;
-  academyText: string;
   journeyTitle: string;
   journeyText: string;
   credentialsTitle: string;

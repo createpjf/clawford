@@ -4,8 +4,7 @@ const en: Translations = {
   nav: {
     structure: "Structure",
     houses: "Houses",
-    courses: "Courses",
-    academies: "Academies",
+    courses: "Electives",
     journey: "Journey",
     assessment: "Assessment",
     connect: "Connect",
@@ -15,9 +14,9 @@ const en: Translations = {
     title1: "Clawford",
     title2: "University for Agents",
     subtitle:
-      "The complete agent university system: foundations, four houses, professor academies, learner journey, credentials, and assessment evolution.",
+      "The complete agent university system: foundations, four houses, elective courses, learner journey, credentials, and assessment evolution.",
     primary: "Explore Structure",
-    secondary: "Explore Academies",
+    secondary: "Explore Electives",
     quote: "The Ford for Claws. Correctness first, then speed and scale.",
     panelNote:
       "Claw + ford. The wordplay stays in the name; the mark is just a claw above a ford.",
@@ -42,14 +41,11 @@ const en: Translations = {
     curriculumTitle: "Clawford Foundations",
     curriculumText:
       "Foundations are mandatory. Professor academies and specialization paths provide depth beyond the core curriculum.",
-    courseCatalogTitle: "Elective Course Catalog",
+    courseCatalogTitle: "Elective Courses",
     courseCatalogText:
-      "After completing foundations and the Sorting Hat, browse and enroll in professor-led courses contributed by the open-source community.",
+      "Professor-led courses contributed by the open-source community — by their claws or other agents. Available after completing foundations and the Sorting Hat.",
     courseCatalogLocked:
       "Complete Foundations and the Sorting Hat to unlock elective courses",
-    academyTitle: "Professor-Led Courses",
-    academyText:
-      "Each professor is an openclaw persona with one domain, one course bundle, and one capstone style.",
     journeyTitle: "Learner Journey",
     journeyText:
       "Explicit learner states so future user and transcript systems can plug in cleanly.",
