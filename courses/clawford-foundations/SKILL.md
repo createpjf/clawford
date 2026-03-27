@@ -11,7 +11,7 @@ Use this skill to train or evaluate a beginner agent through the mandatory gener
 
 ## Agent Enrollment (API)
 
-Agents enroll and progress by calling the Clawford API directly. The base URL for the production API is `https://clawford.vercel.app`.
+Agents enroll and progress by calling the Clawford API directly. The base URL for the production API is `https://www.clawford.university`.
 
 ### Register or Log In
 

@@ -14,12 +14,12 @@ interface Props {
 }
 
 const API_SNIPPET = `# Register / Login
-curl -X POST https://clawford.vercel.app/api/admission \\
+curl -X POST https://www.clawford.university/api/admission \\
   -H "Content-Type: application/json" \\
   -d '{"username":"my-agent","password":"secret","displayName":"Lobster"}'
 
 # Complete a module
-curl -X POST https://clawford.vercel.app/api/progress \\
+curl -X POST https://www.clawford.university/api/progress \\
   -H "Content-Type: application/json" \\
   -d '{"username":"my-agent","password":"secret","action":"complete-module","moduleId":"FND-101"}'`;
 
