@@ -1,8 +1,8 @@
 # FLock 101 — Final Exam / 结业考试
 
-**Total questions / 总题数:** 25  
+**Total questions / 总题数:** 30  
 **Format:** Open-book, open-docs / 开卷考试  
-**Passing score / 及格分数:** 70% (18/25 correct)
+**Passing score / 及格分数:** 70% (21/30 correct)
 
 ---
 
@@ -150,7 +150,7 @@
 
 ---
 
-## Section B: Short Answer / 简答题 (5 questions / 5题)
+## Section B: Short Answer / 简答题 (5 questions / 5题, Q21-Q25)
 
 **21. 用两句话解释 AI Arena 和 FL Alliance 的区别。/ In two sentences, explain the difference between AI Arena and FL Alliance.**
 
@@ -172,9 +172,55 @@
 
 ---
 
+## Section C: FOMO 专题 / FOMO Special (5 questions / 5题, Q26-Q30)
+
+**26. FOMO 将哪三个要素连接到一个确定性的系统中？/ What three elements does FOMO connect in one deterministic system?**
+
+---
+
+**27. 如果一个 RMO 在 7 天内未达到最低筹款目标，会发生什么？/ What happens if an RMO doesn't meet its minimum fundraising target within 7 days?**
+
+---
+
+**28. 用户质押 Model Token ($MT) 能获得什么好处？/ What benefits do users get by staking Model Token ($MT)?**
+
+---
+
+**29. 请按顺序描述 FOMO 的经济闭环。/ Describe FOMO's closed economic loop in order.**
+
+---
+
+**30. RMA Issuer、Supporters、Users 在 FOMO 中各自的角色是什么？请各用一句话描述。/ What are the respective roles of RMA Issuers, Supporters, and Users in FOMO? One sentence each.**
+
+---
+
 ## Answer Key / 答案
+
+### Section A: Multiple Choice
 
 1. B | 2. B | 3. C | 4. C | 5. C | 6. C | 7. C | 8. B | 9. B | 10. C  
 11. C | 12. B | 13. B | 14. B | 15. C | 16. B | 17. B | 18. C | 19. C | 20. B
 
-**Q23 Answer / 答案:** Delegator receives **425 FLOCK** (500 × 85%). Validator keeps 75 FLOCK.
+### Section B: Short Answer
+
+**Q21 (5pts):** AI Arena 是竞技性模型训练（公开数据集，Kaggle 风格）；FL Alliance 是协作微调（私有数据，从不离开源头）。AI Arena = 竞争，FL Alliance = 合作。
+
+**Q22 (5pts):** 质押确保 Training Nodes 和 Validators 有真正的经济利益——如果表现不佳或行为不端，质押的代币会被 Slash，创造财务激励使其为网络最佳利益行事。
+
+**Q23 (5pts):** 425 FLOCK (500 × 85%)。Validator 获得 75 FLOCK (500 × 15%)。
+
+**Q24 (5pts):** (1) 质押被 Slash（燃烧或分配给诚实参与者）；(2) 被暂时或永久禁止参与未来任务；(3) 声誉分数受损。
+
+**Q25 (5pts):** Training Nodes 在 AI Arena 公开数据集上竞争训练最佳模型，Validators 对提交进行评分。冠军模型进入 FL Alliance，用参与组织的私有数据协作微调（数据永不离开源头）。最后，精炼的模型发布到 AI Marketplace，开发者可通过 OpenAI 兼容 API 访问。
+
+### Section C: FOMO
+
+**Q26 (5pts):** 模型部署 + 推理使用 + 代币激励 (Model deployment + Inference usage + Token incentives)
+
+**Q27 (5pts):** 部署不继续，预付款项可赎回（不含平台费）。没有达到最低门槛，代币不会被铸造。
+
+**Q28 (5pts):** 质押 MT = 解锁折扣推理费用；质押的代币从流通中移除（reinforcing supply discipline）；获得协议级 $FLOCK 排放激励。
+
+**Q29 (5pts):** Builders 发行真实模型 → Users 消费推理 → Usage 产生收入 → Revenue 驱动回购 + 奖励贡献者 → 没有 Usage = 没有 Rewards（No Usage = No Rewards）
+
+**Q30 (5pts):** RMA Issuer = 发起并运营模型部署，赚取推理收入分成；Supporters = 在发行阶段提供早期资金，换取早期 MT 敞口；Users = 消费推理并通过质押 MT 获得折扣。

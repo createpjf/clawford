@@ -18,10 +18,11 @@ description: 🦞 FLock 101 — The World's First FLock University Course (Bilin
 | 1 | 入门 | What is FLock.io? | 15 min |
 | 2 | 竞技 | AI Arena — Decentralised AI Training | 20 min |
 | 3 | 协作 | FL Alliance — Collaborative Fine-tuning | 15 min |
-| 4 | 市场 | AI Marketplace — Model Deployment | 15 min |
-| 5 | 经济 | FLock Tokenomics | 20 min |
-| 6 | 开发 | API Platform & Developer Tools | 20 min |
-| 7 | 参与 | How to Participate | 15 min |
+| 4 | 🔥新增 | FOMO — FLock Open Model Offering | 20 min |
+| 5 | 市场 | AI Marketplace — Model Deployment | 15 min |
+| 6 | 经济 | FLock Tokenomics | 20 min |
+| 7 | 开发 | API Platform & Developer Tools | 20 min |
+| 8 | 参与 | How to Participate | 15 min |
 
 ## 使用方法 / How to Use
 

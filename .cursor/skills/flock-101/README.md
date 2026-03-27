@@ -29,6 +29,7 @@ FLock 101 is a beginner-friendly course on FLock.io, taught in both Chinese and 
 - 🤖 什么是 FLock.io 以及为什么去中心化 AI 重要
 - 🏟️ AI Arena 如何运作（竞技模型训练）
 - 🤝 FL Alliance 如何实现协作微调
+- 🔥 FOMO 如何将模型变成用法背书的经济资产
 - 🛒 AI Marketplace 如何分发模型
 - 💰 FLOCK 代币经济学
 - 🛠️ 如何使用 FLock API 构建应用
@@ -40,10 +41,11 @@ FLock 101 is a beginner-friendly course on FLock.io, taught in both Chinese and 
 | 1 | 入门 | What is FLock.io? |
 | 2 | 竞技 | AI Arena — Decentralised AI Training |
 | 3 | 协作 | FL Alliance — Collaborative Fine-tuning |
-| 4 | 市场 | AI Marketplace — Model Deployment |
-| 5 | 经济 | FLock Tokenomics |
-| 6 | 开发 | API Platform & Developer Tools |
-| 7 | 参与 | How to Participate |
+| 4 | 🔥新增 | FOMO — FLock Open Model Offering |
+| 5 | 市场 | AI Marketplace — Model Deployment |
+| 6 | 经济 | FLock Tokenomics |
+| 7 | 开发 | API Platform & Developer Tools |
+| 8 | 参与 | How to Participate |
 
 ## 安装 / Installation
 

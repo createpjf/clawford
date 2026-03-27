@@ -68,7 +68,25 @@ By the end of this course, students will be able to:
 
 ---
 
-### Lesson 4: AI Marketplace — 模型部署 / Model Deployment
+### Lesson 4: 🔥 FOMO — FLock Open Model Offering
+**目标：** 理解 FOMO 如何将 AI 模型变成用法背书的经济资产 / Understand how FOMO turns AI models into usage-backed economic assets
+
+关键问题 / Key questions:
+- FOMO 的四层架构是什么？/ What are FOMO's four layers?
+- RMA Issuer、Supporters、Users 的区别？/ What's the difference between RMA Issuers, Supporters, and Users?
+- FOMO 的经济闭环是什么？/ What is FOMO's closed economic loop?
+- 什么是 RMO？为什么它重要？/ What is an RMO and why does it matter?
+
+阅读 / Readings:
+- `flock-docs/flock-products/fomo.md`
+- `flock-docs/flock-products/fomo/participants.md`
+- `flock-docs/flock-products/fomo/launch-lifecycle-deep-dive/1.-launch-initiation.md`
+
+知识检验 / Knowledge check: 一句话解释 FOMO 的核心设计原则 + 举一个你可以作为 Supporters 参与的例子。
+
+---
+
+### Lesson 5: AI Marketplace — 模型部署 / Model Deployment
 **目标：** 理解训练好的模型如何触达终端用户 / Understand how trained models reach end users
 
 关键问题 / Key questions:
@@ -82,7 +100,7 @@ By the end of this course, students will be able to:
 
 ---
 
-### Lesson 5: FLock 代币经济学 / FLock Tokenomics
+### Lesson 6: FLock 代币经济学 / FLock Tokenomics
 **目标：** 理解 FLOCK 代币在生态中的角色 / Understand the FLOCK token's role in the ecosystem
 
 关键问题 / Key questions:
@@ -97,7 +115,7 @@ By the end of this course, students will be able to:
 
 ---
 
-### Lesson 6: API 平台与开发者工具 / API Platform & Developer Tools
+### Lesson 7: API 平台与开发者工具 / API Platform & Developer Tools
 **目标：** 学习使用 FLock API 构建应用 / Learn to build with FLock's API
 
 关键问题 / Key questions:
@@ -113,7 +131,7 @@ By the end of this course, students will be able to:
 
 ---
 
-### Lesson 7: 如何参与 / How to Participate
+### Lesson 8: 如何参与 / How to Participate
 **目标：** 了解参与 FLock 生态的路径 / Know the paths to participate in the FLock ecosystem
 
 关键问题 / Key questions:
