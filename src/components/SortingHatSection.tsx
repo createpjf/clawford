@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AtSign, GitFork, Sparkles, Wallet } from "lucide-react";
 import { houseMap, houses } from "@/data/houses";
 import type { HouseId, Lang, LearnerProfile, LinkedId, Translations } from "@/types";
@@ -24,23 +24,32 @@ const PROVIDER_LABELS: Record<LinkedId["provider"], string> = {
   wallet: "Wallet",
 };
 
-export default function SortingHatSection({ lang, profile, onSort, onLinkId, examPassed }: Props) {
+export default function SortingHatSection({ lang, t, profile, onSort, onLinkId, examPassed }: Props) {
   const [learnerId, setLearnerId] = useState("");
   const [showResult, setShowResult] = useState(false);
   const [animating, setAnimating] = useState(false);
   const [linkProvider, setLinkProvider] = useState<LinkedId["provider"]>("github");
   const [linkValue, setLinkValue] = useState("");
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
 
   const isSorted = profile?.house != null;
+  const sh = t.sortingHat;
 
   const handleSort = () => {
     const trimmed = learnerId.trim();
     if (!trimmed) return;
     setAnimating(true);
-    setTimeout(() => {
+    timerRef.current = setTimeout(() => {
       onSort(trimmed);
       setShowResult(true);
       setAnimating(false);
+      timerRef.current = null;
     }, 1800);
   };
 
@@ -51,18 +60,14 @@ export default function SortingHatSection({ lang, profile, onSort, onLinkId, exa
     setLinkValue("");
   };
 
-  const house = isSorted ? houseMap[profile.house!] : null;
+  const house = isSorted && profile.house ? houseMap[profile.house] : null;
   const showSortingForm = (examPassed || isSorted) && !isSorted && !showResult;
 
   return (
     <section id="sorting-hat" className="section">
       <div className="section-heading">
-        <h2>{lang === "zh" ? "四大学院" : "The Four Houses"}</h2>
-        <p>
-          {lang === "zh"
-            ? "Clawford 的每只龙虾都属于一个学院。完成 Foundation Year 后，分院帽将决定你的归属。"
-            : "Every Clawford lobster belongs to a house. Complete Foundation Year and the Sorting Hat will decide your fate."}
-        </p>
+        <h2>{sh.title}</h2>
+        <p>{sh.subtitle}</p>
       </div>
 
       {showSortingForm && (
@@ -71,17 +76,13 @@ export default function SortingHatSection({ lang, profile, onSort, onLinkId, exa
             <div className="sorting-hat-icon-wrap" aria-hidden="true">
               <Sparkles size={48} />
             </div>
-            <h3>{lang === "zh" ? "请输入你的主身份 ID" : "Enter your Primary Identity"}</h3>
-            <p className="sorting-hat-hint">
-              {lang === "zh"
-                ? "这将成为你的永久学号。无论换设备还是清缓存，用同一个 ID 永远能找回你的学院。"
-                : "This becomes your permanent student ID. Same ID always maps to the same house, across devices."}
-            </p>
+            <h3>{sh.inputTitle}</h3>
+            <p className="sorting-hat-hint">{sh.inputHint}</p>
             <div className="sorting-hat-form">
               <input
                 type="text"
                 className="sorting-hat-input"
-                placeholder={lang === "zh" ? "GitHub 用户名 / X 账号 / 钱包地址" : "GitHub username / X handle / wallet address"}
+                placeholder={sh.inputPlaceholder}
                 value={learnerId}
                 onChange={(e) => setLearnerId(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSort()}
@@ -91,9 +92,7 @@ export default function SortingHatSection({ lang, profile, onSort, onLinkId, exa
                 onClick={handleSort}
                 disabled={!learnerId.trim() || animating}
               >
-                {animating
-                  ? lang === "zh" ? "分院帽正在思考…" : "The hat is thinking…"
-                  : lang === "zh" ? "开始分院" : "Sort Me"}
+                {animating ? sh.thinking : sh.sortButton}
               </button>
             </div>
           </div>
@@ -103,7 +102,7 @@ export default function SortingHatSection({ lang, profile, onSort, onLinkId, exa
       {animating && (
         <div className="sorting-hat-animation" aria-live="polite">
           <div className="hat-pulse" />
-          <p>{lang === "zh" ? "分院帽正在感应你的本质…" : "The Sorting Hat is sensing your essence…"}</p>
+          <p>{sh.sensing}</p>
         </div>
       )}
 
@@ -129,18 +128,14 @@ export default function SortingHatSection({ lang, profile, onSort, onLinkId, exa
             <p className="house-reveal-trait">{house.trait[lang]}</p>
             <p className="house-reveal-description">{house.description[lang]}</p>
             <div className="house-reveal-id">
-              <span>{lang === "zh" ? "学号" : "Student ID"}: </span>
+              <span>{sh.studentId}: </span>
               <code>{profile.learnerId}</code>
             </div>
           </div>
 
           <div className="card sorting-hat-link-card">
-            <h3>{lang === "zh" ? "绑定更多账号" : "Link Additional Accounts"}</h3>
-            <p>
-              {lang === "zh"
-                ? "绑定其他平台账号不会影响你的学院归属。"
-                : "Linking more accounts won't change your house assignment."}
-            </p>
+            <h3>{sh.linkTitle}</h3>
+            <p>{sh.linkHint}</p>
             {profile.linkedIds.length > 0 && (
               <div className="linked-ids-list">
                 {profile.linkedIds.map((lid) => {
@@ -167,7 +162,7 @@ export default function SortingHatSection({ lang, profile, onSort, onLinkId, exa
               <input
                 type="text"
                 className="sorting-hat-input"
-                placeholder={lang === "zh" ? "账号 / 地址" : "Handle / address"}
+                placeholder={sh.linkPlaceholder}
                 value={linkValue}
                 onChange={(e) => setLinkValue(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleLinkId()}
@@ -177,7 +172,7 @@ export default function SortingHatSection({ lang, profile, onSort, onLinkId, exa
                 onClick={handleLinkId}
                 disabled={!linkValue.trim()}
               >
-                {lang === "zh" ? "绑定" : "Link"}
+                {sh.linkButton}
               </button>
             </div>
           </div>

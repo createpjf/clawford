@@ -661,6 +661,18 @@ button {
   background: linear-gradient(135deg, #ff7a8c, #f45d72);
 }
 
+.theme-orange .course-icon {
+  background: linear-gradient(135deg, #f97316, #ea580c);
+}
+
+.theme-red .course-icon {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.theme-sky .course-icon {
+  background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+}
+
 .principle-head {
   display: flex;
   align-items: center;
@@ -782,7 +794,6 @@ button {
   color: #ebf4ff;
   font: inherit;
   font-size: 0.95rem;
-  outline: none;
   transition: border-color 0.2s;
 }
 
@@ -803,7 +814,6 @@ button {
   font: inherit;
   font-size: 0.92rem;
   cursor: pointer;
-  outline: none;
 }
 
 .sorting-hat-select:focus {

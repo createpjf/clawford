@@ -59,22 +59,3 @@ export const assessmentEvolution: AssessmentEvolutionStep[] = [
   },
 ];
 
-export const docs: string[] = [
-  ".cursor/skills/clawford-foundations/SKILL.md",
-  ".cursor/skills/clawford-foundations/curriculum.md",
-  ".cursor/skills/clawford-foundations/modules/ (8 module files)",
-  ".cursor/skills/clawford-foundations/memory-and-lessons.md",
-  ".cursor/skills/clawford-foundations/multi-agent-playbook.md",
-  ".cursor/skills/clawford-foundations/exam.md",
-  ".cursor/skills/clawford-foundations/rubric.md",
-  ".cursor/skills/clawford-foundations/v2-specialization-paths.md",
-  "docs/schemas/ (5 JSON schemas)",
-  "docs/foundations-course-package.json",
-  "docs/review-pipeline.md",
-  "docs/authoring-interface.md",
-  "docs/professor-system.md",
-  "docs/evaluation-architecture.md",
-  "docs/v2-roadmap.md",
-  "docs/personal-install.md",
-  "README.md",
-];

@@ -9,6 +9,19 @@ interface Props {
   t: Translations;
 }
 
+interface NavItem {
+  href: string;
+  labelKey: keyof Translations["nav"];
+}
+
+const NAV_ITEMS: NavItem[] = [
+  { href: "#structure", labelKey: "structure" },
+  { href: "#sorting-hat", labelKey: "houses" },
+  { href: "#academies", labelKey: "academies" },
+  { href: "#journey", labelKey: "journey" },
+  { href: "#assessment", labelKey: "assessment" },
+];
+
 export default function Header({ lang, setLang, t }: Props) {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
@@ -25,11 +38,11 @@ export default function Header({ lang, setLang, t }: Props) {
       </a>
 
       <nav className="topnav" role="navigation" aria-label="Main navigation">
-        <a href="#structure">{t.nav.structure}</a>
-        <a href="#sorting-hat">{t.nav.houses}</a>
-        <a href="#academies">{t.nav.academies}</a>
-        <a href="#journey">{t.nav.journey}</a>
-        <a href="#assessment">{t.nav.assessment}</a>
+        {NAV_ITEMS.map((item) => (
+          <a key={item.href} href={item.href}>
+            {t.nav[item.labelKey]}
+          </a>
+        ))}
       </nav>
 
       <div className="topbar-actions">
@@ -67,21 +80,11 @@ export default function Header({ lang, setLang, t }: Props) {
 
       {mobileNavOpen && (
         <nav className="mobile-nav" role="navigation" aria-label="Mobile navigation">
-          <a href="#structure" onClick={() => setMobileNavOpen(false)}>
-            {t.nav.structure}
-          </a>
-          <a href="#sorting-hat" onClick={() => setMobileNavOpen(false)}>
-            {t.nav.houses}
-          </a>
-          <a href="#academies" onClick={() => setMobileNavOpen(false)}>
-            {t.nav.academies}
-          </a>
-          <a href="#journey" onClick={() => setMobileNavOpen(false)}>
-            {t.nav.journey}
-          </a>
-          <a href="#assessment" onClick={() => setMobileNavOpen(false)}>
-            {t.nav.assessment}
-          </a>
+          {NAV_ITEMS.map((item) => (
+            <a key={item.href} href={item.href} onClick={() => setMobileNavOpen(false)}>
+              {t.nav[item.labelKey]}
+            </a>
+          ))}
           <a href="#terminal" onClick={() => setMobileNavOpen(false)}>
             {t.nav.connect}
           </a>

@@ -8,6 +8,8 @@ interface State {
   hasError: boolean;
 }
 
+const isZh = typeof navigator !== "undefined" && navigator.language.startsWith("zh");
+
 class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -33,8 +35,10 @@ class ErrorBoundary extends Component<Props, State> {
           }}
         >
           <div>
-            <h1 style={{ color: "#ebf4ff", marginBottom: "0.5rem" }}>Something went wrong</h1>
-            <p>Please refresh the page to try again.</p>
+            <h1 style={{ color: "#ebf4ff", marginBottom: "0.5rem" }}>
+              {isZh ? "页面出了点问题" : "Something went wrong"}
+            </h1>
+            <p>{isZh ? "请刷新页面重试。" : "Please refresh the page to try again."}</p>
           </div>
         </div>
       );
