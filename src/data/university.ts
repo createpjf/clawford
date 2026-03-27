@@ -165,7 +165,7 @@ export const learnerJourney: JourneyStep[] = [
   {
     state: { zh: "Academy Candidate", en: "Academy Candidate" },
     checkpoint: {
-      zh: "选择教授学院并通过入门 capstone",
+      zh: "选择教授课程并通过入门 capstone",
       en: "Select an academy and pass entry capstone",
     },
   },

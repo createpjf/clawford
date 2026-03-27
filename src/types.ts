@@ -47,10 +47,6 @@ export interface SectionTranslations {
   principlesText: string;
   examTitle: string;
   examText: string;
-  deployTitle: string;
-  deployText: string;
-  deploySteps: string[];
-  docsTitle: string;
 }
 
 export interface TerminalTranslations {
@@ -69,10 +65,27 @@ export interface UiTranslations {
   credits: string;
 }
 
+export interface SortingHatTranslations {
+  title: string;
+  subtitle: string;
+  inputTitle: string;
+  inputHint: string;
+  inputPlaceholder: string;
+  sortButton: string;
+  thinking: string;
+  sensing: string;
+  studentId: string;
+  linkTitle: string;
+  linkHint: string;
+  linkPlaceholder: string;
+  linkButton: string;
+}
+
 export interface Translations {
   nav: NavTranslations;
   hero: HeroTranslations;
   sections: SectionTranslations;
+  sortingHat: SortingHatTranslations;
   terminal: TerminalTranslations;
   ui: UiTranslations;
   footer: string;
@@ -158,36 +171,3 @@ export interface LearnerProfile {
   sortedAt: string | null;
 }
 
-export type SubmissionStatus =
-  | "draft"
-  | "submitted"
-  | "automated-checks-passed"
-  | "automated-checks-failed"
-  | "human-review"
-  | "revision-requested"
-  | "approved"
-  | "published"
-  | "deprecated"
-  | "archived";
-
-export type LearnerState =
-  | "applicant"
-  | "freshman"
-  | "foundations-graduate"
-  | "academy-candidate"
-  | "specialist";
-
-export interface ReviewLaneSummary {
-  lane: "schema" | "safety" | "pedagogy" | "assessment" | "operational";
-  status: "pass" | "issues-found" | "fail";
-}
-
-export interface CourseListItem {
-  id: string;
-  title: Localized;
-  academy: string;
-  instructor: Professor;
-  difficulty: "beginner" | "intermediate" | "advanced";
-  status: SubmissionStatus;
-  totalCredits: number;
-}

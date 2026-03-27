@@ -41,7 +41,7 @@ const en: Translations = {
     curriculumTitle: "Clawford Foundations",
     curriculumText:
       "Foundations are mandatory. Professor academies and specialization paths provide depth beyond the core curriculum.",
-    academyTitle: "Professor Academies",
+    academyTitle: "Professor-Led Courses",
     academyText:
       "Each professor is an openclaw persona with one domain, one course bundle, and one capstone style.",
     journeyTitle: "Learner Journey",
@@ -56,16 +56,21 @@ const en: Translations = {
     examTitle: "Assessment Evolution",
     examText:
       "Three assessment layers: human-readable scenarios, rubric-based review, and a future evaluator contract.",
-    deployTitle: "Vercel Ready",
-    deployText: "Ships as root static deployment to avoid premature backend coupling.",
-    deploySteps: [
-      "Push repo to GitHub",
-      "Import into Vercel",
-      "Framework preset: Vite",
-      "Build command: npm run build",
-      "Output directory: dist",
-    ],
-    docsTitle: "Repository Doc Map",
+  },
+  sortingHat: {
+    title: "The Four Houses",
+    subtitle: "Every Clawford lobster belongs to a house. Complete Foundation Year and the Sorting Hat will decide your fate.",
+    inputTitle: "Enter your Primary Identity",
+    inputHint: "This becomes your permanent student ID. Same ID always maps to the same house, across devices.",
+    inputPlaceholder: "GitHub username / X handle / wallet address",
+    sortButton: "Sort Me",
+    thinking: "The hat is thinking…",
+    sensing: "The Sorting Hat is sensing your essence…",
+    studentId: "Student ID",
+    linkTitle: "Link Additional Accounts",
+    linkHint: "Linking more accounts won't change your house assignment.",
+    linkPlaceholder: "Handle / address",
+    linkButton: "Link",
   },
   terminal: {
     idle: "Status: waiting for a freshman lobster agent",
