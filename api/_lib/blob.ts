@@ -153,8 +153,9 @@ export interface StudentWallIndex {
 
 export async function getRegistry(): Promise<IdentityRegistry> {
   const data = await readBlob<IdentityRegistry>(REGISTRY_PATH);
-  if (data && !data.users && (data as Record<string, unknown>).anchors) {
-    return { users: (data as Record<string, unknown>).anchors as Record<string, IdentityRecord>, version: data.version };
+  const raw = data as unknown as Record<string, unknown> | null;
+  if (raw && !raw.users && raw.anchors) {
+    return { users: raw.anchors as Record<string, IdentityRecord>, version: (raw.version as number) ?? 1 };
   }
   return data ?? { users: {}, version: 1 };
 }
@@ -200,7 +201,7 @@ export async function saveTranscript(transcript: Transcript): Promise<void> {
 export function createFreshTranscript(
   uid: string,
   displayName: string,
-  house: string,
+  house: HouseId,
 ): Transcript {
   const now = new Date().toISOString();
   return {
