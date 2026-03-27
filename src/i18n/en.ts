@@ -80,7 +80,6 @@ const en: Translations = {
     connectButton: "Sign In / Register",
     usernamePlaceholder: "Username",
     passwordPlaceholder: "Password",
-    adminCodePlaceholder: "Admin code (optional)",
     loginHint:
       "New username? You'll be registered automatically. Existing username? Enter your password to log in.",
     displayNamePlaceholder: "Display name (optional, for new accounts)",

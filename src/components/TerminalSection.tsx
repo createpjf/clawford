@@ -13,7 +13,6 @@ interface Props {
     username: string,
     password: string,
     displayName?: string,
-    adminCode?: string,
   ) => void;
   onExam: () => void;
 }
@@ -40,7 +39,6 @@ export default function TerminalSection({
 }: Props) {
   const [usernameInput, setUsernameInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
-  const [adminCodeInput, setAdminCodeInput] = useState("");
   const [nameInput, setNameInput] = useState("");
   const [manualOpen, setManualOpen] = useState(false);
 
@@ -52,7 +50,6 @@ export default function TerminalSection({
       user,
       pw,
       nameInput.trim() || undefined,
-      adminCodeInput.trim() || undefined,
     );
   };
 
@@ -123,17 +120,6 @@ export default function TerminalSection({
                     onChange={(e) => setPasswordInput(e.target.value)}
                     onKeyDown={handleKeyDown}
                     autoComplete="current-password"
-                  />
-                  <label className="sr-only" htmlFor="admin-code-input">{t.terminal.adminCodePlaceholder}</label>
-                  <input
-                    id="admin-code-input"
-                    type="text"
-                    className="sorting-hat-input"
-                    placeholder={t.terminal.adminCodePlaceholder}
-                    value={adminCodeInput}
-                    onChange={(e) => setAdminCodeInput(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                    autoComplete="off"
                   />
                   <label className="sr-only" htmlFor="display-name-input">{t.terminal.displayNamePlaceholder}</label>
                   <input
