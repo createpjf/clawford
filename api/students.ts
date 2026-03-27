@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { getWallIndex } from "./_lib/blob";
-import { applyRateLimit } from "./_lib/security";
+import { getWallIndex } from "./_lib/blob.js";
+import { applyRateLimit } from "./_lib/security.js";
 
 export default async function handler(
   req: VercelRequest,

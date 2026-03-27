@@ -5,8 +5,8 @@ import {
   getTranscript,
   saveTranscript,
   createFreshTranscript,
-} from "./_lib/blob";
-import type { IdentityRecord } from "./_lib/blob";
+} from "./_lib/blob.js";
+import type { IdentityRecord } from "./_lib/blob.js";
 import {
   normalizeUsername,
   isValidUsername,
@@ -19,16 +19,17 @@ import {
   MAX_PASSWORD_LENGTH,
   MIN_PASSWORD_LENGTH,
   MAX_DISPLAY_NAME_LENGTH,
-} from "./_lib/identity";
+} from "./_lib/identity.js";
 import {
   applyRateLimit,
+  isAdmin,
   getClientIp,
   canRegister,
   recordRegistration,
   canLogin,
   recordLoginFailure,
   clearLoginFailures,
-} from "./_lib/security";
+} from "./_lib/security.js";
 
 export default async function handler(
   req: VercelRequest,
@@ -76,14 +77,18 @@ export default async function handler(
 
     const existing = await lookupByUsername(normalized);
 
+    const admin = isAdmin(req);
+
     // ---- Login path ----
     if (existing) {
-      const loginCheck = await canLogin(normalized);
-      if (!loginCheck.allowed) {
-        return res.status(429).json({
-          error: "Too many failed login attempts. Try again later.",
-          retryAfter: loginCheck.retryAfter,
-        });
+      if (!admin) {
+        const loginCheck = await canLogin(normalized);
+        if (!loginCheck.allowed) {
+          return res.status(429).json({
+            error: "Too many failed login attempts. Try again later.",
+            retryAfter: loginCheck.retryAfter,
+          });
+        }
       }
 
       if (!verifyPassword(password, existing.salt, existing.passwordHash)) {
@@ -107,12 +112,14 @@ export default async function handler(
 
     // ---- Registration path ----
     const ip = getClientIp(req);
-    const regCheck = await canRegister(ip);
-    if (!regCheck.allowed) {
-      return res.status(429).json({
-        error: "Registration cooldown active. One registration per IP every 7 days.",
-        retryAfter: regCheck.retryAfter,
-      });
+    if (!admin) {
+      const regCheck = await canRegister(ip);
+      if (!regCheck.allowed) {
+        return res.status(429).json({
+          error: "Registration cooldown active. One registration per IP every 7 days.",
+          retryAfter: regCheck.retryAfter,
+        });
+      }
     }
 
     const uid = generateUid(normalized);

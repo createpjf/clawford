@@ -1,5 +1,5 @@
 import { put, list } from "@vercel/blob";
-import type { HouseId } from "./identity";
+import type { HouseId } from "./identity.js";
 
 const REGISTRY_PATH = "clawford/identity-registry.json";
 const WALL_INDEX_PATH = "clawford/student-wall.json";

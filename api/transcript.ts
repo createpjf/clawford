@@ -4,15 +4,15 @@ import {
   registerIdentity,
   getTranscript,
   saveTranscript,
-} from "./_lib/blob";
+} from "./_lib/blob.js";
 import {
   normalizeUsername,
   verifyPassword,
   isValidUid,
   MAX_USERNAME_LENGTH,
   MAX_DISPLAY_NAME_LENGTH,
-} from "./_lib/identity";
-import { applyRateLimit } from "./_lib/security";
+} from "./_lib/identity.js";
+import { applyRateLimit } from "./_lib/security.js";
 
 export default async function handler(
   req: VercelRequest,

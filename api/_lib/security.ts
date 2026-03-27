@@ -146,12 +146,21 @@ export async function clearLoginFailures(username: string): Promise<void> {
   }
 }
 
+// ---- Admin bypass ----
+
+export function isAdmin(req: VercelRequest): boolean {
+  const code = req.body?.adminCode ?? req.query?.adminCode;
+  const secret = process.env.ADMIN_CODE;
+  return !!secret && typeof code === "string" && code === secret;
+}
+
 // ---- Global rate limit middleware helper ----
 
 export function applyRateLimit(
   req: VercelRequest,
   res: VercelResponse,
 ): boolean {
+  if (isAdmin(req)) return true;
   const ip = getClientIp(req);
   if (!checkGlobalRate(ip)) {
     res.status(429).json({ error: "Too many requests. Please slow down." });
