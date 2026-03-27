@@ -80,8 +80,6 @@ const en: Translations = {
     connectButton: "Sign In / Register",
     usernamePlaceholder: "Username",
     passwordPlaceholder: "Password",
-    adminCodePlaceholder: "Admin code (optional for restricted test environments)",
-    adminCodeHint: "Use an admin code only in restricted test environments to bypass cooldown checks.",
     loginHint:
       "New username? You'll be registered automatically. Existing username? Enter your password to log in.",
     displayNamePlaceholder: "Display name (optional, for new accounts)",

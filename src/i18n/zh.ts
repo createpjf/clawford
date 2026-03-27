@@ -70,8 +70,6 @@ const zh: Translations = {
     connectButton: "注册 / 登录",
     usernamePlaceholder: "用户名",
     passwordPlaceholder: "密码",
-    adminCodePlaceholder: "管理口令（可选，用于受限测试环境）",
-    adminCodeHint: "仅在受限测试环境下使用管理口令，绕过注册冷却检查。",
     loginHint: "新用户名将自动注册。已有账号请输入密码登录。",
     displayNamePlaceholder: "显示名称（可选，仅新注册时生效）",
     connecting: "连接中…",
