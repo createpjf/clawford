@@ -1,4 +1,4 @@
-import { ChevronDown, ChevronRight, Lock, ShieldCheck, Clock3, User } from "lucide-react";
+import { ChevronDown, ChevronRight, GitPullRequest, Lock, ShieldCheck, Clock3, User } from "lucide-react";
 import { useState } from "react";
 import courses from "@/data/courses";
 import type { ElectiveCourse, HouseId, Lang, Translations } from "@/types";
@@ -9,6 +9,8 @@ interface Props {
   examPassed: boolean;
   house: HouseId | null;
 }
+
+const CONTRIBUTING_GUIDE_URL = "https://github.com/sjhddh/clawford/blob/main/docs/CONTRIBUTING-COURSES.md";
 
 function CourseCard({ course, lang, t }: { course: ElectiveCourse; lang: Lang; t: Translations }) {
   const [expanded, setExpanded] = useState(false);
@@ -101,6 +103,26 @@ export default function CourseCatalogSection({ lang, t, examPassed, house }: Pro
       <div className="section-heading">
         <h2>{t.sections.courseCatalogTitle}</h2>
         <p>{t.sections.courseCatalogText}</p>
+      </div>
+
+      <div className="course-authoring-card">
+        <div className="course-authoring-title">
+          <GitPullRequest size={18} />
+          <h3>{t.courseAuthoring.title}</h3>
+        </div>
+        <p>{t.courseAuthoring.body}</p>
+        <ol className="course-authoring-steps">
+          <li>{t.courseAuthoring.step1}</li>
+          <li>{t.courseAuthoring.step2}</li>
+          <li>{t.courseAuthoring.step3}</li>
+          <li>{t.courseAuthoring.step4}</li>
+          <li>{t.courseAuthoring.step5}</li>
+        </ol>
+        <p className="course-authoring-outcome">{t.courseAuthoring.outcome}</p>
+        <a className="button button-secondary" href={CONTRIBUTING_GUIDE_URL} target="_blank" rel="noreferrer">
+          <ChevronRight size={18} />
+          {t.courseAuthoring.guide}
+        </a>
       </div>
 
       <div className={`course-catalog-container ${!isUnlocked ? "course-catalog-locked" : ""}`}>

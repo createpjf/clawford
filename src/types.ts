@@ -82,6 +82,18 @@ export interface UiTranslations {
   pending: string;
 }
 
+export interface CourseAuthoringTranslations {
+  title: string;
+  body: string;
+  step1: string;
+  step2: string;
+  step3: string;
+  step4: string;
+  step5: string;
+  outcome: string;
+  guide: string;
+}
+
 export interface SortingHatTranslations {
   title: string;
   subtitle: string;
@@ -122,6 +134,7 @@ export interface Translations {
   nav: NavTranslations;
   hero: HeroTranslations;
   sections: SectionTranslations;
+  courseAuthoring: CourseAuthoringTranslations;
   sortingHat: SortingHatTranslations;
   terminal: TerminalTranslations;
   ui: UiTranslations;

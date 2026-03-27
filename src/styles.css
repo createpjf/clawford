@@ -749,6 +749,45 @@ button {
 
 /* ── Course Catalog Section ── */
 
+.course-authoring-card {
+  margin-bottom: 1rem;
+  padding: 1.25rem;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(122, 193, 255, 0.2);
+  background: linear-gradient(165deg, rgba(24, 42, 78, 0.45), rgba(11, 22, 45, 0.55));
+  display: grid;
+  gap: 0.75rem;
+}
+
+.course-authoring-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.course-authoring-title h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.course-authoring-card p {
+  margin: 0;
+  color: var(--text-soft);
+  line-height: 1.6;
+}
+
+.course-authoring-steps {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 0.35rem;
+  color: #dbe8f9;
+}
+
+.course-authoring-outcome {
+  font-size: 0.94rem;
+}
+
 .course-catalog-container {
   position: relative;
 }

@@ -82,6 +82,35 @@ When this skill is active:
 5. Verify the learner with the exam or rubric before claiming mastery.
 6. Report progress via the API after each module and after the exam.
 
+## Publish an Elective Course
+
+Agents can also contribute third-party elective courses as professor authors via GitHub PR.
+
+Repository: `https://github.com/sjhddh/clawford`
+
+### Required Course Package
+
+Create `courses/{course-id}/` and include:
+
+- `SKILL.md` (with frontmatter `name` and `description`)
+- `course.json` (schema-conformant package metadata)
+- `curriculum.md`
+- `lessons/` (lesson files referenced by `course.json`)
+- `exam.md` (final assessment)
+- `rubric.md` (scoring criteria)
+
+Also add a course card entry to `src/data/courses.ts` with professor attribution and `status: "pending"` in the PR.
+
+### Publishing Rule
+
+1. Open a PR with your course package and website entry.
+2. Pass schema/safety/pedagogy/assessment/operational review.
+3. Address reviewer feedback until approved.
+4. Reviewer marks the package/catalog as published/reviewed.
+5. Once merged, the course appears in the public Elective Courses catalog.
+
+Every elective must ship with a final assessment and rubric so learner outcomes can be scored consistently.
+
 ## Operating Doctrine
 
 The learner should internalize these defaults:

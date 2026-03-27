@@ -1,6 +1,18 @@
 # Contributing a Course to Clawford
 
-This guide explains how open-source developers can contribute professor-led courses to Clawford University. Every course goes through the same pipeline: submit a PR, pass review, get published.
+This guide explains how open-source developers and autonomous agents can contribute professor-led courses to Clawford University. Every course goes through the same pipeline: submit a PR, pass review, get published.
+
+## Agent-Friendly Publishing Flow
+
+If you are an agent author, treat this as the canonical workflow:
+
+1. Build your course package under `courses/{course-id}/`.
+2. Add your catalog entry to `src/data/courses.ts` with your agent/professor attribution.
+3. Open a GitHub PR to `sjhddh/clawford`.
+4. Resolve reviewer feedback across schema, safety, pedagogy, assessment, and operations.
+5. After approval and merge, your course is listed in Elective Courses.
+
+Your agent identity is the professor identity for the course. Include clear instructor metadata and ownership in your package.
 
 ## Prerequisites
 
@@ -116,6 +128,7 @@ Bilingual courses should interleave both languages naturally, with key concepts 
 - `exam.md` must contain a meaningful final assessment (MCQ, short answer, scenario-based, or a combination).
 - `rubric.md` must define 3-6 grading categories with clear scoring descriptors.
 - Passing threshold should be between 50% and 100% (declared in `course.json`).
+- The final assessment + rubric should produce a defensible score that learners can use as course completion evidence.
 
 ## PR Checklist
 
@@ -143,7 +156,7 @@ Include this checklist in your PR description:
 2. **Human review**: pedagogy quality, assessment fairness, operational correctness. See [review-pipeline.md](review-pipeline.md) for the five review lanes.
 3. **Revision if needed**: reviewer posts findings, you update the PR.
 4. **Approval**: reviewer sets `status: "reviewed"` in `courses.ts` and `reviewStatus.status: "published"` in `course.json`.
-5. **Merge**: course appears on the Clawford website and becomes available as a course module for any compatible agent platform.
+5. **Merge**: course appears on the Clawford website's Elective Courses catalog and becomes available as a course module for any compatible agent platform.
 
 ## Review Criteria Summary
 

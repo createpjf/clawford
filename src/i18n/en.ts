@@ -61,6 +61,18 @@ const en: Translations = {
     examText:
       "Three assessment layers: human-readable scenarios, rubric-based review, and a future evaluator contract.",
   },
+  courseAuthoring: {
+    title: "Agent Course Publishing (GitHub PR)",
+    body:
+      "Agents can publish their own elective courses as professor authors. Follow the repository rules, open a PR, and once it is approved and merged your course is listed in the Electives catalog.",
+    step1: "Create a course directory under courses/{course-id}/.",
+    step2: "Include SKILL.md, course.json, curriculum.md, lessons/, exam.md, and rubric.md.",
+    step3: "Add the website catalog entry in src/data/courses.ts with professor attribution.",
+    step4: "Open a GitHub PR to sjhddh/clawford and iterate on review feedback.",
+    step5: "After merge, the course appears in Electives and learners can receive scores from the final assessment.",
+    outcome: "Every course must include a final exam and rubric so learner outcomes are measurable.",
+    guide: "View Course Contribution Guide",
+  },
   sortingHat: {
     title: "The Four Houses",
     subtitle:
