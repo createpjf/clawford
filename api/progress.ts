@@ -5,6 +5,7 @@ import {
   verifyPassword,
   MAX_USERNAME_LENGTH,
 } from "./_lib/identity";
+import { applyRateLimit } from "./_lib/security";
 
 const MODULE_CREDITS: Record<string, number> = {
   "FND-101": 2,
@@ -26,6 +27,7 @@ export default async function handler(
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
+  if (!applyRateLimit(req, res)) return;
 
   try {
     const { username, password, action, moduleId } = req.body ?? {};
@@ -43,10 +45,10 @@ export default async function handler(
     const normalized = normalizeUsername(username);
     const identity = await lookupByUsername(normalized);
     if (!identity) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(401).json({ error: "Invalid credentials" });
     }
     if (!verifyPassword(password, identity.salt, identity.passwordHash)) {
-      return res.status(401).json({ error: "Incorrect password" });
+      return res.status(401).json({ error: "Invalid credentials" });
     }
 
     const transcript = await getTranscript(identity.uid);

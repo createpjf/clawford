@@ -9,6 +9,7 @@ import {
 import type { IdentityRecord } from "./_lib/blob";
 import {
   normalizeUsername,
+  isValidUsername,
   generateUid,
   generateSalt,
   hashPassword,
@@ -16,8 +17,18 @@ import {
   sortIntoHouse,
   MAX_USERNAME_LENGTH,
   MAX_PASSWORD_LENGTH,
+  MIN_PASSWORD_LENGTH,
   MAX_DISPLAY_NAME_LENGTH,
 } from "./_lib/identity";
+import {
+  applyRateLimit,
+  getClientIp,
+  canRegister,
+  recordRegistration,
+  canLogin,
+  recordLoginFailure,
+  clearLoginFailures,
+} from "./_lib/security";
 
 export default async function handler(
   req: VercelRequest,
@@ -26,6 +37,7 @@ export default async function handler(
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
+  if (!applyRateLimit(req, res)) return;
 
   try {
     const { username, password, displayName } = req.body ?? {};
@@ -33,11 +45,16 @@ export default async function handler(
     if (!username || typeof username !== "string" || !username.trim()) {
       return res.status(400).json({ error: "username is required" });
     }
-    if (!password || typeof password !== "string" || password.length < 1) {
+    if (!password || typeof password !== "string") {
       return res.status(400).json({ error: "password is required" });
     }
     if (username.length > MAX_USERNAME_LENGTH) {
       return res.status(400).json({ error: "username too long" });
+    }
+    if (password.length < MIN_PASSWORD_LENGTH) {
+      return res
+        .status(400)
+        .json({ error: `password must be at least ${MIN_PASSWORD_LENGTH} characters` });
     }
     if (password.length > MAX_PASSWORD_LENGTH) {
       return res.status(400).json({ error: "password too long" });
@@ -51,17 +68,30 @@ export default async function handler(
     }
 
     const normalized = normalizeUsername(username);
-    if (!normalized) {
-      return res.status(400).json({ error: "username is invalid" });
+    if (!normalized || !isValidUsername(normalized)) {
+      return res
+        .status(400)
+        .json({ error: "username must contain only letters, numbers, hyphens, and underscores" });
     }
 
     const existing = await lookupByUsername(normalized);
 
+    // ---- Login path ----
     if (existing) {
-      if (!verifyPassword(password, existing.salt, existing.passwordHash)) {
-        return res.status(401).json({ error: "Incorrect password" });
+      const loginCheck = await canLogin(normalized);
+      if (!loginCheck.allowed) {
+        return res.status(429).json({
+          error: "Too many failed login attempts. Try again later.",
+          retryAfter: loginCheck.retryAfter,
+        });
       }
 
+      if (!verifyPassword(password, existing.salt, existing.passwordHash)) {
+        await recordLoginFailure(normalized);
+        return res.status(401).json({ error: "Invalid credentials" });
+      }
+
+      await clearLoginFailures(normalized);
       existing.lastSeen = new Date().toISOString();
       await registerIdentity(normalized, existing);
 
@@ -72,6 +102,16 @@ export default async function handler(
         house: transcript?.house ?? null,
         transcript,
         isNew: false,
+      });
+    }
+
+    // ---- Registration path ----
+    const ip = getClientIp(req);
+    const regCheck = await canRegister(ip);
+    if (!regCheck.allowed) {
+      return res.status(429).json({
+        error: "Registration cooldown active. One registration per IP every 7 days.",
+        retryAfter: regCheck.retryAfter,
       });
     }
 
@@ -97,6 +137,7 @@ export default async function handler(
     };
 
     await registerIdentity(normalized, record);
+    await recordRegistration(ip);
 
     const transcript = createFreshTranscript(uid, name, house);
     await saveTranscript(transcript);

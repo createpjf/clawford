@@ -10,12 +10,19 @@ const HOUSE_ORDER = [
 export type HouseId = (typeof HOUSE_ORDER)[number];
 
 export const MAX_USERNAME_LENGTH = 64;
+export const MIN_PASSWORD_LENGTH = 4;
 export const MAX_PASSWORD_LENGTH = 128;
 export const MAX_DISPLAY_NAME_LENGTH = 64;
 export const UID_PATTERN = /^CLW-[0-9a-f]{16}$/;
+export const USERNAME_PATTERN = /^[a-z0-9][a-z0-9_-]{0,62}[a-z0-9]$/;
 
 export function normalizeUsername(username: string): string {
   return username.trim().replace(/\s+/g, "").toLowerCase();
+}
+
+export function isValidUsername(normalized: string): boolean {
+  if (normalized.length < 2 || normalized.length > MAX_USERNAME_LENGTH) return false;
+  return USERNAME_PATTERN.test(normalized);
 }
 
 export function generateUid(normalizedUsername: string): string {

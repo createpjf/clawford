@@ -12,11 +12,14 @@ import {
   MAX_USERNAME_LENGTH,
   MAX_DISPLAY_NAME_LENGTH,
 } from "./_lib/identity";
+import { applyRateLimit } from "./_lib/security";
 
 export default async function handler(
   req: VercelRequest,
   res: VercelResponse,
 ) {
+  if (!applyRateLimit(req, res)) return;
+
   try {
     if (req.method === "GET") {
       return handleGet(req, res);
@@ -72,10 +75,10 @@ async function handlePatch(req: VercelRequest, res: VercelResponse) {
   const normalized = normalizeUsername(username);
   const identity = await lookupByUsername(normalized);
   if (!identity) {
-    return res.status(404).json({ error: "User not found" });
+    return res.status(401).json({ error: "Invalid credentials" });
   }
   if (!verifyPassword(password, identity.salt, identity.passwordHash)) {
-    return res.status(401).json({ error: "Incorrect password" });
+    return res.status(401).json({ error: "Invalid credentials" });
   }
 
   const transcript = await getTranscript(identity.uid);

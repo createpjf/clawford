@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { getWallIndex } from "./_lib/blob";
+import { applyRateLimit } from "./_lib/security";
 
 export default async function handler(
   req: VercelRequest,
@@ -8,6 +9,7 @@ export default async function handler(
   if (req.method !== "GET") {
     return res.status(405).json({ error: "Method not allowed" });
   }
+  if (!applyRateLimit(req, res)) return;
 
   try {
     const wall = await getWallIndex();
