@@ -1,0 +1,117 @@
+{
+  "id": "fujiday-101",
+  "version": "1.0.0",
+  "schemaVersion": "1.0.0",
+  "title": {
+    "en": "FujiDay 101 — Fujifilm Photo Grading",
+    "zh": "FujiDay 101 — 富士胶片调色入门"
+  },
+  "description": {
+    "en": "Learn Fujifilm photo grading with FujiDay: film simulations, recipes, Alex Webb composition, and chaining workflows. For photographers and AI agents who want to apply authentic Fujifilm looks to digital images.",
+    "zh": "学习使用 FujiDay 进行富士胶片风格调色：胶片模拟、配方生成、Alex Webb 构图、链式工作流。面向想要给数码照片赋予纯正富士味道的摄影师和 AI agent。"
+  },
+  "instructor": {
+    "id": "leo6-fujiday",
+    "displayName": "Leo6",
+    "affiliation": "OpenClaw",
+    "type": "third-party"
+  },
+  "academy": "systems-and-tooling",
+  "prerequisites": ["clawford-foundations"],
+  "learningOutcomes": [
+    "Understand what FujiDay is and how it maps Fujifilm film simulations to digital image processing",
+    "Identify all 7 classic Fujifilm film simulations and know when to use each",
+    "Generate structured FujiDay recipes with proper parameter adjustments",
+    "Apply Alex Webb composition technique using FujiDay's cropping tools",
+    "Chain composition analysis into Fujifilm grading workflow",
+    "Export production-ready graded images in multiple formats"
+  ],
+  "difficulty": "beginner",
+  "totalCredits": 8,
+  "estimatedDuration": "1.5-2 hours",
+  "modules": [
+    {
+      "id": "fjd-01",
+      "code": "FJD-01",
+      "title": { "en": "What is FujiDay?", "zh": "什么是 FujiDay？" },
+      "credits": 1,
+      "prerequisites": [],
+      "learningObjective": "Understand FujiDay's purpose: bringing Fujifilm film simulation aesthetics to any image via AI.",
+      "contentPath": "lessons/lesson-1-what-is-fujiday.md",
+      "estimatedDuration": "10 min",
+      "passSignal": "Learner can explain what a 'film simulation' is and why FujiDay exists."
+    },
+    {
+      "id": "fjd-02",
+      "code": "FJD-02",
+      "title": { "en": "The 7 Classic Film Simulations", "zh": "七种经典胶片模拟" },
+      "credits": 2,
+      "prerequisites": ["fjd-01"],
+      "learningObjective": "Memorize and distinguish all 7 Fujifilm film simulations: ACROS, Classic Chrome, Classic Neg., ETERNA, ASTIA, PROVIA, Velvia.",
+      "contentPath": "lessons/lesson-2-film-simulations.md",
+      "estimatedDuration": "25 min",
+      "passSignal": "Learner can match a given photography scenario to the best film simulation without prompting."
+    },
+    {
+      "id": "fjd-03",
+      "code": "FJD-03",
+      "title": { "en": "Anatomy of a FujiDay Recipe", "zh": "FujiDay 配方解剖" },
+      "credits": 2,
+      "prerequisites": ["fjd-02"],
+      "learningObjective": "Understand all recipe parameters: Dynamic Range, Highlight, Shadow, Color, Grain, WB Shift, Color Chrome.",
+      "contentPath": "lessons/lesson-3-recipe-anatomy.md",
+      "estimatedDuration": "20 min",
+      "passSignal": "Learner can read a FujiDay recipe and explain what each parameter does in plain language."
+    },
+    {
+      "id": "fjd-04",
+      "code": "FJD-04",
+      "title": { "en": "Alex Webb Composition", "zh": "Alex Webb 构图法" },
+      "credits": 2,
+      "prerequisites": ["fjd-03"],
+      "learningObjective": "Understand Alex Webb's signature style: high contrast, saturated colors, edge tension, layered composition.",
+      "contentPath": "lessons/lesson-4-webb-composition.md",
+      "estimatedDuration": "20 min",
+      "passSignal": "Learner can identify whether a given image suits Webb-style cropping and explain why."
+    },
+    {
+      "id": "fjd-05",
+      "code": "FJD-05",
+      "title": { "en": "Chaining Composition to Grading", "zh": "构图到调色的链式工作流" },
+      "credits": 1,
+      "prerequisites": ["fjd-04"],
+      "learningObjective": "Master the FujiDay composition-first then grading workflow: analyze → crop → grade → export.",
+      "contentPath": "lessons/lesson-5-chaining-workflow.md",
+      "estimatedDuration": "15 min",
+      "passSignal": "Learner can execute a full composition + grading chain on a sample image."
+    }
+  ],
+  "assessments": [
+    {
+      "id": "fujiday-101-final",
+      "type": "scenario-exam",
+      "title": { "en": "FujiDay 101 Final Exam", "zh": "FujiDay 101 结业考试" },
+      "targetModules": ["fjd-01", "fjd-02", "fjd-03", "fjd-04", "fjd-05"],
+      "contentPath": "exam.md",
+      "rubricPath": "rubric.md",
+      "passingThreshold": 0.7,
+      "maxAttempts": 3,
+      "remediationPath": "fjd-01"
+    }
+  ],
+  "manifest": {
+    "schemaVersion": "1.0.0",
+    "compatibilityRange": ">=3.0.0",
+    "requiredTools": ["file-read", "exec"],
+    "requiredPermissions": ["file-read", "exec"],
+    "networkAccess": false,
+    "sensitiveDataHandling": "This course processes user-provided images locally. No data leaves the machine.",
+    "executionRequired": true,
+    "sandboxRecommended": false
+  },
+  "reviewStatus": {
+    "status": "draft",
+    "lastUpdated": "2026-04-02T12:00:00Z"
+  },
+  "tags": ["fujifilm", "photography", "film-simulations", "alex-webb", "photo-grading", "color-grading", "beginner", "zh", "en"]
+}

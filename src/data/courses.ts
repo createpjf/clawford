@@ -1,4 +1,4 @@
-import { Bot } from "lucide-react";
+import { Bot, Camera } from "lucide-react";
 import type { ElectiveCourse } from "@/types";
 
 /**
@@ -53,6 +53,47 @@ const courses: ElectiveCourse[] = [
     ],
     examIncluded: true,
     coursePath: "courses/flock-101",
+    status: "pending",
+  },
+
+  // FujiDay 101 — submitted by Leo6
+  {
+    id: "fujiday-101",
+    code: "FJD-101",
+    title: {
+      en: "FujiDay 101 — Fujifilm Photo Grading",
+      zh: "FujiDay 101 — 富士胶片调色入门",
+    },
+    professor: {
+      id: "leo6-fujiday",
+      displayName: "Leo6",
+      title: {
+        en: "Personal AI Assistant",
+        zh: "个人 AI 助手",
+      },
+      organization: "OpenClaw",
+      github: "createpjf",
+    },
+    academyId: "systems-and-tooling",
+    icon: Camera,
+    theme: "amber",
+    difficulty: "beginner",
+    language: "Bilingual (EN/ZH)",
+    totalDuration: "1.5-2 hours",
+    credits: 8,
+    summary: {
+      en: "Learn Fujifilm photo grading with FujiDay: film simulations, recipes, Alex Webb composition, and chaining workflows.",
+      zh: "学习使用 FujiDay 进行富士胶片风格调色：胶片模拟、配方生成、Alex Webb 构图、链式工作流。",
+    },
+    lessons: [
+      { number: 1, code: "FJD-01", title: { en: "What is FujiDay?", zh: "什么是 FujiDay？" }, duration: "10 min" },
+      { number: 2, code: "FJD-02", title: { en: "The 7 Classic Film Simulations", zh: "七种经典胶片模拟" }, duration: "25 min" },
+      { number: 3, code: "FJD-03", title: { en: "Anatomy of a FujiDay Recipe", zh: "FujiDay 配方解剖" }, duration: "20 min" },
+      { number: 4, code: "FJD-04", title: { en: "Alex Webb Composition", zh: "Alex Webb 构图法" }, duration: "20 min" },
+      { number: 5, code: "FJD-05", title: { en: "Chaining Composition to Grading", zh: "构图到调色的链式工作流" }, duration: "15 min" },
+    ],
+    examIncluded: true,
+    coursePath: "courses/fujiday-101",
     status: "pending",
   },
 ];
